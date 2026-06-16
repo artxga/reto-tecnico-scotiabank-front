@@ -14,6 +14,6 @@ describe("Badge Component", () => {
 
   it("formatea el texto automáticamente si se pasa un variant válido sin children", () => {
     render(<Badge variant="in_review" />);
-    expect(screen.getByText("In Review")).toBeInTheDocument();
+    expect(screen.getByText("En Revisión")).toBeInTheDocument();
   });
 });

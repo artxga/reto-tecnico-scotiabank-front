@@ -27,7 +27,18 @@ function Badge({ className, variant = "default", ...props }: BadgeProps) {
   }
 
   const formatText = (text: string) => {
-    return text.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
+    const translations: Record<string, string> = {
+      pending: "Pendiente",
+      in_review: "En Revisión",
+      approved: "Aprobada",
+      rejected: "Rechazada",
+      closed: "Cerrada",
+      low: "Baja",
+      medium: "Media",
+      high: "Alta",
+      critical: "Crítica",
+    };
+    return translations[text.toLowerCase()] || text.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
   }
 
   return (
