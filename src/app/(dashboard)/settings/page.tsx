@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/components/ui/toast-context";
 import { User, Volume2, RefreshCw, Shield, Save, Moon, Sun } from "lucide-react";
 
 export default function SettingsPage() {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
   
   // Settings state
   const [profile, setProfile] = useState({
@@ -19,9 +20,44 @@ export default function SettingsPage() {
   const [notifications, setNotifications] = useState(true);
   const [refreshInterval, setRefreshInterval] = useState("30");
 
+  useEffect(() => {
+    setMounted(true);
+    const savedTheme = localStorage.getItem("theme") || "system";
+    setTheme(savedTheme);
+
+    const handleThemeChange = () => {
+      setTheme(localStorage.getItem("theme") || "system");
+    };
+
+    window.addEventListener("theme-change", handleThemeChange);
+    return () => window.removeEventListener("theme-change", handleThemeChange);
+  }, []);
+
+  const applyTheme = (themeValue: string) => {
+    if (
+      themeValue === "dark" ||
+      (themeValue === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches)
+    ) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  };
+
+  const handleThemeSelect = (value: string) => {
+    setTheme(value);
+    applyTheme(value);
+    localStorage.setItem("theme", value);
+    window.dispatchEvent(new Event("theme-change"));
+  };
+
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    
+    // Save configurations
+    localStorage.setItem("theme", theme);
+    applyTheme(theme);
     
     // Mock API call delay
     await new Promise((resolve) => setTimeout(resolve, 800));
@@ -114,7 +150,7 @@ export default function SettingsPage() {
                     <button
                       key={item.value}
                       type="button"
-                      onClick={() => setTheme(item.value)}
+                      onClick={() => handleThemeSelect(item.value)}
                       className={`flex flex-col sm:flex-row items-center justify-center gap-2 py-3 px-4 rounded-xl border text-sm font-semibold transition-all ${
                         active 
                           ? "bg-indigo-50 border-indigo-200 text-indigo-700 shadow-xs" 
