@@ -12,9 +12,11 @@ import { TrendChart } from "@/components/dashboard/trend-chart";
 import { CategoryChart } from "@/components/dashboard/category-chart";
 import { RecentActivity } from "@/components/dashboard/recent-activity";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useLanguage } from "@/components/providers/language-provider";
 
 export default function DashboardPage() {
   const { data: requests, isLoading } = useRequests();
+  const { t } = useLanguage();
 
   if (isLoading) {
     return (
@@ -122,24 +124,24 @@ export default function DashboardPage() {
   const getCount = (status: RequestStatus) => requests?.filter(r => r.status === status).length || 0;
 
   const stats = [
-    { name: "Total Solicitudes", value: total, icon: Activity, color: "text-blue-600", bg: "bg-blue-100/50" },
-    { name: "Pendientes", value: getCount("pending"), icon: Clock, color: "text-amber-600", bg: "bg-amber-100/50" },
-    { name: "En Revisión", value: getCount("in_review"), icon: PieChart, color: "text-purple-600", bg: "bg-purple-100/50" },
-    { name: "Aprobadas", value: getCount("approved"), icon: CheckCircle, color: "text-emerald-600", bg: "bg-emerald-100/50" },
-    { name: "Rechazadas", value: getCount("rejected"), icon: XCircle, color: "text-rose-600", bg: "bg-rose-100/50" },
-    { name: "Cerradas", value: getCount("closed"), icon: Archive, color: "text-slate-600 dark:text-slate-400", bg: "bg-slate-100/50" },
+    { name: t("dashboard.stats.total"), value: total, icon: Activity, color: "text-blue-600", bg: "bg-blue-100/50" },
+    { name: t("dashboard.stats.pending"), value: getCount("pending"), icon: Clock, color: "text-amber-600", bg: "bg-amber-100/50" },
+    { name: t("dashboard.stats.in_review"), value: getCount("in_review"), icon: PieChart, color: "text-purple-600", bg: "bg-purple-100/50" },
+    { name: t("dashboard.stats.approved"), value: getCount("approved"), icon: CheckCircle, color: "text-emerald-600", bg: "bg-emerald-100/50" },
+    { name: t("dashboard.stats.rejected"), value: getCount("rejected"), icon: XCircle, color: "text-rose-600", bg: "bg-rose-100/50" },
+    { name: t("dashboard.stats.closed"), value: getCount("closed"), icon: Archive, color: "text-slate-600 dark:text-slate-400", bg: "bg-slate-100/50" },
   ];
 
   return (
     <div className="space-y-6 sm:space-y-8">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900">Dashboard</h2>
-          <p className="text-sm text-gray-500 mt-1">Resumen general del estado de las solicitudes en el sistema.</p>
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900">{t("dashboard.title")}</h2>
+          <p className="text-sm text-gray-500 mt-1">{t("dashboard.subtitle")}</p>
         </div>
         <Link href="/requests/new" className="w-full sm:w-auto justify-center btn-primary-liquid px-5 py-2.5 rounded-xl text-sm font-medium inline-flex items-center gap-2 transform active:scale-95">
           <Activity className="h-4 w-4" />
-          Nueva Solicitud
+          {t("dashboard.newRequest")}
         </Link>
       </div>
 

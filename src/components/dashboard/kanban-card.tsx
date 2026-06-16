@@ -6,6 +6,7 @@ import { Request } from "@/lib/types";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import { Calendar, User } from "lucide-react";
+import { useLanguage } from "@/components/providers/language-provider";
 
 interface KanbanCardProps {
   request: Request;
@@ -13,6 +14,19 @@ interface KanbanCardProps {
 }
 
 export function KanbanCard({ request, index }: KanbanCardProps) {
+  const { language } = useLanguage();
+
+  const translateCategory = (cat: string) => {
+    const map: Record<string, string> = {
+      "Hardware": language === "en" ? "Hardware" : "Hardware",
+      "Accesos": language === "en" ? "Access" : "Accesos",
+      "Software": language === "en" ? "Software" : "Software",
+      "Infraestructura": language === "en" ? "Infrastructure" : "Infraestructura",
+      "Recursos Humanos": language === "en" ? "Human Resources" : "Recursos Humanos",
+      "Otros": language === "en" ? "Others" : "Otros",
+    };
+    return map[cat] || cat;
+  };
   return (
     <Draggable draggableId={String(request.id)} index={index}>
       {(provided, snapshot) => (
@@ -47,12 +61,12 @@ export function KanbanCard({ request, index }: KanbanCardProps) {
               <span className="truncate">{request.requester}</span>
             </div>
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-xs text-gray-400">
+              <div className="flex items-center gap-2 text-xs text-gray-450 dark:text-gray-500">
                 <Calendar className="h-3 w-3" />
-                <span>{new Date(request.creationDate).toLocaleDateString()}</span>
+                <span>{new Date(request.creationDate).toLocaleDateString(language === "en" ? "en-US" : "es-ES")}</span>
               </div>
-              <span className="text-[10px] font-medium bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full truncate max-w-[80px]" title={request.category}>
-                {request.category}
+              <span className="text-[10px] font-medium bg-gray-100 text-gray-650 px-2 py-0.5 rounded-full truncate max-w-[80px]" title={translateCategory(request.category)}>
+                {translateCategory(request.category)}
               </span>
             </div>
           </div>

@@ -5,12 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LayoutDashboard, FileText, PlusCircle, Settings, ChevronLeft, ChevronRight, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const navigation = [
-  { name: "Dashboard", href: "/", icon: LayoutDashboard },
-  { name: "Solicitudes", href: "/requests", icon: FileText },
-  { name: "Nueva Solicitud", href: "/requests/new", icon: PlusCircle },
-];
+import { useLanguage } from "@/components/providers/language-provider";
 
 interface SidebarProps {
   isMobileOpen?: boolean;
@@ -20,6 +15,13 @@ interface SidebarProps {
 export function Sidebar({ isMobileOpen, onCloseMobile }: SidebarProps) {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const { t } = useLanguage();
+
+  const navigation = [
+    { name: t("sidebar.dashboard"), href: "/", icon: LayoutDashboard },
+    { name: t("sidebar.requests"), href: "/requests", icon: FileText },
+    { name: t("requests.form.newTitle"), href: "/requests/new", icon: PlusCircle },
+  ];
 
   return (
     <div 
@@ -100,7 +102,7 @@ export function Sidebar({ isMobileOpen, onCloseMobile }: SidebarProps) {
       <div className="border-t border-gray-100 p-4">
         <Link 
           href="/settings"
-          title={isCollapsed ? "Ajustes" : undefined}
+          title={isCollapsed ? t("sidebar.settings") : undefined}
           onClick={onCloseMobile}
           className={cn(
             "group flex w-full items-center py-2.5 text-sm font-medium rounded-lg transition-all duration-200 relative",
@@ -121,7 +123,7 @@ export function Sidebar({ isMobileOpen, onCloseMobile }: SidebarProps) {
               isCollapsed && "md:mr-0"
             )} 
           />
-          <span className={cn("truncate", isCollapsed && "md:hidden")}>Ajustes</span>
+          <span className={cn("truncate", isCollapsed && "md:hidden")}>{t("sidebar.settings")}</span>
         </Link>
       </div>
     </div>

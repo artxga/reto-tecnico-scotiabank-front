@@ -6,6 +6,7 @@ import { Request, RequestStatus } from "@/lib/types";
 import { KanbanColumn } from "./kanban-column";
 import { useUpdateRequest } from "@/hooks/use-requests";
 import { useToast } from "@/components/ui/toast-context";
+import { useLanguage } from "@/components/providers/language-provider";
 
 interface KanbanBoardProps {
   requests: Request[];
@@ -23,6 +24,15 @@ export function KanbanBoard({ requests }: KanbanBoardProps) {
   const [mounted, setMounted] = useState(false);
   const updateRequest = useUpdateRequest();
   const { toast } = useToast();
+  const { t, language } = useLanguage();
+
+  const localColumns: { id: RequestStatus; title: string }[] = [
+    { id: "pending", title: t("dashboard.stats.pending") },
+    { id: "in_review", title: t("dashboard.stats.in_review") },
+    { id: "approved", title: t("dashboard.stats.approved") },
+    { id: "rejected", title: t("dashboard.stats.rejected") },
+    { id: "closed", title: t("dashboard.stats.closed") },
+  ];
 
   useEffect(() => {
     setMounted(true);
@@ -43,26 +53,27 @@ export function KanbanBoard({ requests }: KanbanBoardProps) {
     }
 
     const newStatus = destination.droppableId as RequestStatus;
+    const colTitle = localColumns.find(c => c.id === newStatus)?.title || newStatus;
     
     try {
       await updateRequest.mutateAsync({ id: draggableId, data: { status: newStatus } });
-      toast(`Solicitud movida a ${COLUMNS.find(c => c.id === newStatus)?.title}`, "success");
+      toast(language === "en" ? `Request moved to ${colTitle}` : `Solicitud movida a ${colTitle}`, "success");
     } catch (error) {
-      toast("Error al mover la solicitud", "error");
+      toast(language === "en" ? "Error moving request" : "Error al mover la solicitud", "error");
     }
   };
 
   return (
     <div className="w-full mt-4">
       <div className="mb-4">
-        <h3 className="font-bold text-gray-900 text-2xl">Tablero de Trabajo</h3>
-        <p className="text-gray-500 mt-1">Arrastra y suelta las solicitudes para cambiar su estado en tiempo real.</p>
+        <h3 className="font-bold text-gray-900 text-2xl">{t("dashboard.kanban.title")}</h3>
+        <p className="text-gray-500 mt-1">{t("dashboard.kanban.subtitle")}</p>
       </div>
       
       <div className="w-full">
         <DragDropContext onDragEnd={onDragEnd}>
           <div className="flex gap-5 overflow-x-auto pb-6 pt-2 snap-x hide-scrollbar items-start">
-            {COLUMNS.map((col) => (
+            {localColumns.map((col) => (
               <KanbanColumn 
                 key={col.id} 
                 id={col.id} 

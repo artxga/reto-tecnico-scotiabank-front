@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { SolicitudFormData } from "@/lib/validations";
+import { useLanguage } from "@/components/providers/language-provider";
 
 export default function EditRequestPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -15,22 +16,31 @@ export default function EditRequestPage({ params }: { params: Promise<{ id: stri
   const updateRequest = useUpdateRequest();
   const { toast } = useToast();
   const router = useRouter();
+  const { t, language } = useLanguage();
 
   if (isLoading) {
-    return <div className="flex justify-center p-12"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div></div>;
+    return (
+      <div className="flex justify-center p-12">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+      </div>
+    );
   }
 
   if (!request) {
-    return <div className="text-center p-12 text-gray-500">Solicitud no encontrada.</div>;
+    return (
+      <div className="text-center p-12 text-gray-500">
+        {language === "en" ? "Request not found." : "Solicitud no encontrada."}
+      </div>
+    );
   }
 
   const handleSubmit = async (data: SolicitudFormData) => {
     try {
       await updateRequest.mutateAsync({ id, data: { ...data } });
-      toast("Solicitud actualizada exitosamente", "success");
+      toast(t("requests.form.toastUpdated"), "success");
       router.push(`/requests/${id}`);
     } catch (error: any) {
-      toast(error.message || "Error al actualizar la solicitud", "error");
+      toast(error.message || (language === "en" ? "Error updating request" : "Error al actualizar la solicitud"), "error");
     }
   };
 
@@ -41,8 +51,8 @@ export default function EditRequestPage({ params }: { params: Promise<{ id: stri
           <ArrowLeft className="h-5 w-5 text-gray-700" />
         </Link>
         <div>
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900">Editar Solicitud</h2>
-          <p className="text-sm text-gray-500">Actualiza la información permitida.</p>
+          <h2 className="text-2xl font-bold tracking-tight text-gray-900">{t("requests.form.editTitle")}</h2>
+          <p className="text-sm text-gray-500">{t("requests.form.editSubtitle")}</p>
         </div>
       </div>
 

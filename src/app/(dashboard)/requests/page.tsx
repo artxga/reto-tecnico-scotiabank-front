@@ -11,6 +11,7 @@ import { useSearchParams } from "next/navigation";
 import { Search, SlidersHorizontal, ArrowUpDown, Eye, PlusCircle, Calendar, Download, X } from "lucide-react";
 import { Priority } from "@/lib/types";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useLanguage } from "@/components/providers/language-provider";
 
 // Loading Fallback for Suspense Boundary
 function RequestsSkeleton() {
@@ -84,6 +85,7 @@ function RequestsSkeleton() {
 function RequestsList() {
   const { data: requests } = useRequests();
   const searchParams = useSearchParams();
+  const { t, language } = useLanguage();
 
   // Read URL search params for pre-selected dashboard filters
   const initialStatus = searchParams.get("status") || "todos";
@@ -96,18 +98,27 @@ function RequestsList() {
   const [showFilters, setShowFilters] = useState(initialStatus !== "todos" || initialPriority !== "todos");
 
   const statusTranslations: Record<string, string> = {
-    pending: "Pendiente",
-    in_review: "En Revisión",
-    approved: "Aprobada",
-    rejected: "Rechazada",
-    closed: "Cerrada",
+    pending: t("dashboard.stats.pending"),
+    in_review: t("dashboard.stats.in_review"),
+    approved: t("dashboard.stats.approved"),
+    rejected: t("dashboard.stats.rejected"),
+    closed: t("dashboard.stats.closed"),
   };
 
   const priorityTranslations: Record<string, string> = {
-    low: "Baja",
-    medium: "Media",
-    high: "Alta",
-    critical: "Crítica",
+    low: language === "en" ? "Low" : "Baja",
+    medium: language === "en" ? "Medium" : "Media",
+    high: language === "en" ? "High" : "Alta",
+    critical: language === "en" ? "Critical" : "Crítica",
+  };
+
+  const categoryTranslations: Record<string, string> = {
+    "Hardware": language === "en" ? "Hardware" : "Hardware",
+    "Accesos": language === "en" ? "Access" : "Accesos",
+    "Software": language === "en" ? "Software" : "Software",
+    "Infraestructura": language === "en" ? "Infrastructure" : "Infraestructura",
+    "Recursos Humanos": language === "en" ? "Human Resources" : "Recursos Humanos",
+    "Otros": language === "en" ? "Others" : "Otros",
   };
 
   const activeFiltersCount =
@@ -153,15 +164,18 @@ function RequestsList() {
 
   // Export to CSV Functionality (Excel-ready UTF-8 BOM encoding)
   const exportToCSV = () => {
-    const headers = ["ID", "Título", "Solicitante", "Categoría", "Prioridad", "Estado", "Fecha de Creación"];
+    const headers = language === "en"
+      ? ["ID", "Title", "Requester", "Category", "Priority", "Status", "Creation Date"]
+      : ["ID", "Título", "Solicitante", "Categoría", "Prioridad", "Estado", "Fecha de Creación"];
+
     const rows = filtered.map((req) => [
       req.id,
       `"${req.title.replace(/"/g, '""')}"`,
       `"${req.requester.replace(/"/g, '""')}"`,
-      `"${req.category.replace(/"/g, '""')}"`,
-      req.priority,
-      req.status,
-      new Date(req.creationDate).toLocaleDateString()
+      `"${(categoryTranslations[req.category] || req.category).replace(/"/g, '""')}"`,
+      priorityTranslations[req.priority] || req.priority,
+      statusTranslations[req.status] || req.status,
+      new Date(req.creationDate).toLocaleDateString(language === "en" ? "en-US" : "es-ES")
     ]);
 
     const csvContent = "\uFEFF" + [headers.join(","), ...rows.map((e) => e.join(","))].join("\n");
@@ -169,7 +183,9 @@ function RequestsList() {
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.setAttribute("href", url);
-    link.setAttribute("download", `solicitudes_exportadas_${new Date().toISOString().split("T")[0]}.csv`);
+    link.setAttribute("download", language === "en" 
+      ? `exported_requests_${new Date().toISOString().split("T")[0]}.csv`
+      : `solicitudes_exportadas_${new Date().toISOString().split("T")[0]}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -179,8 +195,8 @@ function RequestsList() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900">Bandeja de Solicitudes</h2>
-          <p className="text-sm text-gray-500 mt-1">Busca, filtra y revisa el estado de todas las solicitudes.</p>
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900">{t("requests.title")}</h2>
+          <p className="text-sm text-gray-500 mt-1">{t("requests.subtitle")}</p>
         </div>
         <div className="flex gap-3 w-full sm:w-auto">
           <button
@@ -189,14 +205,14 @@ function RequestsList() {
             className="flex-1 sm:flex-initial justify-center btn-secondary-liquid px-4 py-2.5 rounded-xl text-sm font-medium inline-flex items-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transform active:scale-95"
           >
             <Download className="h-4 w-4" />
-            Exportar CSV
+            {t("requests.exportCSV")}
           </button>
           <Link 
             href="/requests/new" 
             className="flex-1 sm:flex-initial justify-center btn-primary-liquid px-5 py-2.5 rounded-xl text-sm font-medium inline-flex items-center gap-2 transform active:scale-95"
           >
             <PlusCircle className="h-4 w-4" />
-            Nueva Solicitud
+            {t("dashboard.newRequest")}
           </Link>
         </div>
       </div>
@@ -209,7 +225,7 @@ function RequestsList() {
           <div className="relative flex-1">
             <Search className="absolute left-3.5 top-3.5 h-4 w-4 text-gray-400 dark:text-gray-500" />
             <Input
-              placeholder="Buscar por título o solicitante..."
+              placeholder={t("requests.searchPlaceholder")}
               className="pl-10 text-gray-900 dark:text-white bg-white/40 dark:bg-slate-950/20 pr-10 border-gray-200 dark:border-slate-800/80 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 transition-all h-10.5"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -219,7 +235,7 @@ function RequestsList() {
                 onClick={() => setSearch("")}
                 className="absolute right-3.5 top-3.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-xs font-semibold cursor-pointer select-none"
               >
-                Limpiar
+                {language === "en" ? "Clear" : "Limpiar"}
               </button>
             )}
           </div>
@@ -233,7 +249,7 @@ function RequestsList() {
             }`}
           >
             <SlidersHorizontal className="h-4 w-4" />
-            <span className="text-sm">Filtros</span>
+            <span className="text-sm">{language === "en" ? "Filters" : "Filtros"}</span>
             {activeFiltersCount > 0 && (
               <span className="h-5 min-w-5 px-1.5 flex items-center justify-center rounded-full bg-indigo-600 dark:bg-indigo-500 text-[10px] font-bold text-white leading-none">
                 {activeFiltersCount}
@@ -246,46 +262,46 @@ function RequestsList() {
         {showFilters && (
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-gray-150/60 dark:border-slate-800/50 animate-in slide-in-from-top-2 duration-300">
             <div className="space-y-1.5">
-              <label className="text-[11px] font-bold tracking-wider text-gray-400 dark:text-gray-500 uppercase">Estado</label>
+              <label className="text-[11px] font-bold tracking-wider text-gray-400 dark:text-gray-500 uppercase">{language === "en" ? "Status" : "Estado"}</label>
               <Select 
                 value={statusFilter} 
                 onChange={(e) => setStatusFilter(e.target.value)} 
                 className="w-full text-gray-800 dark:text-slate-200 bg-white/40 dark:bg-slate-950/20 border-gray-200 dark:border-slate-800/80 rounded-xl"
               >
-                <option value="todos">Todos los estados</option>
-                <option value="pending">Pendiente</option>
-                <option value="in_review">En Revisión</option>
-                <option value="approved">Aprobada</option>
-                <option value="rejected">Rechazada</option>
-                <option value="closed">Cerrada</option>
+                <option value="todos">{t("requests.allStatuses")}</option>
+                <option value="pending">{statusTranslations.pending}</option>
+                <option value="in_review">{statusTranslations.in_review}</option>
+                <option value="approved">{statusTranslations.approved}</option>
+                <option value="rejected">{statusTranslations.rejected}</option>
+                <option value="closed">{statusTranslations.closed}</option>
               </Select>
             </div>
             
             <div className="space-y-1.5">
-              <label className="text-[11px] font-bold tracking-wider text-gray-400 dark:text-gray-500 uppercase">Prioridad</label>
+              <label className="text-[11px] font-bold tracking-wider text-gray-400 dark:text-gray-500 uppercase">{language === "en" ? "Priority" : "Prioridad"}</label>
               <Select 
                 value={priorityFilter} 
                 onChange={(e) => setPriorityFilter(e.target.value)} 
                 className="w-full text-gray-800 dark:text-slate-200 bg-white/40 dark:bg-slate-950/20 border-gray-200 dark:border-slate-800/80 rounded-xl"
               >
-                <option value="todos">Todas las prioridades</option>
-                <option value="low">Baja</option>
-                <option value="medium">Media</option>
-                <option value="high">Alta</option>
-                <option value="critical">Crítica</option>
+                <option value="todos">{t("requests.allPriorities")}</option>
+                <option value="low">{priorityTranslations.low}</option>
+                <option value="medium">{priorityTranslations.medium}</option>
+                <option value="high">{priorityTranslations.high}</option>
+                <option value="critical">{priorityTranslations.critical}</option>
               </Select>
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-[11px] font-bold tracking-wider text-gray-400 dark:text-gray-500 uppercase">Ordenar por</label>
+              <label className="text-[11px] font-bold tracking-wider text-gray-400 dark:text-gray-500 uppercase">{language === "en" ? "Order by" : "Ordenar por"}</label>
               <Select 
                 value={sortBy} 
                 onChange={(e) => setSortBy(e.target.value)} 
                 className="w-full text-gray-800 dark:text-slate-200 bg-white/40 dark:bg-slate-950/20 border-gray-200 dark:border-slate-800/80 rounded-xl"
               >
-                <option value="recent">Más recientes</option>
-                <option value="oldest">Más antiguas</option>
-                <option value="priority">Mayor prioridad</option>
+                <option value="recent">{language === "en" ? "Most recent" : "Más recientes"}</option>
+                <option value="oldest">{language === "en" ? "Oldest" : "Más antiguas"}</option>
+                <option value="priority">{language === "en" ? "Highest priority" : "Mayor prioridad"}</option>
               </Select>
             </div>
           </div>
@@ -294,14 +310,14 @@ function RequestsList() {
         {/* Active Filter Chips */}
         {hasActiveFilters && (
           <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-gray-150/40 dark:border-slate-800/30 animate-in fade-in duration-300">
-            <span className="text-xs font-semibold text-gray-400 dark:text-gray-500 mr-1">Filtros activos:</span>
+            <span className="text-xs font-semibold text-gray-400 dark:text-gray-500 mr-1">{t("requests.activeFilters")}</span>
             {search && (
               <span className="inline-flex items-center gap-1 bg-indigo-50/70 dark:bg-indigo-950/20 text-indigo-700 dark:text-indigo-300 text-xs font-medium px-2.5 py-1 rounded-full border border-indigo-100/50 dark:border-indigo-950/50">
-                Búsqueda: "{search}"
+                {language === "en" ? "Search:" : "Búsqueda:"} "{search}"
                 <button
                   onClick={() => setSearch("")}
                   className="hover:bg-indigo-100 dark:hover:bg-indigo-900 rounded-full p-0.5 ml-1 transition-colors cursor-pointer"
-                  title="Quitar búsqueda"
+                  title={language === "en" ? "Remove search" : "Quitar búsqueda"}
                 >
                   <X className="h-3 w-3" />
                 </button>
@@ -309,11 +325,11 @@ function RequestsList() {
             )}
             {statusFilter !== "todos" && (
               <span className="inline-flex items-center gap-1 bg-indigo-50/70 dark:bg-indigo-950/20 text-indigo-700 dark:text-indigo-300 text-xs font-medium px-2.5 py-1 rounded-full border border-indigo-100/50 dark:border-indigo-950/50">
-                Estado: {statusTranslations[statusFilter] || statusFilter}
+                {language === "en" ? "Status:" : "Estado:"} {statusTranslations[statusFilter] || statusFilter}
                 <button
                   onClick={() => setStatusFilter("todos")}
                   className="hover:bg-indigo-100 dark:hover:bg-indigo-900 rounded-full p-0.5 ml-1 transition-colors cursor-pointer"
-                  title="Quitar filtro de estado"
+                  title={language === "en" ? "Remove status filter" : "Quitar filtro de estado"}
                 >
                   <X className="h-3 w-3" />
                 </button>
@@ -321,11 +337,11 @@ function RequestsList() {
             )}
             {priorityFilter !== "todos" && (
               <span className="inline-flex items-center gap-1 bg-indigo-50/70 dark:bg-indigo-950/20 text-indigo-700 dark:text-indigo-300 text-xs font-medium px-2.5 py-1 rounded-full border border-indigo-100/50 dark:border-indigo-950/50">
-                Prioridad: {priorityTranslations[priorityFilter] || priorityFilter}
+                {language === "en" ? "Priority:" : "Prioridad:"} {priorityTranslations[priorityFilter] || priorityFilter}
                 <button
                   onClick={() => setPriorityFilter("todos")}
                   className="hover:bg-indigo-100 dark:hover:bg-indigo-900 rounded-full p-0.5 ml-1 transition-colors cursor-pointer"
-                  title="Quitar filtro de prioridad"
+                  title={language === "en" ? "Remove priority filter" : "Quitar filtro de prioridad"}
                 >
                   <X className="h-3 w-3" />
                 </button>
@@ -335,7 +351,7 @@ function RequestsList() {
               onClick={clearAllFilters}
               className="text-xs font-bold text-rose-600 hover:text-rose-800 dark:text-rose-400 dark:hover:text-rose-300 transition-colors ml-2 cursor-pointer"
             >
-              Limpiar todo
+              {t("requests.clearFilters")}
             </button>
           </div>
         )}
@@ -355,12 +371,12 @@ function RequestsList() {
             </div>
             <div className="flex justify-between items-center text-xs text-gray-500 mb-4">
               <span>{req.requester}</span>
-              <span className="font-mono bg-slate-100/80 px-2 py-0.5 rounded text-[10px] text-gray-600">{req.category}</span>
+              <span className="font-mono bg-slate-100/80 px-2 py-0.5 rounded text-[10px] text-gray-600">{categoryTranslations[req.category] || req.category}</span>
             </div>
             <div className="flex justify-between items-center pt-3 border-t border-gray-100">
-              <div className="flex items-center gap-1.5 text-xs text-gray-400">
+              <div className="flex items-center gap-1.5 text-xs text-gray-440 dark:text-gray-500">
                 <Calendar className="h-3.5 w-3.5" />
-                <span>{formatDate(req.creationDate)}</span>
+                <span>{new Date(req.creationDate).toLocaleDateString(language === "en" ? "en-US" : "es-ES")}</span>
               </div>
               <Badge variant={req.priority} />
             </div>
@@ -370,7 +386,7 @@ function RequestsList() {
           <div className="bg-white/70 backdrop-blur-xl rounded-2xl border border-white p-12 text-center text-gray-500">
             <div className="flex flex-col items-center gap-2">
               <Search className="h-8 w-8 text-gray-300" />
-              <p>No se encontraron solicitudes con los filtros aplicados.</p>
+              <p>{t("requests.noResults")}</p>
             </div>
           </div>
         )}
@@ -382,13 +398,13 @@ function RequestsList() {
           <table className="w-full text-left text-sm whitespace-nowrap">
             <thead className="bg-white/50 text-gray-600 font-semibold border-b border-gray-100">
               <tr>
-                <th className="px-6 py-4">Título de la Solicitud</th>
-                <th className="px-6 py-4">Solicitante</th>
-                <th className="px-6 py-4">Categoría</th>
-                <th className="px-6 py-4">Fecha</th>
-                <th className="px-6 py-4">Prioridad</th>
-                <th className="px-6 py-4">Estado</th>
-                <th className="px-6 py-4 text-right">Acciones</th>
+                <th className="px-6 py-4">{language === "en" ? "Request Title" : "Título de la Solicitud"}</th>
+                <th className="px-6 py-4">{language === "en" ? "Requester" : "Solicitante"}</th>
+                <th className="px-6 py-4">{t("requests.table.category")}</th>
+                <th className="px-6 py-4">{language === "en" ? "Date" : "Fecha"}</th>
+                <th className="px-6 py-4">{t("requests.table.priority")}</th>
+                <th className="px-6 py-4">{t("requests.table.status")}</th>
+                <th className="px-6 py-4 text-right">{t("common.actions")}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
@@ -396,8 +412,8 @@ function RequestsList() {
                 <tr key={req.id} className="hover:bg-white/60 transition-colors group">
                   <td className="px-6 py-4 font-semibold text-gray-900 max-w-[280px] truncate" title={req.title}>{req.title}</td>
                   <td className="px-6 py-4 text-gray-600">{req.requester}</td>
-                  <td className="px-6 py-4 text-gray-600">{req.category}</td>
-                  <td className="px-6 py-4 text-gray-500">{formatDate(req.creationDate)}</td>
+                  <td className="px-6 py-4 text-gray-600">{categoryTranslations[req.category] || req.category}</td>
+                  <td className="px-6 py-4 text-gray-500">{new Date(req.creationDate).toLocaleDateString(language === "en" ? "en-US" : "es-ES")}</td>
                   <td className="px-6 py-4">
                     <Badge variant={req.priority} />
                   </td>
@@ -416,7 +432,7 @@ function RequestsList() {
                   <td colSpan={7} className="px-6 py-16 text-center text-gray-500">
                     <div className="flex flex-col items-center gap-2">
                       <Search className="h-8 w-8 text-gray-300" />
-                      <p>No se encontraron solicitudes con los filtros aplicados.</p>
+                      <p>{t("requests.noResults")}</p>
                     </div>
                   </td>
                 </tr>

@@ -3,19 +3,22 @@
 import { Request } from "@/lib/types";
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { TrendingUp } from "lucide-react";
+import { useLanguage } from "@/components/providers/language-provider";
 
 interface TrendChartProps {
   requests: Request[];
 }
 
 export function TrendChart({ requests }: TrendChartProps) {
+  const { t, language } = useLanguage();
+
   // Generate data for the last 7 days dynamically
   const getLast7DaysData = () => {
     const data = [];
     for (let i = 6; i >= 0; i--) {
       const d = new Date();
       d.setDate(d.getDate() - i);
-      const dateLabel = d.toLocaleDateString("es-ES", { day: "numeric", month: "short" });
+      const dateLabel = d.toLocaleDateString(language === "en" ? "en-US" : "es-ES", { day: "numeric", month: "short" });
       const dateKey = d.toISOString().split("T")[0];
 
       // Count requests created on this day
@@ -37,10 +40,10 @@ export function TrendChart({ requests }: TrendChartProps) {
         <div>
           <h3 className="text-sm font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2">
             <TrendingUp className="h-4 w-4 text-indigo-500" />
-            Tendencia (Últimos 7 días)
+            {t("dashboard.charts.trendTitle")}
           </h3>
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-            {totalInLast7Days} solicitudes registradas esta semana.
+            {t("dashboard.charts.trendSubtitle", { count: totalInLast7Days })}
           </p>
         </div>
       </div>

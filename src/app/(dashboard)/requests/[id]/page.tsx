@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, Edit, Trash2, Calendar, User, AlignLeft, Activity } from "lucide-react";
 import { useToast } from "@/components/ui/toast-context";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useLanguage } from "@/components/providers/language-provider";
 
 export default function RequestDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -17,6 +18,16 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
   const deleteRequest = useDeleteRequest();
   const { toast } = useToast();
   const router = useRouter();
+  const { t, language } = useLanguage();
+
+  const categoryTranslations: Record<string, string> = {
+    "Hardware": language === "en" ? "Hardware" : "Hardware",
+    "Accesos": language === "en" ? "Access" : "Accesos",
+    "Software": language === "en" ? "Software" : "Software",
+    "Infraestructura": language === "en" ? "Infrastructure" : "Infraestructura",
+    "Recursos Humanos": language === "en" ? "Human Resources" : "Recursos Humanos",
+    "Otros": language === "en" ? "Others" : "Otros",
+  };
 
   if (isLoading) {
     return (
@@ -88,17 +99,23 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
   }
 
   if (!request) {
-    return <div className="text-center p-12 text-gray-500">Solicitud no encontrada.</div>;
+    return (
+      <div className="text-center p-12 text-gray-500">
+        {language === "en" ? "Request not found." : "Solicitud no encontrada."}
+      </div>
+    );
   }
 
   const handleDelete = async () => {
-    if (confirm("¿Estás seguro de que deseas cerrar/eliminar esta solicitud?")) {
+    if (confirm(language === "en" 
+      ? "Are you sure you want to close/delete this request?" 
+      : "¿Estás seguro de que deseas cerrar/eliminar esta solicitud?")) {
       try {
         await deleteRequest.mutateAsync(id);
-        toast("Solicitud cerrada exitosamente", "success");
+        toast(t("requests.detail.toastClosed"), "success");
         router.push("/requests");
       } catch (error: any) {
-        toast(error.message || "Error al cerrar la solicitud", "error");
+        toast(error.message || (language === "en" ? "Error closing request" : "Error al cerrar la solicitud"), "error");
       }
     }
   };
@@ -110,16 +127,16 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
           <Link href="/requests" className="p-2 rounded-full hover:bg-white/50 transition-colors shadow-sm bg-white/30 backdrop-blur-sm border border-white shrink-0">
             <ArrowLeft className="h-5 w-5 text-gray-700" />
           </Link>
-          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900">Detalle de Solicitud</h2>
+          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900">{t("requests.detail.title")}</h2>
         </div>
         <div className="flex gap-3 w-full sm:w-auto">
           <Link href={`/requests/${id}/edit`} className="flex-1 sm:flex-initial">
             <Button variant="secondary" className="w-full gap-2 bg-white/50 backdrop-blur-sm hover:bg-white">
-              <Edit className="h-4 w-4" /> Editar
+              <Edit className="h-4 w-4" /> {t("common.edit")}
             </Button>
           </Link>
           <Button variant="danger" className="flex-1 sm:flex-initial gap-2" onClick={handleDelete} disabled={deleteRequest.isPending}>
-            <Trash2 className="h-4 w-4" /> Cerrar
+            <Trash2 className="h-4 w-4" /> {t("common.close")}
           </Button>
         </div>
       </div>
@@ -143,7 +160,7 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
             <div className="space-y-3">
               <div className="flex items-center gap-2 text-gray-800 font-semibold text-lg">
                 <AlignLeft className="h-5 w-5 text-indigo-500" />
-                <h3>Descripción</h3>
+                <h3>{t("requests.detail.description")}</h3>
               </div>
               <div className="bg-white/50 rounded-xl p-5 border border-gray-100 text-gray-700 leading-relaxed shadow-sm">
                 {request.description}
@@ -154,35 +171,39 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
           <div className="space-y-6">
             <div className="bg-gray-50/50 rounded-2xl p-5 border border-gray-100/80 space-y-5">
               <h3 className="font-semibold text-gray-800 flex items-center gap-2 border-b border-gray-200 pb-3">
-                <Activity className="h-4 w-4 text-indigo-500" /> Detalles
+                <Activity className="h-4 w-4 text-indigo-500" /> {language === "en" ? "Details" : "Detalles"}
               </h3>
               
               <div className="space-y-1">
                 <p className="text-xs text-gray-500 flex items-center gap-1.5 uppercase tracking-wider font-semibold">
-                  <User className="h-3.5 w-3.5" /> Solicitante
+                  <User className="h-3.5 w-3.5" /> {t("requests.form.fieldRequester")}
                 </p>
                 <p className="font-medium text-gray-900 ml-5">{request.requester}</p>
               </div>
 
               <div className="space-y-1">
                 <p className="text-xs text-gray-500 flex items-center gap-1.5 uppercase tracking-wider font-semibold">
-                  <Activity className="h-3.5 w-3.5" /> Categoría
+                  <Activity className="h-3.5 w-3.5" /> {t("requests.detail.category")}
                 </p>
-                <p className="font-medium text-gray-900 ml-5">{request.category}</p>
+                <p className="font-medium text-gray-900 ml-5">{categoryTranslations[request.category] || request.category}</p>
               </div>
 
               <div className="space-y-1">
                 <p className="text-xs text-gray-500 flex items-center gap-1.5 uppercase tracking-wider font-semibold">
-                  <Calendar className="h-3.5 w-3.5" /> Creación
+                  <Calendar className="h-3.5 w-3.5" /> {t("requests.detail.creationDate")}
                 </p>
-                <p className="font-medium text-gray-900 ml-5">{formatDate(request.creationDate)}</p>
+                <p className="font-medium text-gray-900 ml-5">
+                  {new Date(request.creationDate).toLocaleDateString(language === "en" ? "en-US" : "es-ES")}
+                </p>
               </div>
 
               <div className="space-y-1">
                 <p className="text-xs text-gray-500 flex items-center gap-1.5 uppercase tracking-wider font-semibold">
-                  <Calendar className="h-3.5 w-3.5" /> Última actualización
+                  <Calendar className="h-3.5 w-3.5" /> {t("requests.detail.lastUpdate")}
                 </p>
-                <p className="font-medium text-gray-900 ml-5">{formatDate(request.lastChangeDate)}</p>
+                <p className="font-medium text-gray-900 ml-5">
+                  {new Date(request.lastChangeDate).toLocaleDateString(language === "en" ? "en-US" : "es-ES")}
+                </p>
               </div>
             </div>
           </div>

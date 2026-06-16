@@ -5,6 +5,7 @@ import { PlusCircle, Clock, CheckCircle2, XCircle, Archive, History, ChevronRigh
 import { useMemo } from "react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
+import { useLanguage } from "@/components/providers/language-provider";
 
 interface RecentActivityProps {
   requests: Request[];
@@ -24,15 +25,9 @@ interface ActivityEvent {
   priority: string;
 }
 
-const statusTranslations: Record<string, string> = {
-  pending: "Pendiente",
-  in_review: "En Revisión",
-  approved: "Aprobada",
-  rejected: "Rechazada",
-  closed: "Cerrada",
-};
-
 export function RecentActivity({ requests }: RecentActivityProps) {
+  const { t, language } = useLanguage();
+
   // Helper to format relative time
   const formatTimeAgo = (dateStr: string) => {
     try {
@@ -43,18 +38,30 @@ export function RecentActivity({ requests }: RecentActivityProps) {
       const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
       const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-      if (diffMins < 1) return "Hace un momento";
-      if (diffMins < 60) return `Hace ${diffMins} min`;
-      if (diffHours < 24) return `Hace ${diffHours} ${diffHours === 1 ? "hora" : "horas"}`;
-      if (diffDays < 30) return `Hace ${diffDays} ${diffDays === 1 ? "día" : "días"}`;
-      return date.toLocaleDateString("es-ES", { day: "numeric", month: "short" });
+      if (diffMins < 1) return t("dashboard.recentActivity.time.now");
+      if (diffMins < 60) return t("dashboard.recentActivity.time.mins", { count: diffMins });
+      if (diffHours < 24) return diffHours === 1 
+        ? t("dashboard.recentActivity.time.hour")
+        : t("dashboard.recentActivity.time.hours", { count: diffHours });
+      if (diffDays < 30) return diffDays === 1
+        ? t("dashboard.recentActivity.time.day")
+        : t("dashboard.recentActivity.time.days", { count: diffDays });
+      return date.toLocaleDateString(language === "en" ? "en-US" : "es-ES", { day: "numeric", month: "short" });
     } catch (e) {
-      return "Recientemente";
+      return language === "en" ? "Recently" : "Recientemente";
     }
   };
 
   const activities = useMemo(() => {
     const list: ActivityEvent[] = [];
+
+    const localStatusTranslations: Record<string, string> = {
+      pending: language === "en" ? "Pending" : "Pendiente",
+      in_review: language === "en" ? "In Review" : "En Revisión",
+      approved: language === "en" ? "Approved" : "Aprobada",
+      rejected: language === "en" ? "Rejected" : "Rechazada",
+      closed: language === "en" ? "Closed" : "Cerrada",
+    };
 
     requests.forEach((r) => {
       // 1. Every request has a creation event
@@ -62,8 +69,8 @@ export function RecentActivity({ requests }: RecentActivityProps) {
         id: `${r.id}-create`,
         requestId: String(r.id),
         type: "create",
-        title: "Nueva Solicitud",
-        desc: `${r.requester} creó la solicitud "${r.title}"`,
+        title: t("dashboard.recentActivity.newEvent"),
+        desc: t("dashboard.recentActivity.createdDesc", { requester: r.requester, title: r.title }),
         time: formatTimeAgo(r.creationDate),
         timestamp: new Date(r.creationDate).getTime(),
         color: "text-blue-500 bg-blue-50 dark:bg-blue-950/30",
@@ -74,14 +81,14 @@ export function RecentActivity({ requests }: RecentActivityProps) {
 
       // 2. If lastChangeDate is different from creationDate, add update event
       if (r.lastChangeDate && r.lastChangeDate !== r.creationDate) {
-        let title = "Solicitud Editada";
-        let desc = `Se actualizaron los detalles de la solicitud "${r.title}"`;
+        let title = t("dashboard.recentActivity.requestEdited");
+        let desc = t("dashboard.recentActivity.editedDesc", { title: r.title });
         let icon = Clock;
         let color = "text-amber-500 bg-amber-50 dark:bg-amber-950/30";
 
         if (r.status !== "pending") {
-          title = "Estado Actualizado";
-          desc = `La solicitud "${r.title}" cambió a ${statusTranslations[r.status] || r.status}`;
+          title = t("dashboard.recentActivity.statusUpdated");
+          desc = t("dashboard.recentActivity.statusDesc", { title: r.title, status: localStatusTranslations[r.status] || r.status });
           if (r.status === "approved") {
             icon = CheckCircle2;
             color = "text-emerald-500 bg-emerald-50 dark:bg-emerald-950/30";
@@ -118,7 +125,7 @@ export function RecentActivity({ requests }: RecentActivityProps) {
 
     // Sort by timestamp desc and take top 8 (wider layout allows more entries)
     return list.sort((a, b) => b.timestamp - a.timestamp).slice(0, 8);
-  }, [requests]);
+  }, [requests, language, t]);
 
   return (
     <div className="rounded-2xl border border-white dark:border-slate-800 bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl p-5 shadow-sm transition-all hover:shadow-md flex flex-col h-auto min-h-[350px]">
@@ -126,10 +133,10 @@ export function RecentActivity({ requests }: RecentActivityProps) {
         <div>
           <h3 className="text-sm font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2">
             <History className="h-4 w-4 text-indigo-500" />
-            Actividad Reciente
+            {t("dashboard.recentActivity.title")}
           </h3>
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-            Historial de eventos de las solicitudes registradas en la plataforma.
+            {t("dashboard.recentActivity.subtitle")}
           </p>
         </div>
       </div>
@@ -184,7 +191,7 @@ export function RecentActivity({ requests }: RecentActivityProps) {
         {activities.length === 0 && (
           <div className="flex flex-col items-center justify-center min-h-[200px] text-center text-gray-400 dark:text-gray-500 py-12">
             <History className="h-8 w-8 text-gray-300 dark:text-slate-800 mb-2" />
-            <p className="text-xs">No hay actividad registrada</p>
+            <p className="text-xs">{t("dashboard.recentActivity.noActivity")}</p>
           </div>
         )}
       </div>

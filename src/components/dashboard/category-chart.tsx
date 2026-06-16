@@ -3,6 +3,7 @@
 import { Request } from "@/lib/types";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
 import { FolderKanban } from "lucide-react";
+import { useLanguage } from "@/components/providers/language-provider";
 
 interface CategoryChartProps {
   requests: Request[];
@@ -18,6 +19,20 @@ const COLORS = [
 ];
 
 export function CategoryChart({ requests }: CategoryChartProps) {
+  const { t, language } = useLanguage();
+
+  const translateCategory = (cat: string) => {
+    const map: Record<string, string> = {
+      "Hardware": language === "en" ? "Hardware" : "Hardware",
+      "Accesos": language === "en" ? "Access" : "Accesos",
+      "Software": language === "en" ? "Software" : "Software",
+      "Infraestructura": language === "en" ? "Infrastructure" : "Infraestructura",
+      "Recursos Humanos": language === "en" ? "Human Resources" : "Recursos Humanos",
+      "Otros": language === "en" ? "Others" : "Otros",
+    };
+    return map[cat] || cat;
+  };
+
   // Process data to count requests per category
   const getCategoryData = () => {
     const categories: Record<string, number> = {};
@@ -28,7 +43,7 @@ export function CategoryChart({ requests }: CategoryChartProps) {
 
     return Object.entries(categories)
       .map(([key, value]) => ({
-        name: key,
+        name: translateCategory(key),
         cantidad: value,
       }))
       .sort((a, b) => b.cantidad - a.cantidad);
@@ -42,10 +57,10 @@ export function CategoryChart({ requests }: CategoryChartProps) {
         <div>
           <h3 className="text-sm font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2">
             <FolderKanban className="h-4 w-4 text-blue-500" />
-            Distribución por Categoría
+            {t("dashboard.charts.categoryTitle")}
           </h3>
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
-            Volumen de solicitudes según área temática.
+            {t("dashboard.charts.categorySubtitle")}
           </p>
         </div>
       </div>

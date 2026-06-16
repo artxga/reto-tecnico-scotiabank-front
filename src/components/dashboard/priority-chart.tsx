@@ -3,6 +3,7 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
 import { Request } from "@/lib/types";
 import { useRouter } from "next/navigation";
+import { useLanguage } from "@/components/providers/language-provider";
 
 interface PriorityChartProps {
   requests: Request[];
@@ -24,17 +25,25 @@ const PRIORITY_LABELS: Record<string, string> = {
 
 export function PriorityChart({ requests }: PriorityChartProps) {
   const router = useRouter();
+  const { t, language } = useLanguage();
 
-  const data = Object.keys(PRIORITY_LABELS).map((key) => ({
+  const localPriorityLabels: Record<string, string> = {
+    low: language === "en" ? "Low" : "Baja",
+    medium: language === "en" ? "Medium" : "Media",
+    high: language === "en" ? "High" : "Alta",
+    critical: language === "en" ? "Critical" : "Crítica",
+  };
+
+  const data = Object.keys(localPriorityLabels).map((key) => ({
     key,
-    name: PRIORITY_LABELS[key],
+    name: localPriorityLabels[key],
     value: requests.filter((r) => r.priority === key).length,
     color: PRIORITY_COLORS[key],
   }));
 
   return (
     <div className="bg-white/70 backdrop-blur-xl border border-white rounded-2xl p-6 shadow-sm h-full flex flex-col hover:shadow-md transition-shadow">
-      <h3 className="text-lg font-bold text-gray-900 mb-6 text-center">Solicitudes por Prioridad</h3>
+      <h3 className="text-lg font-bold text-gray-900 mb-6 text-center">{t("dashboard.charts.priorityTitle")}</h3>
       <div className="flex-1 min-h-[280px]">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>

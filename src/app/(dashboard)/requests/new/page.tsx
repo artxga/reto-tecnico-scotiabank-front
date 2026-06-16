@@ -7,19 +7,21 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { SolicitudFormData } from "@/lib/validations";
+import { useLanguage } from "@/components/providers/language-provider";
 
 export default function NewRequestPage() {
   const createRequest = useCreateRequest();
   const { toast } = useToast();
   const router = useRouter();
+  const { t, language } = useLanguage();
 
   const handleSubmit = async (data: SolicitudFormData) => {
     try {
       await createRequest.mutateAsync(data);
-      toast("Solicitud creada exitosamente", "success");
+      toast(t("requests.form.toastCreated"), "success");
       router.push("/requests");
     } catch (error: any) {
-      toast(error.message || "Error al crear la solicitud", "error");
+      toast(error.message || (language === "en" ? "Error creating request" : "Error al crear la solicitud"), "error");
     }
   };
 
@@ -30,8 +32,8 @@ export default function NewRequestPage() {
           <ArrowLeft className="h-5 w-5 text-gray-700" />
         </Link>
         <div>
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900">Nueva Solicitud</h2>
-          <p className="text-sm text-gray-500">Completa el formulario para registrar una nueva solicitud.</p>
+          <h2 className="text-2xl font-bold tracking-tight text-gray-900">{t("requests.form.newTitle")}</h2>
+          <p className="text-sm text-gray-500">{t("requests.form.newSubtitle")}</p>
         </div>
       </div>
 

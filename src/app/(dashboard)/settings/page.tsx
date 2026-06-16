@@ -2,12 +2,14 @@
 
 import { useState, useEffect } from "react";
 import { useToast } from "@/components/ui/toast-context";
-import { User, Volume2, RefreshCw, Shield, Save, Moon, Sun } from "lucide-react";
+import { User, Volume2, RefreshCw, Shield, Save, Moon, Sun, Globe } from "lucide-react";
+import { useLanguage } from "@/components/providers/language-provider";
 
 export default function SettingsPage() {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const { t, language, setLanguage } = useLanguage();
   
   // Settings state
   const [profile, setProfile] = useState({
@@ -32,6 +34,23 @@ export default function SettingsPage() {
     window.addEventListener("theme-change", handleThemeChange);
     return () => window.removeEventListener("theme-change", handleThemeChange);
   }, []);
+
+  // Update profile fields dynamically depending on active language
+  useEffect(() => {
+    if (language === "en") {
+      setProfile({
+        name: "Ángel Arteaga",
+        role: "Requests Administrator",
+        department: "Operations & Systems"
+      });
+    } else {
+      setProfile({
+        name: "Ángel Arteaga",
+        role: "Administrador de Solicitudes",
+        department: "Operaciones y Sistemas"
+      });
+    }
+  }, [language]);
 
   const applyTheme = (themeValue: string) => {
     if (
@@ -63,14 +82,14 @@ export default function SettingsPage() {
     await new Promise((resolve) => setTimeout(resolve, 800));
     
     setLoading(false);
-    toast("Ajustes guardados exitosamente", "success");
+    toast(t("settings.toastSaved"), "success");
   };
 
   return (
     <div className="space-y-8 max-w-4xl mx-auto">
       <div>
-        <h2 className="text-3xl font-bold tracking-tight text-gray-900">Ajustes</h2>
-        <p className="text-gray-500 mt-1">Configura las preferencias de tu espacio de trabajo y perfil.</p>
+        <h2 className="text-3xl font-bold tracking-tight text-gray-900">{t("settings.title")}</h2>
+        <p className="text-gray-500 mt-1">{t("settings.subtitle")}</p>
       </div>
 
       <form onSubmit={handleSave} className="space-y-6">
@@ -81,14 +100,14 @@ export default function SettingsPage() {
               <User className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-gray-950">Perfil de Usuario</h3>
-              <p className="text-xs text-gray-500">Información básica del solicitante asignado.</p>
+              <h3 className="text-lg font-bold text-gray-950">{t("settings.profile.title")}</h3>
+              <p className="text-xs text-gray-500">{t("settings.profile.subtitle")}</p>
             </div>
           </div>
 
           <div className="grid gap-6 sm:grid-cols-2">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1.5">Nombre Completo</label>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1.5">{t("settings.profile.name")}</label>
               <input
                 id="name"
                 type="text"
@@ -99,7 +118,7 @@ export default function SettingsPage() {
             </div>
 
             <div>
-              <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-1.5">Rol / Cargo</label>
+              <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-1.5">{t("settings.profile.role")}</label>
               <input
                 id="role"
                 type="text"
@@ -110,7 +129,7 @@ export default function SettingsPage() {
             </div>
 
             <div className="sm:col-span-2">
-              <label htmlFor="department" className="block text-sm font-medium text-gray-700 mb-1.5">Departamento</label>
+              <label htmlFor="department" className="block text-sm font-medium text-gray-700 mb-1.5">{t("settings.profile.department")}</label>
               <input
                 id="department"
                 type="text"
@@ -129,20 +148,20 @@ export default function SettingsPage() {
               <Sun className="h-5 w-5" />
             </div>
             <div>
-              <h3 className="text-lg font-bold text-gray-950">Preferencias de Interfaz</h3>
-              <p className="text-xs text-gray-500">Configura la visualización de la plataforma.</p>
+              <h3 className="text-lg font-bold text-gray-950">{t("settings.preferences.title")}</h3>
+              <p className="text-xs text-gray-500">{t("settings.preferences.subtitle")}</p>
             </div>
           </div>
 
           <div className="space-y-5">
             {/* Theme Selector */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2.5">Tema Visual</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2.5">{t("settings.preferences.theme")}</label>
               <div className="grid grid-cols-3 gap-3">
                 {[
-                  { value: "light", label: "Claro", icon: Sun },
-                  { value: "dark", label: "Oscuro", icon: Moon },
-                  { value: "system", label: "Sistema", icon: Shield }
+                  { value: "light", label: t("settings.preferences.themeLight"), icon: Sun },
+                  { value: "dark", label: t("settings.preferences.themeDark"), icon: Moon },
+                  { value: "system", label: t("settings.preferences.themeSystem"), icon: Shield }
                 ].map((item) => {
                   const Icon = item.icon;
                   const active = theme === item.value;
@@ -165,13 +184,45 @@ export default function SettingsPage() {
               </div>
             </div>
 
+            {/* Language Selector */}
+            <div className="border-t border-gray-100 pt-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2.5 flex items-center gap-2">
+                <Globe className="h-4.5 w-4.5 text-gray-400" />
+                {t("settings.preferences.language")}
+              </label>
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  { value: "es", label: t("settings.preferences.langEs") },
+                  { value: "en", label: t("settings.preferences.langEn") }
+                ].map((item) => {
+                  const active = language === item.value;
+                  return (
+                    <button
+                      key={item.value}
+                      type="button"
+                      onClick={() => setLanguage(item.value as "es" | "en")}
+                      className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl border text-sm font-semibold transition-all cursor-pointer ${
+                        active 
+                          ? "bg-indigo-50 border-indigo-200 text-indigo-700 shadow-xs" 
+                          : "border-gray-200 bg-white/50 text-gray-600 hover:bg-white hover:text-gray-950"
+                      }`}
+                    >
+                      <span>{item.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
             {/* Refresh Interval */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 py-3 border-t border-gray-100">
               <div className="flex items-center gap-2">
                 <RefreshCw className="h-4.5 w-4.5 text-gray-400" />
                 <div>
-                  <p className="text-sm font-semibold text-gray-800">Actualización Automática</p>
-                  <p className="text-xs text-gray-500">Frecuencia de refresco para la lista de solicitudes.</p>
+                  <p className="text-sm font-semibold text-gray-800">{t("settings.preferences.refresh")}</p>
+                  <p className="text-xs text-gray-500">
+                    {language === "en" ? "Auto-refresh frequency for requests lists." : "Frecuencia de refresco para la lista de solicitudes."}
+                  </p>
                 </div>
               </div>
               <select
@@ -179,10 +230,10 @@ export default function SettingsPage() {
                 onChange={(e) => setRefreshInterval(e.target.value)}
                 className="px-3 py-2 rounded-xl border border-gray-200 bg-white/50 text-gray-700 font-medium text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 outline-hidden"
               >
-                <option value="10">Cada 10 segundos</option>
-                <option value="30">Cada 30 segundos</option>
-                <option value="60">Cada 1 minuto</option>
-                <option value="0">Desactivado</option>
+                <option value="10">{t("settings.preferences.refreshOption", { count: 10 })}</option>
+                <option value="30">{t("settings.preferences.refreshOption", { count: 30 })}</option>
+                <option value="60">{t("settings.preferences.refreshMinute")}</option>
+                <option value="0">{t("settings.preferences.refreshDisabled")}</option>
               </select>
             </div>
 
@@ -191,8 +242,8 @@ export default function SettingsPage() {
               <div className="flex items-center gap-2">
                 <Volume2 className="h-4.5 w-4.5 text-gray-400" />
                 <div>
-                  <p className="text-sm font-semibold text-gray-800">Alertas de Sonido</p>
-                  <p className="text-xs text-gray-500">Emitir sonido en notificaciones importantes.</p>
+                  <p className="text-sm font-semibold text-gray-800">{t("settings.preferences.sound")}</p>
+                  <p className="text-xs text-gray-500">{t("settings.preferences.soundDesc")}</p>
                 </div>
               </div>
               <button
@@ -220,7 +271,7 @@ export default function SettingsPage() {
             className="w-full sm:w-auto btn-primary-liquid px-6 py-3 rounded-xl font-semibold inline-flex items-center justify-center gap-2 transform active:scale-98 disabled:opacity-75 disabled:pointer-events-none"
           >
             <Save className="h-4 w-4" />
-            {loading ? "Guardando..." : "Guardar Ajustes"}
+            {loading ? t("common.saving") : (language === "en" ? "Save Settings" : "Guardar Ajustes")}
           </button>
         </div>
       </form>

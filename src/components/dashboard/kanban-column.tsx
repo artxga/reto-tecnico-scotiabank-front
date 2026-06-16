@@ -6,6 +6,7 @@ import { Request, RequestStatus } from "@/lib/types";
 import { KanbanCard } from "./kanban-card";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { useLanguage } from "@/components/providers/language-provider";
 
 interface KanbanColumnProps {
   id: RequestStatus;
@@ -14,6 +15,7 @@ interface KanbanColumnProps {
 }
 
 export function KanbanColumn({ id, title, requests }: KanbanColumnProps) {
+  const { t, language } = useLanguage();
   const isClosedColumn = id === "closed";
   const displayRequests = isClosedColumn ? requests.slice(0, 5) : requests;
   const hasMoreClosed = isClosedColumn && requests.length > 5;
@@ -65,14 +67,17 @@ export function KanbanColumn({ id, title, requests }: KanbanColumnProps) {
                   href="/requests" 
                   className="inline-flex items-center gap-1.5 text-xs font-semibold text-indigo-600 hover:text-indigo-800 transition-colors bg-indigo-50 px-3 py-1.5 rounded-full hover:bg-indigo-100"
                 >
-                  Ver más solicitudes ({requests.length - 5} ocultas) <ArrowRight className="h-3 w-3" />
+                  {language === "en" 
+                    ? `View more requests (${requests.length - 5} hidden)` 
+                    : `Ver más solicitudes (${requests.length - 5} ocultas)`}{" "}
+                  <ArrowRight className="h-3 w-3" />
                 </Link>
               </div>
             )}
             
             {displayRequests.length === 0 && (
-              <div className="h-full flex flex-col items-center justify-center text-center p-4 text-gray-400 text-sm border-2 border-dashed border-gray-200 rounded-lg mt-2">
-                Sin solicitudes
+              <div className="h-full flex flex-col items-center justify-center text-center p-4 text-gray-400 text-xs border-2 border-dashed border-gray-200/50 dark:border-slate-800/40 rounded-lg mt-2">
+                {t("dashboard.kanban.noRequests")}
               </div>
             )}
           </div>

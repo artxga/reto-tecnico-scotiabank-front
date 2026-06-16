@@ -1,6 +1,7 @@
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { RequestStatus, Priority } from "@/lib/types"
+import { useLanguage } from "@/components/providers/language-provider"
 
 export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: "default" | "secondary" | "outline" | RequestStatus | Priority | string;
@@ -26,8 +27,18 @@ function Badge({ className, variant = "default", ...props }: BadgeProps) {
     critical: "bg-red-600 text-white border-red-700 font-bold shadow-sm animate-pulse",
   }
 
+  let language = "es";
+  try {
+    const langCtx = useLanguage();
+    language = langCtx.language;
+  } catch (e) {
+    // Fallback if not inside LanguageProvider (e.g. standalone tests)
+  }
+
   const formatText = (text: string) => {
-    const translations: Record<string, string> = {
+    const textLower = text.toLowerCase();
+    
+    const esTranslations: Record<string, string> = {
       pending: "Pendiente",
       in_review: "En Revisión",
       approved: "Aprobada",
@@ -38,8 +49,22 @@ function Badge({ className, variant = "default", ...props }: BadgeProps) {
       high: "Alta",
       critical: "Crítica",
     };
-    return translations[text.toLowerCase()] || text.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
-  }
+
+    const enTranslations: Record<string, string> = {
+      pending: "Pending",
+      in_review: "In Review",
+      approved: "Approved",
+      rejected: "Rejected",
+      closed: "Closed",
+      low: "Low",
+      medium: "Medium",
+      high: "High",
+      critical: "Critical",
+    };
+
+    const translations = language === "en" ? enTranslations : esTranslations;
+    return translations[textLower] || text.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
+  };
 
   return (
     <div

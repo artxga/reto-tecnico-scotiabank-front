@@ -3,6 +3,7 @@
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { Request } from "@/lib/types";
 import { useRouter } from "next/navigation";
+import { useLanguage } from "@/components/providers/language-provider";
 
 interface StatusChartProps {
   requests: Request[];
@@ -26,17 +27,26 @@ const STATUS_LABELS: Record<string, string> = {
 
 export function StatusChart({ requests }: StatusChartProps) {
   const router = useRouter();
+  const { t, language } = useLanguage();
+
+  const localStatusLabels: Record<string, string> = {
+    pending: language === "en" ? "Pending" : "Pendiente",
+    in_review: language === "en" ? "In Review" : "En Revisión",
+    approved: language === "en" ? "Approved" : "Aprobada",
+    rejected: language === "en" ? "Rejected" : "Rechazada",
+    closed: language === "en" ? "Closed" : "Cerrada",
+  };
   
-  const data = Object.keys(STATUS_LABELS).map((key) => ({
+  const data = Object.keys(localStatusLabels).map((key) => ({
     key,
-    name: STATUS_LABELS[key],
+    name: localStatusLabels[key],
     value: requests.filter((r) => r.status === key).length,
     color: STATUS_COLORS[key],
   })).filter(d => d.value > 0);
 
   return (
     <div className="bg-white/70 backdrop-blur-xl border border-white rounded-2xl p-6 shadow-sm h-full flex flex-col hover:shadow-md transition-shadow">
-      <h3 className="text-lg font-bold text-gray-900 mb-6 text-center">Distribución por Estado</h3>
+      <h3 className="text-lg font-bold text-gray-900 mb-6 text-center">{t("dashboard.charts.statusTitle")}</h3>
       <div className="flex-1 min-h-[280px]">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
