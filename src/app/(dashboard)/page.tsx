@@ -8,6 +8,9 @@ import { RequestStatus } from "@/lib/types";
 import { KanbanBoard } from "@/components/dashboard/kanban-board";
 import { StatusChart } from "@/components/dashboard/status-chart";
 import { PriorityChart } from "@/components/dashboard/priority-chart";
+import { TrendChart } from "@/components/dashboard/trend-chart";
+import { CategoryChart } from "@/components/dashboard/category-chart";
+import { RecentActivity } from "@/components/dashboard/recent-activity";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function DashboardPage() {
@@ -73,6 +76,43 @@ export default function DashboardPage() {
             ))}
           </div>
         </div>
+
+        {/* Charts Layout Skeleton */}
+        <div className="grid gap-6 grid-cols-1 md:grid-cols-2 w-full">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="rounded-2xl border border-white bg-white/70 backdrop-blur-xl p-5 shadow-sm h-[320px] space-y-4">
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-1/3" />
+                <Skeleton className="h-3 w-1/2" />
+              </div>
+              <Skeleton className="h-[200px] w-full rounded-xl" />
+            </div>
+          ))}
+        </div>
+
+        {/* Recent Activity Skeleton (Full Width) */}
+        <div className="w-full">
+          <div className="rounded-2xl border border-white bg-white/70 backdrop-blur-xl p-5 shadow-sm h-auto min-h-[300px] space-y-6">
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-1/4" />
+              <Skeleton className="h-3 w-1/3" />
+            </div>
+            <div className="space-y-4">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <div key={i} className="flex gap-4 items-center p-3 rounded-xl border border-transparent">
+                  <Skeleton className="h-9 w-9 rounded-xl shrink-0" />
+                  <div className="space-y-2 flex-1">
+                    <div className="flex justify-between">
+                      <Skeleton className="h-3.5 w-1/4" />
+                      <Skeleton className="h-3 w-16" />
+                    </div>
+                    <Skeleton className="h-3 w-1/2" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -121,9 +161,17 @@ export default function DashboardPage() {
         {requests && <KanbanBoard requests={requests} />}
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2 w-full">
+      {/* Charts Section */}
+      <div className="grid gap-6 grid-cols-1 md:grid-cols-2 w-full">
         {requests && <StatusChart requests={requests} />}
         {requests && <PriorityChart requests={requests} />}
+        {requests && <TrendChart requests={requests} />}
+        {requests && <CategoryChart requests={requests} />}
+      </div>
+
+      {/* Recent Activity Section (Full Width) */}
+      <div className="w-full">
+        {requests && <RecentActivity requests={requests} />}
       </div>
     </div>
   );
