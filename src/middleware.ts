@@ -8,6 +8,21 @@ const LIMIT = 60;
 const WINDOW_MS = 60 * 1000;
 
 export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+  const authToken = request.cookies.get("auth_token")?.value;
+  const isLoginPage = pathname === "/login";
+  const isApiRoute = pathname.startsWith("/api");
+
+  if (!authToken && !isLoginPage) {
+    const loginUrl = new URL("/login", request.url);
+    return NextResponse.redirect(loginUrl);
+  }
+  if (authToken && isLoginPage) {
+    const dashboardUrl = new URL("/", request.url);
+    return NextResponse.redirect(dashboardUrl);
+  }
+
+
   const response = NextResponse.next();
   const ip = request.headers.get("x-forwarded-for") || "127.0.0.1";
 

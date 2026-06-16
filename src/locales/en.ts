@@ -160,5 +160,20 @@ export const en = {
       soundDesc: "Emit sound for important notifications.",
     },
     toastSaved: "Settings saved successfully",
+  },
+  login: {
+    title: "Sign In",
+    subtitle: "Enter your credentials to access the manager.",
+    email: "Email Address",
+    emailPlaceholder: "example@scotiabank.com",
+    password: "Password",
+    passwordPlaceholder: "Enter your password",
+    submit: "Sign In",
+    submitting: "Signing in...",
+    mockCredentials: "Mock credentials:",
+    invalidEmail: "Email address is invalid",
+    passwordMin: "Password must be at least 6 characters",
+    invalidCredentials: "Incorrect email or password (Try: admin@scotiabank.com / admin123)",
+    signOut: "Sign Out",
   }
 };

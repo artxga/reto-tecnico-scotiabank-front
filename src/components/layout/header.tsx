@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Bell, User, Menu, Sun, Moon, Globe, FileText, Settings } from "lucide-react";
+import { Bell, User, Menu, Sun, Moon, Globe, FileText, Settings, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useLanguage } from "@/components/providers/language-provider";
@@ -19,6 +19,7 @@ interface NotificationItem {
 }
 
 export function Header({ onOpenMobileMenu }: HeaderProps) {
+  const router = useRouter();
   const { t, language, setLanguage } = useLanguage();
   const [mounted, setMounted] = useState(false);
   const [currentTheme, setCurrentTheme] = useState<string>("light");
@@ -174,6 +175,12 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
   const profileName = "Ángel Arteaga";
   const profileRole = language === "en" ? "Requests Administrator" : "Administrador de Solicitudes";
   const profileDept = language === "en" ? "Operations & Systems" : "Operaciones y Sistemas";
+
+  const handleSignOut = () => {
+    document.cookie = "auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Strict";
+    router.push("/login");
+    setIsOpenProfile(false);
+  };
 
   const markAllAsRead = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -369,6 +376,15 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
                 <Settings className="h-3.5 w-3.5" />
                 {language === "en" ? "View Profile" : "Ver Perfil"}
               </Link>
+
+              {/* Sign Out Button */}
+              <button
+                onClick={handleSignOut}
+                className="w-full bg-rose-50 hover:bg-rose-100 text-rose-600 dark:bg-rose-950/20 dark:hover:bg-rose-950/40 dark:text-rose-400 py-2 px-3 rounded-xl font-semibold text-xs inline-flex items-center justify-center gap-1.5 transition-all border border-rose-100 dark:border-rose-950/30 cursor-pointer"
+              >
+                <LogOut className="h-3.5 w-3.5" />
+                {t("login.signOut")}
+              </button>
             </div>
           )}
         </div>

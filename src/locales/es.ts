@@ -160,5 +160,20 @@ export const es = {
       soundDesc: "Emitir sonido en notificaciones importantes.",
     },
     toastSaved: "Ajustes guardados exitosamente",
+  },
+  login: {
+    title: "Iniciar Sesión",
+    subtitle: "Ingresa tus credenciales para acceder al gestor.",
+    email: "Correo Electrónico",
+    emailPlaceholder: "ejemplo@scotiabank.com",
+    password: "Contraseña",
+    passwordPlaceholder: "Ingresa tu contraseña",
+    submit: "Iniciar Sesión",
+    submitting: "Iniciando sesión...",
+    mockCredentials: "Credenciales de prueba:",
+    invalidEmail: "El correo electrónico no es válido",
+    passwordMin: "La contraseña debe tener al menos 6 caracteres",
+    invalidCredentials: "Correo o contraseña incorrectos (Prueba: admin@scotiabank.com / admin123)",
+    signOut: "Cerrar Sesión",
   }
 };
