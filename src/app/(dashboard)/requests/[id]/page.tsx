@@ -1,0 +1,127 @@
+"use client";
+
+import { use } from "react";
+import { useRequest, useDeleteRequest } from "@/hooks/use-requests";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { formatDate } from "@/lib/utils";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { ArrowLeft, Edit, Trash2, Calendar, User, AlignLeft, Activity } from "lucide-react";
+import { useToast } from "@/components/ui/toast-context";
+
+export default function RequestDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
+  const { data: request, isLoading } = useRequest(id);
+  const deleteRequest = useDeleteRequest();
+  const { toast } = useToast();
+  const router = useRouter();
+
+  if (isLoading) {
+    return <div className="flex justify-center p-12"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div></div>;
+  }
+
+  if (!request) {
+    return <div className="text-center p-12 text-gray-500">Solicitud no encontrada.</div>;
+  }
+
+  const handleDelete = async () => {
+    if (confirm("¿Estás seguro de que deseas cerrar/eliminar esta solicitud?")) {
+      try {
+        await deleteRequest.mutateAsync(id);
+        toast("Solicitud cerrada exitosamente", "success");
+        router.push("/requests");
+      } catch (error: any) {
+        toast(error.message || "Error al cerrar la solicitud", "error");
+      }
+    }
+  };
+
+  return (
+    <div className="max-w-3xl mx-auto space-y-6">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <Link href="/requests" className="p-2 rounded-full hover:bg-white/50 transition-colors shadow-sm bg-white/30 backdrop-blur-sm border border-white">
+            <ArrowLeft className="h-5 w-5 text-gray-700" />
+          </Link>
+          <h2 className="text-2xl font-bold tracking-tight text-gray-900">Detalle de Solicitud</h2>
+        </div>
+        <div className="flex gap-3">
+          <Link href={`/requests/${id}/edit`}>
+            <Button variant="secondary" className="gap-2 bg-white/50 backdrop-blur-sm hover:bg-white">
+              <Edit className="h-4 w-4" /> Editar
+            </Button>
+          </Link>
+          <Button variant="danger" className="gap-2" onClick={handleDelete} disabled={deleteRequest.isPending}>
+            <Trash2 className="h-4 w-4" /> Cerrar
+          </Button>
+        </div>
+      </div>
+
+      <div className="bg-white/70 backdrop-blur-xl rounded-3xl shadow-lg shadow-gray-200/50 border border-white overflow-hidden">
+        <div className="p-8 border-b border-gray-100 bg-gradient-to-br from-white/60 to-white/10">
+          <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900 mb-2">{request.title}</h1>
+              <p className="text-gray-500 font-mono text-xs bg-gray-100 px-2 py-1 rounded-md inline-block">ID: {request.id}</p>
+            </div>
+            <div className="flex flex-col items-end gap-2">
+              <Badge variant={request.status} className="px-3 py-1 text-sm shadow-sm" />
+              <Badge variant={request.priority} />
+            </div>
+          </div>
+        </div>
+
+        <div className="p-8 grid gap-8 md:grid-cols-3">
+          <div className="md:col-span-2 space-y-6">
+            <div className="space-y-3">
+              <div className="flex items-center gap-2 text-gray-800 font-semibold text-lg">
+                <AlignLeft className="h-5 w-5 text-indigo-500" />
+                <h3>Descripción</h3>
+              </div>
+              <div className="bg-white/50 rounded-xl p-5 border border-gray-100 text-gray-700 leading-relaxed shadow-sm">
+                {request.description}
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <div className="bg-gray-50/50 rounded-2xl p-5 border border-gray-100/80 space-y-5">
+              <h3 className="font-semibold text-gray-800 flex items-center gap-2 border-b border-gray-200 pb-3">
+                <Activity className="h-4 w-4 text-indigo-500" /> Detalles
+              </h3>
+              
+              <div className="space-y-1">
+                <p className="text-xs text-gray-500 flex items-center gap-1.5 uppercase tracking-wider font-semibold">
+                  <User className="h-3.5 w-3.5" /> Solicitante
+                </p>
+                <p className="font-medium text-gray-900 ml-5">{request.requester}</p>
+              </div>
+
+              <div className="space-y-1">
+                <p className="text-xs text-gray-500 flex items-center gap-1.5 uppercase tracking-wider font-semibold">
+                  <Activity className="h-3.5 w-3.5" /> Categoría
+                </p>
+                <p className="font-medium text-gray-900 ml-5">{request.category}</p>
+              </div>
+
+              <div className="space-y-1">
+                <p className="text-xs text-gray-500 flex items-center gap-1.5 uppercase tracking-wider font-semibold">
+                  <Calendar className="h-3.5 w-3.5" /> Creación
+                </p>
+                <p className="font-medium text-gray-900 ml-5">{formatDate(request.creationDate)}</p>
+              </div>
+
+              <div className="space-y-1">
+                <p className="text-xs text-gray-500 flex items-center gap-1.5 uppercase tracking-wider font-semibold">
+                  <Calendar className="h-3.5 w-3.5" /> Última actualización
+                </p>
+                <p className="font-medium text-gray-900 ml-5">{formatDate(request.lastChangeDate)}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
