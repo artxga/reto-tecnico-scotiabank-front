@@ -97,7 +97,7 @@ export default function DashboardPage() {
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900">Dashboard</h2>
           <p className="text-sm text-gray-500 mt-1">Resumen general del estado de las solicitudes en el sistema.</p>
         </div>
-        <Link href="/requests/new" className="w-full sm:w-auto justify-center bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 py-2.5 rounded-lg shadow-md hover:shadow-lg hover:from-blue-700 hover:to-indigo-700 transition-all font-medium inline-flex items-center gap-2 transform active:scale-95">
+        <Link href="/requests/new" className="w-full sm:w-auto justify-center btn-primary-liquid px-5 py-2.5 rounded-xl text-sm font-medium inline-flex items-center gap-2 transform active:scale-95">
           <Activity className="h-4 w-4" />
           Nueva Solicitud
         </Link>

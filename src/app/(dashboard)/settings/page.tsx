@@ -217,7 +217,7 @@ export default function SettingsPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full sm:w-auto bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-xl shadow-md hover:shadow-lg hover:from-blue-700 hover:to-indigo-700 transition-all font-semibold inline-flex items-center justify-center gap-2 transform active:scale-98 disabled:opacity-75 disabled:pointer-events-none"
+            className="w-full sm:w-auto btn-primary-liquid px-6 py-3 rounded-xl font-semibold inline-flex items-center justify-center gap-2 transform active:scale-98 disabled:opacity-75 disabled:pointer-events-none"
           >
             <Save className="h-4 w-4" />
             {loading ? "Guardando..." : "Guardar Ajustes"}

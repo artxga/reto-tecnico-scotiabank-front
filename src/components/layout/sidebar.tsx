@@ -24,7 +24,7 @@ export function Sidebar({ isMobileOpen, onCloseMobile }: SidebarProps) {
   return (
     <div 
       className={cn(
-        "flex h-full flex-col border-r border-gray-200 bg-white shadow-[2px_0_15px_-3px_rgba(0,0,0,0.05)] transition-all duration-300",
+        "flex h-full flex-col border-r border-gray-200 bg-white shadow-[2px_0_15px_-3px_rgba(0,0,0,0.05)] transition-all duration-300 glass-sidebar",
         // Desktop behavior
         "md:relative md:z-20 md:translate-x-0",
         isCollapsed ? "md:w-20" : "md:w-64",
@@ -55,7 +55,7 @@ export function Sidebar({ isMobileOpen, onCloseMobile }: SidebarProps) {
         {/* Close mobile menu */}
         <button 
           onClick={onCloseMobile}
-          className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors focus:outline-none md:hidden"
+          className="p-1.5 rounded-lg text-gray-400 hover:text-indigo-650 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/40 transition-colors focus:outline-none md:hidden cursor-pointer"
           aria-label="Cerrar menú"
         >
           <X className="h-5 w-5" />

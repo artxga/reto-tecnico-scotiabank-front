@@ -152,7 +152,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
   const unreadCount = notifications.filter((n) => !n.read).length;
 
   return (
-    <header className="flex h-16 flex-shrink-0 items-center justify-between border-b border-gray-200 bg-white/70 backdrop-blur-xl px-4 sm:px-6 shadow-sm sticky top-0 z-20 transition-all">
+    <header className="flex h-16 flex-shrink-0 items-center justify-between border-b border-gray-200 bg-white/70 backdrop-blur-xl px-4 sm:px-6 shadow-sm sticky top-0 z-20 transition-all glass-header">
       <div className="flex flex-1 items-center gap-3">
         <button
           onClick={onOpenMobileMenu}

@@ -186,14 +186,14 @@ function RequestsList() {
           <button
             onClick={exportToCSV}
             disabled={filtered.length === 0}
-            className="flex-1 sm:flex-initial justify-center bg-white border border-gray-200 text-gray-700 hover:text-indigo-600 hover:border-indigo-200 px-4 py-2.5 rounded-lg shadow-sm hover:shadow-md transition-all font-medium inline-flex items-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 sm:flex-initial justify-center btn-secondary-liquid px-4 py-2.5 rounded-xl text-sm font-medium inline-flex items-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed transform active:scale-95"
           >
             <Download className="h-4 w-4" />
             Exportar CSV
           </button>
           <Link 
             href="/requests/new" 
-            className="flex-1 sm:flex-initial justify-center bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-5 py-2.5 rounded-lg shadow-md hover:shadow-lg hover:from-blue-700 hover:to-indigo-700 transition-all font-medium inline-flex items-center gap-2"
+            className="flex-1 sm:flex-initial justify-center btn-primary-liquid px-5 py-2.5 rounded-xl text-sm font-medium inline-flex items-center gap-2 transform active:scale-95"
           >
             <PlusCircle className="h-4 w-4" />
             Nueva Solicitud

@@ -2,6 +2,7 @@
 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
 import { Request } from "@/lib/types";
+import { useRouter } from "next/navigation";
 
 interface PriorityChartProps {
   requests: Request[];
@@ -22,7 +23,10 @@ const PRIORITY_LABELS: Record<string, string> = {
 };
 
 export function PriorityChart({ requests }: PriorityChartProps) {
+  const router = useRouter();
+
   const data = Object.keys(PRIORITY_LABELS).map((key) => ({
+    key,
     name: PRIORITY_LABELS[key],
     value: requests.filter((r) => r.priority === key).length,
     color: PRIORITY_COLORS[key],
@@ -42,7 +46,17 @@ export function PriorityChart({ requests }: PriorityChartProps) {
               contentStyle={{ borderRadius: "12px", border: "none", boxShadow: "0 10px 25px -5px rgba(0,0,0,0.1)" }}
               itemStyle={{ fontWeight: "bold" }}
             />
-            <Bar dataKey="value" radius={[6, 6, 0, 0]} maxBarSize={45}>
+            <Bar 
+              dataKey="value" 
+              radius={[6, 6, 0, 0]} 
+              maxBarSize={45}
+              onClick={(entry) => {
+                if (entry && entry.key) {
+                  router.push(`/requests?priority=${String(entry.key)}`);
+                }
+              }}
+              style={{ cursor: "pointer" }}
+            >
               {data.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.color} />
               ))}
