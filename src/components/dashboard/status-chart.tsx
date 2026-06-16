@@ -2,6 +2,7 @@
 
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { Request } from "@/lib/types";
+import { useRouter } from "next/navigation";
 
 interface StatusChartProps {
   requests: Request[];
@@ -24,7 +25,10 @@ const STATUS_LABELS: Record<string, string> = {
 };
 
 export function StatusChart({ requests }: StatusChartProps) {
+  const router = useRouter();
+  
   const data = Object.keys(STATUS_LABELS).map((key) => ({
+    key,
     name: STATUS_LABELS[key],
     value: requests.filter((r) => r.status === key).length,
     color: STATUS_COLORS[key],
@@ -45,6 +49,12 @@ export function StatusChart({ requests }: StatusChartProps) {
               paddingAngle={5}
               dataKey="value"
               stroke="none"
+              onClick={(entry) => {
+                if (entry && entry.key) {
+                  router.push(`/requests?status=${String(entry.key)}`);
+                }
+              }}
+              style={{ cursor: "pointer" }}
             >
               {data.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.color} />

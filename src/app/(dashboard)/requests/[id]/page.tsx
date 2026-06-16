@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Edit, Trash2, Calendar, User, AlignLeft, Activity } from "lucide-react";
 import { useToast } from "@/components/ui/toast-context";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function RequestDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -18,7 +19,72 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
   const router = useRouter();
 
   if (isLoading) {
-    return <div className="flex justify-center p-12"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div></div>;
+    return (
+      <div className="max-w-3xl mx-auto space-y-6">
+        {/* Header Actions Skeleton */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <Skeleton className="h-9 w-9 rounded-full shrink-0" />
+            <Skeleton className="h-8 w-[200px]" />
+          </div>
+          <div className="flex gap-3 w-full sm:w-auto">
+            <Skeleton className="h-10 flex-1 sm:flex-initial sm:w-24" />
+            <Skeleton className="h-10 flex-1 sm:flex-initial sm:w-24" />
+          </div>
+        </div>
+
+        {/* Main Details Box Skeleton */}
+        <div className="bg-white/70 backdrop-blur-xl rounded-3xl shadow-lg border border-white overflow-hidden">
+          {/* Box Header */}
+          <div className="p-6 sm:p-8 border-b border-gray-100 bg-gradient-to-br from-white/60 to-white/10 space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+              <div className="space-y-2 flex-1">
+                <Skeleton className="h-7 w-2/3" />
+                <Skeleton className="h-5 w-24" />
+              </div>
+              <div className="flex flex-row sm:flex-col items-center sm:items-end gap-2 shrink-0">
+                <Skeleton className="h-6 w-20 rounded-full" />
+                <Skeleton className="h-5 w-16 rounded-full" />
+              </div>
+            </div>
+          </div>
+
+          {/* Box Body */}
+          <div className="p-6 sm:p-8 grid gap-8 md:grid-cols-3">
+            {/* Description Skeleton */}
+            <div className="md:col-span-2 space-y-6">
+              <div className="space-y-3">
+                <div className="flex items-center gap-2">
+                  <Skeleton className="h-5 w-5 rounded-md" />
+                  <Skeleton className="h-6 w-28" />
+                </div>
+                <div className="bg-white/50 rounded-xl p-5 border border-gray-100 space-y-2">
+                  <Skeleton className="h-4 w-full" />
+                  <Skeleton className="h-4 w-11/12" />
+                  <Skeleton className="h-4 w-4/5" />
+                </div>
+              </div>
+            </div>
+
+            {/* Sidebar details Skeleton */}
+            <div className="space-y-6">
+              <div className="bg-gray-50/50 rounded-2xl p-5 border border-gray-100/80 space-y-5">
+                <div className="border-b border-gray-200 pb-3 flex items-center gap-2">
+                  <Skeleton className="h-4 w-4 rounded-md" />
+                  <Skeleton className="h-5 w-20" />
+                </div>
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="space-y-2">
+                    <Skeleton className="h-3.5 w-1/3" />
+                    <Skeleton className="h-4 w-2/3" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (!request) {
