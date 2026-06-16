@@ -7,6 +7,9 @@ export const requestSchema = z.object({
   priority: z.enum(["low", "medium", "high", "critical"], {
     message: "Prioridad inválida",
   }),
+  status: z.enum(["pending", "in_review", "approved", "rejected", "closed"], {
+    message: "Estado inválido",
+  }).optional(),
   requester: z.string().min(3, "El nombre del solicitante es obligatorio"),
 });
 

@@ -22,6 +22,7 @@ const COLUMNS: { id: RequestStatus; title: string }[] = [
 
 export function KanbanBoard({ requests }: KanbanBoardProps) {
   const [mounted, setMounted] = useState(false);
+  const [localRequests, setLocalRequests] = useState<Request[]>(requests);
   const updateRequest = useUpdateRequest();
   const { toast } = useToast();
   const { t, language } = useLanguage();
@@ -37,6 +38,10 @@ export function KanbanBoard({ requests }: KanbanBoardProps) {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    setLocalRequests(requests);
+  }, [requests]);
 
   if (!mounted) return null; // Prevents hydration mismatch
 
@@ -55,10 +60,19 @@ export function KanbanBoard({ requests }: KanbanBoardProps) {
     const newStatus = destination.droppableId as RequestStatus;
     const colTitle = localColumns.find(c => c.id === newStatus)?.title || newStatus;
     
+    // Optimistic local update to prevent snap-back
+    setLocalRequests(prev => 
+      prev.map(req => 
+        String(req.id) === draggableId ? { ...req, status: newStatus } : req
+      )
+    );
+    
     try {
       await updateRequest.mutateAsync({ id: draggableId, data: { status: newStatus } });
       toast(language === "en" ? `Request moved to ${colTitle}` : `Solicitud movida a ${colTitle}`, "success");
     } catch (error) {
+      // Revert on error
+      setLocalRequests(requests);
       toast(language === "en" ? "Error moving request" : "Error al mover la solicitud", "error");
     }
   };
@@ -78,7 +92,7 @@ export function KanbanBoard({ requests }: KanbanBoardProps) {
                 key={col.id} 
                 id={col.id} 
                 title={col.title} 
-                requests={requests.filter(r => r.status === col.id).sort((a, b) => new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime())} 
+                requests={localRequests.filter(r => r.status === col.id).sort((a, b) => new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime())} 
               />
             ))}
           </div>
