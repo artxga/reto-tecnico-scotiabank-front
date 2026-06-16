@@ -31,9 +31,10 @@ export function RequestForm({ initialData, onSubmit, isLoading }: RequestFormPro
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="space-y-5">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1.5">Título de la Solicitud</label>
+          <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1.5">Título de la Solicitud</label>
           <Input
             {...register("title")}
+            id="title"
             placeholder="Ej. Renovación de equipo de cómputo"
             disabled={isLoading || !!initialData}
             className={errors.title ? "border-red-500 focus:ring-red-500" : ""}
@@ -42,9 +43,10 @@ export function RequestForm({ initialData, onSubmit, isLoading }: RequestFormPro
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1.5">Solicitante</label>
+          <label htmlFor="requester" className="block text-sm font-medium text-gray-700 mb-1.5">Solicitante</label>
           <Input
             {...register("requester")}
+            id="requester"
             placeholder="Nombre completo"
             disabled={isLoading || !!initialData}
             className={errors.requester ? "border-red-500 focus:ring-red-500" : ""}
@@ -53,8 +55,8 @@ export function RequestForm({ initialData, onSubmit, isLoading }: RequestFormPro
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1.5">Prioridad</label>
-          <Select {...register("priority")} disabled={isLoading}>
+          <label htmlFor="priority" className="block text-sm font-medium text-gray-700 mb-1.5">Prioridad</label>
+          <Select {...register("priority")} id="priority" disabled={isLoading}>
             <option value="low">Baja - Puede esperar</option>
             <option value="medium">Media - Requiere atención pronto</option>
             <option value="high">Alta - Urgente</option>
@@ -64,9 +66,10 @@ export function RequestForm({ initialData, onSubmit, isLoading }: RequestFormPro
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1.5">Categoría</label>
+          <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1.5">Categoría</label>
           <Input
             {...register("category")}
+            id="category"
             placeholder="Ej. Hardware, Software, RRHH"
             disabled={isLoading || !!initialData}
             className={errors.category ? "border-red-500 focus:ring-red-500" : ""}
@@ -75,9 +78,10 @@ export function RequestForm({ initialData, onSubmit, isLoading }: RequestFormPro
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1.5">Descripción Detallada</label>
+          <label htmlFor="description" className="block text-sm font-medium text-gray-700 mb-1.5">Descripción Detallada</label>
           <Textarea
             {...register("description")}
+            id="description"
             placeholder="Proporciona todos los detalles necesarios para evaluar tu solicitud..."
             disabled={isLoading}
             className={errors.description ? "border-red-500 focus:ring-red-500" : ""}

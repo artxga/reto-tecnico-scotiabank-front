@@ -8,13 +8,12 @@ describe("Badge Component", () => {
   });
 
   it("aplica clases de variante correctamente (alta prioridad)", () => {
-    const { container } = render(<Badge variant="alta">Urgente</Badge>);
+    const { container } = render(<Badge variant="high">Critical</Badge>);
     expect(container.firstChild).toHaveClass("bg-red-50", "text-red-700");
   });
 
   it("formatea el texto automáticamente si se pasa un variant válido sin children", () => {
-    render(<Badge variant="en_revision" />);
-    // Debería transformarse de "en_revision" a "En Revision"
-    expect(screen.getByText("En Revision")).toBeInTheDocument();
+    render(<Badge variant="in_review" />);
+    expect(screen.getByText("In Review")).toBeInTheDocument();
   });
 });

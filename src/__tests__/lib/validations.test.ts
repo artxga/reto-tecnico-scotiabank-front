@@ -6,7 +6,7 @@ describe("Validaciones de Solicitud (Zod)", () => {
       title: "Título de prueba válido",
       description: "Descripción detallada de la solicitud de prueba.",
       category: "Prueba de categoría",
-      priority: "alta",
+      priority: "high",
       requester: "Juan Pérez"
     };
 
@@ -19,7 +19,7 @@ describe("Validaciones de Solicitud (Zod)", () => {
       title: "No",
       description: "Descripción detallada de la solicitud de prueba.",
       category: "Prueba de categoría",
-      priority: "alta",
+      priority: "high",
       requester: "Juan Pérez"
     };
 
@@ -31,7 +31,7 @@ describe("Validaciones de Solicitud (Zod)", () => {
   });
 
   it("debe validar la prioridad en el esquema de actualización", () => {
-    expect(updatePrioritySchema.safeParse({ priority: "media" }).success).toBe(true);
+    expect(updatePrioritySchema.safeParse({ priority: "medium" }).success).toBe(true);
     expect(updatePrioritySchema.safeParse({ priority: "urgente" }).success).toBe(false);
   });
 });
