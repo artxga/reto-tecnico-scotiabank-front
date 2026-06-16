@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { formatDate } from "@/lib/utils";
 import Link from "next/link";
-import { Search, SlidersHorizontal, ArrowUpDown, Eye, PlusCircle } from "lucide-react";
+import { Search, SlidersHorizontal, ArrowUpDown, Eye, PlusCircle, Calendar } from "lucide-react";
 import { Priority } from "@/lib/types";
 
 export default function RequestsPage() {
@@ -86,7 +86,41 @@ export default function RequestsPage() {
         </div>
       </div>
 
-      <div className="bg-white/70 backdrop-blur-xl rounded-2xl shadow-sm border border-white overflow-hidden">
+      <div className="grid gap-4 md:hidden">
+        {filtered.map((req) => (
+          <Link
+            key={req.id}
+            href={`/requests/${req.id}`}
+            className="block p-5 bg-white/70 backdrop-blur-xl border border-white rounded-2xl shadow-sm hover:shadow-md transition-all active:scale-[0.99]"
+          >
+            <div className="flex justify-between items-start gap-2 mb-2">
+              <h3 className="font-bold text-gray-900 line-clamp-2 pr-2 leading-snug">{req.title}</h3>
+              <Badge variant={req.status} className="shrink-0" />
+            </div>
+            <div className="flex justify-between items-center text-xs text-gray-500 mb-4">
+              <span>{req.requester}</span>
+              <span className="font-mono bg-slate-100/80 px-2 py-0.5 rounded text-[10px] text-gray-600">{req.category}</span>
+            </div>
+            <div className="flex justify-between items-center pt-3 border-t border-gray-100">
+              <div className="flex items-center gap-1.5 text-xs text-gray-400">
+                <Calendar className="h-3.5 w-3.5" />
+                <span>{formatDate(req.creationDate)}</span>
+              </div>
+              <Badge variant={req.priority} />
+            </div>
+          </Link>
+        ))}
+        {filtered.length === 0 && (
+          <div className="bg-white/70 backdrop-blur-xl rounded-2xl border border-white p-12 text-center text-gray-500">
+            <div className="flex flex-col items-center gap-2">
+              <Search className="h-8 w-8 text-gray-300" />
+              <p>No se encontraron solicitudes con los filtros aplicados.</p>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="hidden md:block bg-white/70 backdrop-blur-xl rounded-2xl shadow-sm border border-white overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm whitespace-nowrap">
             <thead className="bg-white/50 text-gray-600 font-semibold border-b border-gray-100">
