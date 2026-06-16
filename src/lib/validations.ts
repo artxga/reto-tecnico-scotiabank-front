@@ -5,14 +5,14 @@ export const solicitudSchema = z.object({
   description: z.string().min(10, "La descripción debe tener al menos 10 caracteres").max(500, "La descripción no puede exceder los 500 caracteres"),
   category: z.string().min(2, "La categoría es obligatoria"),
   priority: z.enum(["low", "medium", "high", "critical"], {
-    errorMap: () => ({ message: "Prioridad inválida" }),
+    message: "Prioridad inválida",
   }),
   requester: z.string().min(3, "El nombre del solicitante es obligatorio"),
 });
 
 export const updatePrioritySchema = z.object({
   priority: z.enum(["low", "medium", "high", "critical"], {
-    errorMap: () => ({ message: "Prioridad inválida" }),
+    message: "Prioridad inválida",
   }),
 });
 
