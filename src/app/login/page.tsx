@@ -7,6 +7,7 @@ import { useToast } from "@/components/ui/toast-context";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FileText, Lock, Mail, Globe, Sun, Moon, LogIn } from "lucide-react";
+import { loginSchema } from "@/lib/validations";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -49,23 +50,22 @@ export default function LoginPage() {
   };
 
   const validate = () => {
+    const result = loginSchema.safeParse({ email, password });
+    if (result.success) {
+      setErrors({});
+      return true;
+    }
+
     const newErrors: { email?: string; password?: string } = {};
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!email) {
-      newErrors.email = language === "en" ? "Email is required" : "El correo electrónico es obligatorio";
-    } else if (!emailRegex.test(email)) {
-      newErrors.email = t("login.invalidEmail");
-    }
-
-    if (!password) {
-      newErrors.password = language === "en" ? "Password is required" : "La contraseña es obligatoria";
-    } else if (password.length < 6) {
-      newErrors.password = t("login.passwordMin");
-    }
+    result.error.issues.forEach((issue) => {
+      const field = issue.path[0] as "email" | "password";
+      if (!newErrors[field]) {
+        newErrors[field] = t(issue.message as any);
+      }
+    });
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    return false;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -148,7 +148,7 @@ export default function LoginPage() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-5" noValidate>
           {/* Auth general errors */}
           {errors.auth && (
             <div className="p-3 text-xs font-semibold text-rose-600 bg-rose-50 dark:bg-rose-950/30 dark:text-rose-400 rounded-xl border border-rose-100 dark:border-rose-950/40">

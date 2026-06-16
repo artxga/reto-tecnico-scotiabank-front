@@ -125,7 +125,7 @@ function RequestsList() {
     (statusFilter !== "todos" ? 1 : 0) +
     (priorityFilter !== "todos" ? 1 : 0) +
     (search !== "" ? 1 : 0);
-  
+
   const hasActiveFilters = activeFiltersCount > 0;
 
   const clearAllFilters = () => {
@@ -183,7 +183,7 @@ function RequestsList() {
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.setAttribute("href", url);
-    link.setAttribute("download", language === "en" 
+    link.setAttribute("download", language === "en"
       ? `exported_requests_${new Date().toISOString().split("T")[0]}.csv`
       : `solicitudes_exportadas_${new Date().toISOString().split("T")[0]}.csv`);
     document.body.appendChild(link);
@@ -207,8 +207,8 @@ function RequestsList() {
             <Download className="h-4 w-4" />
             {t("requests.exportCSV")}
           </button>
-          <Link 
-            href="/requests/new" 
+          <Link
+            href="/requests/new"
             className="flex-1 sm:flex-initial justify-center btn-primary-liquid px-5 py-2.5 rounded-xl text-sm font-medium inline-flex items-center gap-2 transform active:scale-95"
           >
             <PlusCircle className="h-4 w-4" />
@@ -219,13 +219,14 @@ function RequestsList() {
 
       {/* Search and Filters Block */}
       <div className="flex flex-col gap-4 p-5 bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-white dark:border-slate-800 rounded-2xl shadow-md transition-all duration-300">
-        
+
         {/* Search input + Filter toggle button */}
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
             <Search className="absolute left-3.5 top-3.5 h-4 w-4 text-gray-400 dark:text-gray-500" />
             <Input
               placeholder={t("requests.searchPlaceholder")}
+              id="search"
               className="pl-10 text-gray-900 dark:text-white bg-white/40 dark:bg-slate-950/20 pr-10 border-gray-200 dark:border-slate-800/80 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 transition-all h-10.5"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -239,14 +240,13 @@ function RequestsList() {
               </button>
             )}
           </div>
-          
+
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className={`w-full sm:w-auto justify-center px-4 py-2.5 rounded-xl border font-medium inline-flex items-center gap-2 cursor-pointer transition-all shadow-sm hover:shadow h-10.5 ${
-              showFilters || hasActiveFilters
+            className={`w-full sm:w-auto justify-center px-4 py-2.5 rounded-xl border font-medium inline-flex items-center gap-2 cursor-pointer transition-all shadow-sm hover:shadow h-10.5 ${showFilters || hasActiveFilters
                 ? "bg-indigo-50 border-indigo-200 text-indigo-700 dark:bg-indigo-950/30 dark:border-indigo-800 dark:text-indigo-300"
                 : "bg-white border-gray-200 text-gray-700 hover:bg-gray-50 dark:bg-slate-950/20 dark:border-slate-800/80 dark:text-gray-200 dark:hover:bg-slate-950/45"
-            }`}
+              }`}
           >
             <SlidersHorizontal className="h-4 w-4" />
             <span className="text-sm">{language === "en" ? "Filters" : "Filtros"}</span>
@@ -263,9 +263,9 @@ function RequestsList() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-gray-150/60 dark:border-slate-800/50 animate-in slide-in-from-top-2 duration-300">
             <div className="space-y-1.5">
               <label className="text-[11px] font-bold tracking-wider text-gray-400 dark:text-gray-500 uppercase">{language === "en" ? "Status" : "Estado"}</label>
-              <Select 
-                value={statusFilter} 
-                onChange={(e) => setStatusFilter(e.target.value)} 
+              <Select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
                 className="w-full text-gray-800 dark:text-slate-200 bg-white/40 dark:bg-slate-950/20 border-gray-200 dark:border-slate-800/80 rounded-xl"
               >
                 <option value="todos">{t("requests.allStatuses")}</option>
@@ -276,12 +276,12 @@ function RequestsList() {
                 <option value="closed">{statusTranslations.closed}</option>
               </Select>
             </div>
-            
+
             <div className="space-y-1.5">
               <label className="text-[11px] font-bold tracking-wider text-gray-400 dark:text-gray-500 uppercase">{language === "en" ? "Priority" : "Prioridad"}</label>
-              <Select 
-                value={priorityFilter} 
-                onChange={(e) => setPriorityFilter(e.target.value)} 
+              <Select
+                value={priorityFilter}
+                onChange={(e) => setPriorityFilter(e.target.value)}
                 className="w-full text-gray-800 dark:text-slate-200 bg-white/40 dark:bg-slate-950/20 border-gray-200 dark:border-slate-800/80 rounded-xl"
               >
                 <option value="todos">{t("requests.allPriorities")}</option>
@@ -294,9 +294,9 @@ function RequestsList() {
 
             <div className="space-y-1.5">
               <label className="text-[11px] font-bold tracking-wider text-gray-400 dark:text-gray-500 uppercase">{language === "en" ? "Order by" : "Ordenar por"}</label>
-              <Select 
-                value={sortBy} 
-                onChange={(e) => setSortBy(e.target.value)} 
+              <Select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
                 className="w-full text-gray-800 dark:text-slate-200 bg-white/40 dark:bg-slate-950/20 border-gray-200 dark:border-slate-800/80 rounded-xl"
               >
                 <option value="recent">{language === "en" ? "Most recent" : "Más recientes"}</option>
@@ -360,8 +360,8 @@ function RequestsList() {
       {/* Mobile Card List View (visible on mobile/tablet, hidden on desktop) */}
       <div className="grid gap-4 md:hidden">
         {filtered.map((req) => (
-          <Link 
-            key={req.id} 
+          <Link
+            key={req.id}
             href={`/requests/${req.id}`}
             className="block p-5 bg-white/70 backdrop-blur-xl border border-white rounded-2xl shadow-sm hover:shadow-md transition-all active:scale-[0.99]"
           >

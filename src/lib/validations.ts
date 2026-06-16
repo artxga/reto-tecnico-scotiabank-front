@@ -16,4 +16,17 @@ export const updatePrioritySchema = z.object({
   }),
 });
 
+export const loginSchema = z.object({
+  email: z
+    .string()
+    .min(1, "login.emailRequired")
+    .email("login.invalidEmail"),
+  password: z
+    .string()
+    .min(1, "login.passwordRequired")
+    .min(6, "login.passwordMin"),
+});
+
 export type SolicitudFormData = z.infer<typeof requestSchema>;
+export type LoginFormData = z.infer<typeof loginSchema>;
+
