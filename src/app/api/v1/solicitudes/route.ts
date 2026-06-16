@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getMockRequests, addMockRequest, delay } from "@/lib/data";
-import { RequestCreateInput, Request as RequestModel } from "@/lib/types";
+import { Request as RequestModel } from "@/lib/types";
+import { requestSchema } from "@/lib/validations";
 
 export async function GET() {
   await delay(800);
@@ -10,20 +11,30 @@ export async function GET() {
 export async function POST(request: Request) {
   await delay(800);
   try {
-    const body: RequestCreateInput = await request.json();
+    const body = await request.json();
 
-    if (!body.title || !body.description || !body.category || !body.priority || !body.requester) {
-      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
+
+    const validation = requestSchema.safeParse(body);
+    if (!validation.success) {
+      return NextResponse.json(
+        {
+          error: "Validation failed",
+          details: validation.error.flatten().fieldErrors
+        },
+        { status: 400 }
+      );
     }
 
+    const data = validation.data;
+
     const newRequest: RequestModel = {
-      id: Math.random().toString(36).substr(2, 9),
-      title: body.title,
-      description: body.description,
+      id: Math.random().toString(36).substring(2, 11),
+      title: data.title,
+      description: data.description,
       status: "pending",
-      priority: body.priority,
-      category: body.category,
-      requester: body.requester,
+      priority: data.priority,
+      category: data.category,
+      requester: data.requester,
       creationDate: new Date().toISOString(),
       lastChangeDate: new Date().toISOString(),
     };
@@ -31,6 +42,6 @@ export async function POST(request: Request) {
     addMockRequest(newRequest);
     return NextResponse.json(newRequest, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: "Invalid data" }, { status: 400 });
+    return NextResponse.json({ error: "Invalid JSON data structure" }, { status: 400 });
   }
 }

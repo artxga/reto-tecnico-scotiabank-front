@@ -1,4 +1,4 @@
-import { solicitudSchema, updatePrioritySchema } from "@/lib/validations";
+import { requestSchema, updatePrioritySchema } from "@/lib/validations";
 
 describe("Validaciones de Solicitud (Zod)", () => {
   it("debe validar un payload correcto", () => {
@@ -10,7 +10,7 @@ describe("Validaciones de Solicitud (Zod)", () => {
       requester: "Juan Pérez"
     };
 
-    const result = solicitudSchema.safeParse(validData);
+    const result = requestSchema.safeParse(validData);
     expect(result.success).toBe(true);
   });
 
@@ -23,7 +23,7 @@ describe("Validaciones de Solicitud (Zod)", () => {
       requester: "Juan Pérez"
     };
 
-    const result = solicitudSchema.safeParse(invalidData);
+    const result = requestSchema.safeParse(invalidData);
     expect(result.success).toBe(false);
     if (!result.success) {
       expect(result.error.issues[0].message).toBe("El título debe tener al menos 5 caracteres");

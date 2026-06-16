@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SolicitudFormData, solicitudSchema } from "@/lib/validations";
+import { SolicitudFormData, requestSchema } from "@/lib/validations";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select } from "@/components/ui/select";
@@ -17,7 +17,7 @@ interface RequestFormProps {
 
 export function RequestForm({ initialData, onSubmit, isLoading }: RequestFormProps) {
   const { register, handleSubmit, formState: { errors } } = useForm<SolicitudFormData>({
-    resolver: zodResolver(solicitudSchema),
+    resolver: zodResolver(requestSchema),
     defaultValues: {
       title: initialData?.title || "",
       description: initialData?.description || "",

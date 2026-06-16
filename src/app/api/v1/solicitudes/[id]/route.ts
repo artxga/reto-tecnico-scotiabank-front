@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getMockRequests, updateMockRequest, delay } from "@/lib/data";
-import { Priority, RequestUpdateInput } from "@/lib/types";
+import { Priority } from "@/lib/types";
+import { requestSchema, updatePrioritySchema } from "@/lib/validations";
 
 export async function GET(
   req: Request,
@@ -30,13 +31,26 @@ export async function PUT(
   }
 
   try {
-    const body: RequestUpdateInput = await req.json();
-    updateMockRequest(id, body);
+    const body = await req.json();
+
+    // Partial validate body
+    const validation = requestSchema.partial().safeParse(body);
+    if (!validation.success) {
+      return NextResponse.json(
+        {
+          error: "Validation failed",
+          details: validation.error.flatten().fieldErrors
+        },
+        { status: 400 }
+      );
+    }
+
+    updateMockRequest(id, validation.data);
 
     const updated = getMockRequests().find((req) => req.id === id);
     return NextResponse.json(updated);
   } catch (error) {
-    return NextResponse.json({ error: "Invalid data" }, { status: 400 });
+    return NextResponse.json({ error: "Invalid JSON data structure" }, { status: 400 });
   }
 }
 
@@ -53,14 +67,26 @@ export async function PATCH(
   }
 
   try {
-    const body: { priority: string } = await req.json();
+    const body = await req.json();
 
-    updateMockRequest(id, { priority: body.priority as Priority });
+    // Validate update priority schema
+    const validation = updatePrioritySchema.safeParse(body);
+    if (!validation.success) {
+      return NextResponse.json(
+        {
+          error: "Validation failed",
+          details: validation.error.flatten().fieldErrors
+        },
+        { status: 400 }
+      );
+    }
+
+    updateMockRequest(id, { priority: validation.data.priority as Priority });
 
     const updated = getMockRequests().find((req) => req.id === id);
     return NextResponse.json(updated);
   } catch (error) {
-    return NextResponse.json({ error: "Invalid data" }, { status: 400 });
+    return NextResponse.json({ error: "Invalid JSON data structure" }, { status: 400 });
   }
 }
 
