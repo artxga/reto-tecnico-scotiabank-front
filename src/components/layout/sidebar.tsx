@@ -98,22 +98,31 @@ export function Sidebar({ isMobileOpen, onCloseMobile }: SidebarProps) {
       </nav>
       
       <div className="border-t border-gray-100 p-4">
-        <button 
+        <Link 
+          href="/settings"
           title={isCollapsed ? "Ajustes" : undefined}
+          onClick={onCloseMobile}
           className={cn(
-            "group flex w-full items-center py-2 text-sm font-medium text-gray-600 rounded-lg hover:bg-gray-50 hover:text-indigo-600 transition-colors",
+            "group flex w-full items-center py-2.5 text-sm font-medium rounded-lg transition-all duration-200 relative",
+            pathname === "/settings"
+              ? "bg-indigo-50 text-indigo-700 shadow-sm"
+              : "text-gray-600 hover:bg-gray-50 hover:text-indigo-600",
             isCollapsed ? "md:justify-center md:px-0 justify-start px-3" : "justify-start px-3"
           )}
         >
+          {pathname === "/settings" && (
+            <span className="absolute left-0 top-0 h-full w-1 bg-indigo-600 rounded-r-full" />
+          )}
           <Settings 
             className={cn(
-              "h-5 w-5 text-gray-400 group-hover:text-indigo-500 transition-transform group-hover:rotate-45",
+              "h-5 w-5 transition-all duration-200 group-hover:rotate-45",
+              pathname === "/settings" ? "text-indigo-600" : "text-gray-400 group-hover:text-indigo-500 group-hover:scale-110",
               "mr-3",
               isCollapsed && "md:mr-0"
             )} 
           />
           <span className={cn("truncate", isCollapsed && "md:hidden")}>Ajustes</span>
-        </button>
+        </Link>
       </div>
     </div>
   );
