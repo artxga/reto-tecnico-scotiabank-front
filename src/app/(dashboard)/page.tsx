@@ -5,6 +5,9 @@ import { Badge } from "@/components/ui/badge";
 import { PieChart, Activity, Clock, CheckCircle, XCircle } from "lucide-react";
 import Link from "next/link";
 import { RequestStatus } from "@/lib/types";
+import { KanbanBoard } from "@/components/dashboard/kanban-board";
+import { StatusChart } from "@/components/dashboard/status-chart";
+import { PriorityChart } from "@/components/dashboard/priority-chart";
 
 export default function DashboardPage() {
   const { data: requests, isLoading } = useRequests();
@@ -52,36 +55,13 @@ export default function DashboardPage() {
         ))}
       </div>
 
-      <div className="rounded-2xl border border-white bg-white/70 backdrop-blur-xl shadow-sm overflow-hidden transition-all duration-300">
-        <div className="border-b border-gray-100/50 px-6 py-5 bg-white/50">
-          <h3 className="font-semibold text-gray-900 text-lg">Actividad Reciente</h3>
-        </div>
-        <div className="divide-y divide-gray-100/50">
-          {requests?.slice(0, 5).map((req) => (
-            <div key={req.id} className="px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:bg-white/50 transition-colors">
-              <div>
-                <p className="font-semibold text-gray-900">{req.title}</p>
-                <div className="flex items-center gap-2 mt-1 text-sm text-gray-500">
-                  <span className="font-medium">{req.requester}</span>
-                  <span>•</span>
-                  <span>{new Intl.DateTimeFormat('es-ES', { dateStyle: 'long' }).format(new Date(req.creationDate))}</span>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <Badge variant={req.priority} />
-                <Badge variant={req.status} />
-              </div>
-            </div>
-          ))}
-          {requests?.length === 0 && (
-            <div className="p-8 text-center text-gray-500">No hay solicitudes en el sistema.</div>
-          )}
-        </div>
-        <div className="bg-gray-50/50 px-6 py-4 border-t border-gray-100/50 text-center">
-          <Link href="/requests" className="text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition-colors">
-            Ver todas las solicitudes &rarr;
-          </Link>
-        </div>
+      <div className="w-full">
+        {requests && <KanbanBoard requests={requests} />}
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-2 w-full">
+        {requests && <StatusChart requests={requests} />}
+        {requests && <PriorityChart requests={requests} />}
       </div>
     </div>
   );

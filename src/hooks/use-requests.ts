@@ -62,7 +62,23 @@ export function useUpdateRequest() {
       }
       return res.json();
     },
-    onSuccess: (_, variables) => {
+    onMutate: async ({ id, data }) => {
+      await queryClient.cancelQueries({ queryKey: ["requests"] });
+      const previousRequests = queryClient.getQueryData<Request[]>(["requests"]);
+      if (previousRequests) {
+        queryClient.setQueryData<Request[]>(
+          ["requests"],
+          previousRequests.map((req) => (String(req.id) === String(id) ? { ...req, ...data } : req))
+        );
+      }
+      return { previousRequests };
+    },
+    onError: (err, newRequest, context) => {
+      if (context?.previousRequests) {
+        queryClient.setQueryData(["requests"], context.previousRequests);
+      }
+    },
+    onSettled: (data, error, variables) => {
       queryClient.invalidateQueries({ queryKey: ["requests"] });
       queryClient.invalidateQueries({ queryKey: ["requests", variables.id] });
     },
