@@ -129,4 +129,8 @@ async function setup() {
   } finally {
     await client.end();
   }
-} ()
+}
+
+setup();
+
+export {};
