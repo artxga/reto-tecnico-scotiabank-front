@@ -1,81 +1,71 @@
 import { Request } from "./types";
+import { createClient } from "@supabase/supabase-js";
 
-const initialData: Request[] = [
-  {
-    id: "1",
-    title: "Renovación de equipo de cómputo",
-    description: "Mi laptop actual presenta fallas constantes y lentitud. Necesito un equipo de reemplazo para poder trabajar correctamente.",
-    status: "pending",
-    priority: "medium",
-    category: "Hardware",
-    requester: "Juan Pérez",
-    creationDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
-    lastChangeDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2).toISOString(),
-  },
-  {
-    id: "2",
-    title: "Acceso a base de datos de pruebas",
-    description: "Necesito acceso a la base de datos de QA para validar el nuevo módulo de pagos.",
-    status: "approved",
-    priority: "high",
-    category: "Accesos",
-    requester: "María García",
-    creationDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5).toISOString(),
-    lastChangeDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 4).toISOString(),
-  },
-  {
-    id: "3",
-    title: "Servidor de producción caído",
-    description: "El servidor principal no responde a las peticiones, error 502 Bad Gateway continuo.",
-    status: "in_review",
-    priority: "critical",
-    category: "Infraestructura",
-    requester: "Carlos López",
-    creationDate: new Date(Date.now() - 1000 * 60 * 60 * 1).toISOString(),
-    lastChangeDate: new Date().toISOString(),
-  },
-  {
-    id: "4",
-    title: "Licencia de software de diseño",
-    description: "Renovación de la licencia anual para la suite de diseño requerida para el proyecto de marketing.",
-    status: "rejected",
-    priority: "medium",
-    category: "Software",
-    requester: "Ana Torres",
-    creationDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 10).toISOString(),
-    lastChangeDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 8).toISOString(),
-  },
-  {
-    id: "5",
-    title: "Permiso para trabajo remoto extendido",
-    description: "Solicito 2 semanas de trabajo remoto por motivos familiares fuera de la ciudad.",
-    status: "closed",
-    priority: "low",
-    category: "Recursos Humanos",
-    requester: "Luis Martínez",
-    creationDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 20).toISOString(),
-    lastChangeDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 15).toISOString(),
+// Initialize Supabase client
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+export async function getMockRequests(): Promise<Request[]> {
+  const { data, error } = await supabase
+    .from('requests')
+    .select('*')
+    .order('creationDate', { ascending: false });
+
+  if (error) {
+    console.error("Supabase Error during GET:", error);
+    return [];
   }
-];
-
-let mockRequests = [...initialData];
-
-export function getMockRequests() {
-  return [...mockRequests].sort((a, b) => new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime());
+  
+  return data as Request[];
 }
 
-export function addMockRequest(request: Request) {
-  mockRequests.push(request);
+export async function getMockRequest(id: string | number): Promise<Request | undefined> {
+  const { data, error } = await supabase
+    .from('requests')
+    .select('*')
+    .eq('id', String(id))
+    .single();
+
+  if (error) {
+    console.error("Supabase Error during GET by ID:", error);
+    return undefined;
+  }
+
+  return data as Request;
 }
 
-export function updateMockRequest(id: string | number, updates: Partial<Request>) {
-  mockRequests = mockRequests.map((req) =>
-    String(req.id) === String(id) ? { ...req, ...updates, lastChangeDate: new Date().toISOString() } : req
-  );
+export async function addMockRequest(request: Request) {
+  const { error } = await supabase
+    .from('requests')
+    .insert([request]);
+
+  if (error) {
+    console.error("Supabase Error during POST:", error);
+  }
 }
 
-export function deleteMockRequest(id: string | number) {
-  mockRequests = mockRequests.filter((req) => String(req.id) !== String(id));
+export async function updateMockRequest(id: string | number, updates: Partial<Request>) {
+  const { error } = await supabase
+    .from('requests')
+    .update({ ...updates, lastChangeDate: new Date().toISOString() })
+    .eq('id', String(id));
+
+  if (error) {
+    console.error("Supabase Error during PUT:", error);
+  }
+}
+
+export async function deleteMockRequest(id: string | number) {
+  const { error } = await supabase
+    .from('requests')
+    .delete()
+    .eq('id', String(id));
+
+  if (error) {
+    console.error("Supabase Error during DELETE:", error);
+  }
 }
 
 export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));

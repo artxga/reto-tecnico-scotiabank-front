@@ -5,14 +5,14 @@ import { requestSchema } from "@/lib/validations";
 
 export async function GET() {
   await delay(800);
-  return NextResponse.json(getMockRequests());
+  const requests = await getMockRequests();
+  return NextResponse.json(requests);
 }
 
 export async function POST(request: Request) {
   await delay(800);
   try {
     const body = await request.json();
-
 
     const validation = requestSchema.safeParse(body);
     if (!validation.success) {
@@ -39,7 +39,7 @@ export async function POST(request: Request) {
       lastChangeDate: new Date().toISOString(),
     };
 
-    addMockRequest(newRequest);
+    await addMockRequest(newRequest);
     return NextResponse.json(newRequest, { status: 201 });
   } catch (error) {
     return NextResponse.json({ error: "Invalid JSON data structure" }, { status: 400 });

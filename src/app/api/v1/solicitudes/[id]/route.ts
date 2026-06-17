@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getMockRequests, updateMockRequest, delay } from "@/lib/data";
+import { getMockRequest, updateMockRequest, deleteMockRequest, delay } from "@/lib/data";
 import { Priority } from "@/lib/types";
 import { requestSchema, updatePrioritySchema } from "@/lib/validations";
 
@@ -9,7 +9,7 @@ export async function GET(
 ) {
   await delay(500);
   const { id } = await params;
-  const request = getMockRequests().find((req) => req.id === id);
+  const request = await getMockRequest(id);
 
   if (!request) {
     return NextResponse.json({ error: "Request not found" }, { status: 404 });
@@ -24,7 +24,7 @@ export async function PUT(
 ) {
   await delay(800);
   const { id } = await params;
-  const request = getMockRequests().find((req) => req.id === id);
+  const request = await getMockRequest(id);
 
   if (!request) {
     return NextResponse.json({ error: "Request not found" }, { status: 404 });
@@ -45,9 +45,9 @@ export async function PUT(
       );
     }
 
-    updateMockRequest(id, validation.data);
+    await updateMockRequest(id, validation.data);
 
-    const updated = getMockRequests().find((req) => req.id === id);
+    const updated = await getMockRequest(id);
     return NextResponse.json(updated);
   } catch (error) {
     return NextResponse.json({ error: "Invalid JSON data structure" }, { status: 400 });
@@ -60,7 +60,7 @@ export async function PATCH(
 ) {
   await delay(800);
   const { id } = await params;
-  const request = getMockRequests().find((req) => req.id === id);
+  const request = await getMockRequest(id);
 
   if (!request) {
     return NextResponse.json({ error: "Request not found" }, { status: 404 });
@@ -81,9 +81,9 @@ export async function PATCH(
       );
     }
 
-    updateMockRequest(id, { priority: validation.data.priority as Priority });
+    await updateMockRequest(id, { priority: validation.data.priority as Priority });
 
-    const updated = getMockRequests().find((req) => req.id === id);
+    const updated = await getMockRequest(id);
     return NextResponse.json(updated);
   } catch (error) {
     return NextResponse.json({ error: "Invalid JSON data structure" }, { status: 400 });
@@ -96,13 +96,13 @@ export async function DELETE(
 ) {
   await delay(800);
   const { id } = await params;
-  const request = getMockRequests().find((req) => req.id === id);
+  const request = await getMockRequest(id);
 
   if (!request) {
     return NextResponse.json({ error: "Request not found" }, { status: 404 });
   }
 
-  updateMockRequest(id, { status: "closed" });
+  await updateMockRequest(id, { status: "closed" });
 
   return NextResponse.json({ message: "Request marked as closed successfully" });
 }
