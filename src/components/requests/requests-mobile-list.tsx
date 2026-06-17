@@ -25,7 +25,7 @@ export function RequestsMobileList({ filtered, categoryTranslations }: RequestsM
           </div>
           <div className="flex justify-between items-center text-xs text-gray-500 mb-4">
             <span>{req.requester}</span>
-            <span className="font-mono bg-white/80 px-2 py-0.5 rounded text-[10px] text-gray-600">
+            <span className="font-mono bg-white/80 px-2 py-0.5 rounded text-[10px] dark:bg-slate-900/60 text-gray-600">
               {categoryTranslations[req.category] || req.category}
             </span>
           </div>

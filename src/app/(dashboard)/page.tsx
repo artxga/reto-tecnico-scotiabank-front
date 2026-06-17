@@ -4,7 +4,6 @@ import { useRequests } from "@/hooks/use-requests";
 import { PieChart, Activity, Clock, CheckCircle, XCircle, Archive } from "lucide-react";
 import Link from "next/link";
 import { RequestStatus } from "@/lib/types";
-import { KanbanBoard } from "@/components/dashboard/kanban-board";
 import { StatusChart } from "@/components/dashboard/status-chart";
 import { PriorityChart } from "@/components/dashboard/priority-chart";
 import { TrendChart } from "@/components/dashboard/trend-chart";
@@ -222,7 +221,7 @@ export default function DashboardPage() {
         ))}
       </div>
 
-      <div className="w-full">{requests && <KanbanBoard requests={requests} />}</div>
+
 
       {/* Charts Section */}
       <div className="grid gap-6 grid-cols-1 md:grid-cols-2 w-full">

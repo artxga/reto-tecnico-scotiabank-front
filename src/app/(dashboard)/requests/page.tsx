@@ -12,6 +12,7 @@ import { RequestsHeader } from "@/components/requests/requests-header";
 import { RequestsFilters } from "@/components/requests/requests-filters";
 import { RequestsMobileList } from "@/components/requests/requests-mobile-list";
 import { RequestsTable } from "@/components/requests/requests-table";
+import { KanbanBoard } from "@/components/dashboard/kanban-board";
 
 function RequestsSkeleton() {
   return (
@@ -93,6 +94,7 @@ function RequestsList() {
   const [showFilters, setShowFilters] = useState(
     initialStatus !== "todos" || initialPriority !== "todos",
   );
+  const [viewMode, setViewMode] = useState<"list" | "kanban">("list");
 
   const statusTranslations = useMemo(
     () => ({
@@ -185,6 +187,8 @@ function RequestsList() {
           })
         }
         exportDisabled={filtered.length === 0}
+        viewMode={viewMode}
+        setViewMode={setViewMode}
       />
 
       <RequestsFilters
@@ -205,9 +209,14 @@ function RequestsList() {
         priorityTranslations={priorityTranslations}
       />
 
-      <RequestsMobileList filtered={filtered} categoryTranslations={categoryTranslations} />
-
-      <RequestsTable filtered={filtered} categoryTranslations={categoryTranslations} />
+      {viewMode === "list" ? (
+        <>
+          <RequestsMobileList filtered={filtered} categoryTranslations={categoryTranslations} />
+          <RequestsTable filtered={filtered} categoryTranslations={categoryTranslations} />
+        </>
+      ) : (
+        <div className="w-full pt-2">{filtered && <KanbanBoard requests={filtered} />}</div>
+      )}
     </div>
   );
 }
