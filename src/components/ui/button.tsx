@@ -10,10 +10,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant = "default", size = "default", ...props }, ref) => {
     const variants = {
       default: "btn-primary-liquid text-white transform active:scale-95",
-      secondary: "btn-secondary-liquid text-gray-800 hover:text-indigo-600 transform active:scale-95",
-      outline: "border-2 border-indigo-200 bg-transparent hover:border-indigo-500 hover:text-indigo-700 text-indigo-600 transform active:scale-95",
-      ghost: "bg-transparent hover:bg-indigo-50 text-indigo-700 transform active:scale-95",
-      danger: "bg-gradient-to-r from-red-500 to-rose-600 text-white hover:from-red-600 hover:to-rose-700 shadow-md hover:shadow-lg transform active:scale-95 border border-transparent",
+      secondary: "btn-secondary-liquid text-gray-800 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 transform active:scale-95",
+      outline: "border-2 border-indigo-200 dark:border-indigo-500/30 bg-transparent hover:border-indigo-500 dark:hover:border-indigo-500/70 hover:text-indigo-700 dark:hover:text-indigo-300 text-indigo-600 dark:text-indigo-400 transform active:scale-95",
+      ghost: "bg-transparent hover:bg-indigo-50 dark:hover:bg-slate-800/50 text-indigo-700 dark:text-indigo-400 transform active:scale-95",
+      danger: "bg-red-600 hover:bg-red-700 text-white shadow-sm transform active:scale-95",
     }
     
     const sizes = {

@@ -12,7 +12,7 @@ interface NotificationsMenuProps {
 export function NotificationsMenu({ isOpen, onToggle, onClose }: NotificationsMenuProps) {
   const { t, language } = useLanguage();
   const menuRef = useRef<HTMLDivElement>(null);
-  
+
   const {
     notifications,
     unreadCount,
@@ -56,7 +56,7 @@ export function NotificationsMenu({ isOpen, onToggle, onClose }: NotificationsMe
       {isOpen && (
         <div
           onClick={(e) => e.stopPropagation()}
-          className="absolute right-0 mt-2 w-80 sm:w-96 rounded-2xl border border-gray-250 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl z-50 overflow-hidden"
+          className="absolute right-0 mt-2 w-80 sm:w-96 rounded-2xl border border-gray-100/70 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl z-50 overflow-hidden"
         >
           <div className="p-4 border-b border-gray-100 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 flex justify-between items-center">
             <span className="font-bold text-gray-900 dark:text-white">{t("header.notifications")}</span>

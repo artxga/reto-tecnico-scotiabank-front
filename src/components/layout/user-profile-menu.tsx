@@ -53,7 +53,7 @@ export function UserProfileMenu({ isOpen, onToggle, onClose }: UserProfileMenuPr
       {isOpen && (
         <div
           onClick={(e) => e.stopPropagation()}
-          className="absolute right-0 mt-2 w-72 rounded-2xl border border-gray-250 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl z-50 overflow-hidden p-5 space-y-4"
+          className="absolute right-0 mt-2 w-72 rounded-2xl border border-gray-100/70 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl z-50 overflow-hidden p-5 space-y-4"
         >
           <div className="flex flex-col items-center text-center space-y-2.5 pb-4 border-b border-gray-100 dark:border-slate-800">
             <div className="h-16 w-16 rounded-full bg-gradient-to-tr from-indigo-100 to-blue-100 flex items-center justify-center text-indigo-700 font-bold text-xl shadow-inner ring-4 ring-indigo-50 dark:ring-indigo-950/20">

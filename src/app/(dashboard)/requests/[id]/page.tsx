@@ -146,7 +146,7 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
             <div>
               <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">{request.title}</h1>
-              <p className="text-gray-500 font-mono text-xs bg-gray-100 px-2 py-1 rounded-md inline-block">ID: {request.id}</p>
+              <p className="text-gray-500 font-mono text-xs bg-gray-100 dark:bg-slate-800/60 dark:text-gray-400 px-2 py-1 rounded-md inline-block">ID: {request.id}</p>
             </div>
             <div className="flex flex-row sm:flex-col items-center sm:items-end gap-2 shrink-0">
               <Badge variant={request.status} className="px-3 py-1 text-sm shadow-sm" />

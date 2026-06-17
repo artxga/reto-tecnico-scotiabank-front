@@ -65,7 +65,7 @@ export function KanbanCard({ request, index }: KanbanCardProps) {
                 <Calendar className="h-3 w-3" />
                 <span>{new Date(request.creationDate).toLocaleDateString(language === "en" ? "en-US" : "es-ES")}</span>
               </div>
-              <span className="text-[10px] font-medium bg-gray-100 text-gray-650 px-2 py-0.5 rounded-full truncate max-w-[80px]" title={translateCategory(request.category)}>
+              <span className="text-[10px] font-medium bg-gray-100 text-gray-650 dark:bg-slate-800 dark:text-slate-300 px-2 py-0.5 rounded-full truncate max-w-[80px]" title={translateCategory(request.category)}>
                 {translateCategory(request.category)}
               </span>
             </div>

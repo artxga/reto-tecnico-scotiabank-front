@@ -129,113 +129,48 @@ select option {
 }
 
 /* ==========================================================================
-   Liquid Glass Buttons (Light Mode)
+   Simple Buttons (Light Mode)
    ========================================================================== */
 
-/* Primary Glossy Gel Button */
+/* Primary Button */
 .btn-primary-liquid,
 .glass-btn-primary {
-  background: linear-gradient(180deg, rgba(99, 102, 241, 0.95) 0%, rgba(79, 70, 229, 0.8) 50%, rgba(55, 48, 163, 0.95) 100%) !important;
-  backdrop-filter: blur(8px) !important;
-  -webkit-backdrop-filter: blur(8px) !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.5) !important;
-  border-left: 1px solid rgba(255, 255, 255, 0.25) !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.25) !important;
-  border-bottom: 1.5px solid rgba(15, 23, 42, 0.45) !important;
+  background-color: #4f46e5 !important;
   color: #ffffff !important;
-  text-shadow: 0 1px 1.5px rgba(0, 0, 0, 0.2) !important;
-  box-shadow:
-    0 4px 15px rgba(99, 102, 241, 0.25),
-    inset 0 1px 1px rgba(255, 255, 255, 0.4),
-    inset 0 -2px 6px rgba(0, 0, 0, 0.15) !important;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  position: relative;
-  overflow: hidden;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn-primary-liquid::after,
-.glass-btn-primary::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 50%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0) 100%) !important;
-  pointer-events: none;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+  transition: all 0.2s ease-in-out !important;
+  border: none !important;
 }
 
 .btn-primary-liquid:hover,
 .glass-btn-primary:hover {
-  background: linear-gradient(180deg, rgba(110, 114, 243, 0.98) 0%, rgba(89, 80, 239, 0.85) 50%, rgba(67, 56, 202, 0.98) 100%) !important;
-  box-shadow:
-    0 6px 18px rgba(99, 102, 241, 0.35),
-    inset 0 1px 1px rgba(255, 255, 255, 0.5),
-    inset 0 -2px 6px rgba(0, 0, 0, 0.1) !important;
-  transform: translateY(-1px) scale(1.01) !important;
+  background-color: #4338ca !important;
 }
 
 .btn-primary-liquid:active,
 .glass-btn-primary:active {
-  transform: translateY(1px) scale(0.98) !important;
-  box-shadow:
-    0 2px 8px rgba(99, 102, 241, 0.2),
-    inset 0 1px 2px rgba(0, 0, 0, 0.25) !important;
+  transform: scale(0.98) !important;
 }
 
-/* Secondary Frosted Glossy Button */
+/* Secondary Button */
 .btn-secondary-liquid,
 .glass-btn-secondary {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0.25) 50%, rgba(245, 247, 250, 0.55) 100%) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.75) !important;
-  border-left: 1px solid rgba(255, 255, 255, 0.5) !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.5) !important;
-  border-bottom: 1.5px solid rgba(0, 0, 0, 0.12) !important;
-  color: #334155 !important;
-  box-shadow:
-    0 4px 12px rgba(0, 0, 0, 0.02),
-    inset 0 1px 1px rgba(255, 255, 255, 0.7),
-    inset 0 -2px 6px rgba(255, 255, 255, 0.3) !important;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-secondary-liquid::after,
-.glass-btn-secondary::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 50%;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0) 100%) !important;
-  pointer-events: none;
+  background-color: #ffffff !important;
+  color: #374151 !important;
+  border: 1px solid #d1d5db !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+  transition: all 0.2s ease-in-out !important;
 }
 
 .btn-secondary-liquid:hover,
 .glass-btn-secondary:hover {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.4) 50%, rgba(250, 250, 250, 0.6) 100%) !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.85) !important;
-  box-shadow:
-    0 6px 14px rgba(0, 0, 0, 0.03),
-    inset 0 1px 1px rgba(255, 255, 255, 0.85),
-    inset 0 -2px 6px rgba(255, 255, 255, 0.4) !important;
-  border-color: rgba(99, 102, 241, 0.3) !important;
-  transform: translateY(-1px) scale(1.01) !important;
+  background-color: #f9fafb !important;
+  color: #111827 !important;
 }
 
 .btn-secondary-liquid:active,
 .glass-btn-secondary:active {
-  transform: translateY(1px) scale(0.98) !important;
-  box-shadow:
-    0 2px 6px rgba(0, 0, 0, 0.02),
-    inset 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+  transform: scale(0.98) !important;
 }
 
 /* ==========================================================================
@@ -384,54 +319,29 @@ select option {
   -webkit-backface-visibility: hidden;
 }
 
-/* Liquid Buttons (Dark Mode overrides) */
+/* Simple Buttons (Dark Mode overrides) */
 .dark .btn-primary-liquid,
 .dark .glass-btn-primary {
-  background: linear-gradient(180deg, rgba(99, 102, 241, 0.8) 0%, rgba(79, 70, 229, 0.6) 50%, rgba(49, 46, 129, 0.8) 100%) !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.25) !important;
-  border-bottom: 1.5px solid rgba(0, 0, 0, 0.65) !important;
-  box-shadow:
-    0 6px 18px rgba(99, 102, 241, 0.15),
-    inset 0 1px 1px rgba(255, 255, 255, 0.2),
-    inset 0 -2px 6px rgba(0, 0, 0, 0.25) !important;
+  background-color: #4f46e5 !important;
+  color: #ffffff !important;
 }
 
 .dark .btn-primary-liquid:hover,
 .dark .glass-btn-primary:hover {
-  background: linear-gradient(180deg, rgba(99, 102, 241, 0.9) 0%, rgba(79, 70, 229, 0.75) 50%, rgba(49, 46, 129, 0.9) 100%) !important;
-  box-shadow:
-    0 8px 24px rgba(99, 102, 241, 0.25),
-    inset 0 1px 1px rgba(255, 255, 255, 0.3),
-    inset 0 -2px 6px rgba(0, 0, 0, 0.15) !important;
+  background-color: #6366f1 !important;
 }
 
 .dark .btn-secondary-liquid,
 .dark .glass-btn-secondary {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 50%, rgba(255, 255, 255, 0.04) 100%) !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
-  border-left: 1px solid rgba(255, 255, 255, 0.08) !important;
-  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
-  border-bottom: 1.5px solid rgba(0, 0, 0, 0.45) !important;
-  box-shadow:
-    0 6px 16px rgba(0, 0, 0, 0.25),
-    inset 0 1px 1px rgba(255, 255, 255, 0.1),
-    inset 0 -2px 6px rgba(0, 0, 0, 0.15) !important;
-}
-
-.dark .btn-secondary-liquid::after,
-.dark .glass-btn-secondary::after {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 100%) !important;
+  background-color: #1e293b !important;
+  color: #f1f5f9 !important;
+  border: 1px solid #334155 !important;
 }
 
 .dark .btn-secondary-liquid:hover,
 .dark .glass-btn-secondary:hover {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 50%, rgba(255, 255, 255, 0.07) 100%) !important;
-  border-top: 1px solid rgba(255, 255, 255, 0.22) !important;
-  box-shadow:
-    0 8px 20px rgba(0, 0, 0, 0.35),
-    inset 0 1px 1px rgba(255, 255, 255, 0.15),
-    inset 0 -2px 6px rgba(0, 0, 0, 0.05) !important;
-  border-color: rgba(129, 140, 248, 0.3) !important;
+  background-color: #334155 !important;
+  border-color: #475569 !important;
 }
 
 /* Badges Custom Styling Overrides for Dark Mode visibility */
