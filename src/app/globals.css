@@ -19,13 +19,6 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
@@ -55,8 +48,7 @@ body {
 .bg-white\/70,
 .bg-white\/60,
 .bg-white\/50,
-.bg-white\/40,
-.bg-white {
+.bg-white\/40 {
   background-color: rgba(255, 255, 255, 0.4) !important;
   backdrop-filter: blur(24px) saturate(200%) !important;
   -webkit-backdrop-filter: blur(24px) saturate(200%) !important;
@@ -196,8 +188,7 @@ select option {
 
 /* Secondary Frosted Glossy Button */
 .btn-secondary-liquid,
-.glass-btn-secondary,
-.bg-white.border.border-gray-200 {
+.glass-btn-secondary {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.65) 0%, rgba(255, 255, 255, 0.25) 50%, rgba(245, 247, 250, 0.55) 100%) !important;
   backdrop-filter: blur(12px) !important;
   -webkit-backdrop-filter: blur(12px) !important;
@@ -216,8 +207,7 @@ select option {
 }
 
 .btn-secondary-liquid::after,
-.glass-btn-secondary::after,
-.bg-white.border.border-gray-200::after {
+.glass-btn-secondary::after {
   content: '';
   position: absolute;
   top: 0;
@@ -229,8 +219,7 @@ select option {
 }
 
 .btn-secondary-liquid:hover,
-.glass-btn-secondary:hover,
-.bg-white.border.border-gray-200:hover {
+.glass-btn-secondary:hover {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.4) 50%, rgba(250, 250, 250, 0.6) 100%) !important;
   border-top: 1px solid rgba(255, 255, 255, 0.85) !important;
   box-shadow:
@@ -242,8 +231,7 @@ select option {
 }
 
 .btn-secondary-liquid:active,
-.glass-btn-secondary:active,
-.bg-white.border.border-gray-200:active {
+.glass-btn-secondary:active {
   transform: translateY(1px) scale(0.98) !important;
   box-shadow:
     0 2px 6px rgba(0, 0, 0, 0.02),
@@ -267,7 +255,6 @@ select option {
 .dark .bg-white\/60,
 .dark .bg-white\/50,
 .dark .bg-white\/40,
-.dark .bg-white,
 .dark .bg-slate-900\/60 {
   background-color: rgba(15, 23, 42, 0.4) !important;
   backdrop-filter: blur(24px) saturate(200%) !important;
@@ -419,9 +406,7 @@ select option {
 }
 
 .dark .btn-secondary-liquid,
-.dark .glass-btn-secondary,
-.dark .bg-white.border.border-gray-200,
-.dark .bg-white.border.border-gray-250 {
+.dark .glass-btn-secondary {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 50%, rgba(255, 255, 255, 0.04) 100%) !important;
   border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
   border-left: 1px solid rgba(255, 255, 255, 0.08) !important;
@@ -434,15 +419,12 @@ select option {
 }
 
 .dark .btn-secondary-liquid::after,
-.dark .glass-btn-secondary::after,
-.dark .bg-white.border.border-gray-200::after {
+.dark .glass-btn-secondary::after {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0) 100%) !important;
 }
 
 .dark .btn-secondary-liquid:hover,
-.dark .glass-btn-secondary:hover,
-.dark .bg-white.border.border-gray-200:hover,
-.dark .bg-white.border.border-gray-250:hover {
+.dark .glass-btn-secondary:hover {
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 50%, rgba(255, 255, 255, 0.07) 100%) !important;
   border-top: 1px solid rgba(255, 255, 255, 0.22) !important;
   box-shadow:

@@ -12,7 +12,7 @@ export default function DashboardLayout({
   const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   return (
-    <div className="flex h-screen overflow-hidden bg-slate-50/30 dark:bg-[#030712] relative transition-all duration-300">
+    <div className="flex h-screen overflow-hidden bg-white/80 dark:bg-[#030712] relative transition-all duration-300">
       {/* Background Liquid Glass Blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
         {/* Blob 1: Top Right - Blue/Indigo */}
@@ -35,7 +35,7 @@ export default function DashboardLayout({
       <div className="flex flex-1 flex-col overflow-hidden relative z-10">
         <Header onOpenMobileMenu={() => setIsMobileOpen(true)} />
         <main className="flex-1 overflow-y-auto overflow-x-hidden p-4 sm:p-6 relative">
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none"></div>
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f46e50a_1px,transparent_1px),linear-gradient(to_bottom,#4f46e50a_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)] pointer-events-none"></div>
           <div className="relative z-10 mx-auto max-w-7xl animate-in fade-in duration-500">
             {children}
           </div>

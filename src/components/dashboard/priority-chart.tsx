@@ -42,7 +42,7 @@ export function PriorityChart({ requests }: PriorityChartProps) {
   }));
 
   return (
-    <div className="bg-white/70 backdrop-blur-xl border border-white rounded-2xl p-6 shadow-sm h-full flex flex-col hover:shadow-md transition-shadow">
+    <div className="bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-white rounded-2xl p-6 shadow-sm h-full flex flex-col hover:shadow-md transition-shadow">
       <h3 className="text-lg font-bold text-gray-900 mb-6 text-center">{t("dashboard.charts.priorityTitle")}</h3>
       <div className="flex-1 min-h-[280px]">
         <ResponsiveContainer width="100%" height="100%">

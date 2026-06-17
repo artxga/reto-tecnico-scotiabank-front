@@ -148,7 +148,7 @@ export function RecentActivity({ requests }: RecentActivityProps) {
             <Link
               href={`/requests/${act.requestId}`}
               key={act.id}
-              className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl border border-white/40 dark:border-white/5 bg-white/30 dark:bg-slate-900/30 backdrop-blur-md hover:bg-white/60 dark:hover:bg-slate-900/50 hover:border-indigo-500/30 transition-all duration-300 group shadow-xs hover:shadow-sm"
+              className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl border border-white/40 dark:border-white/5 bg-white/30 dark:bg-slate-900/30 backdrop-blur-md hover:bg-white/60 dark:bg-slate-900/50 dark:hover:bg-slate-900/50 hover:border-indigo-500/30 transition-all duration-300 group shadow-xs hover:shadow-sm"
             >
               <div className="flex items-center gap-4 flex-1 min-w-0">
                 <div className={`p-2.5 rounded-xl shrink-0 ${act.color} ring-1 ring-black/5 dark:ring-white/5 shadow-xs`}>
@@ -167,7 +167,7 @@ export function RecentActivity({ requests }: RecentActivityProps) {
                   </div>
                   <div className="flex flex-wrap items-center gap-2 pt-0.5">
                     {act.category && (
-                      <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-slate-100/60 dark:bg-slate-800/60 text-slate-700 dark:text-slate-350 border border-slate-200/50 dark:border-slate-700/50">
+                      <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-white/60 dark:bg-slate-800/60 text-slate-700 dark:text-slate-350 border border-slate-200/50 dark:border-slate-700/50">
                         {act.category}
                       </span>
                     )}

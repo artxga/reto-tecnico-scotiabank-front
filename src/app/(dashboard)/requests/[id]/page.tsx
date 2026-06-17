@@ -45,7 +45,7 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
         </div>
 
         {/* Main Details Box Skeleton */}
-        <div className="bg-white/70 backdrop-blur-xl rounded-3xl shadow-lg border border-white overflow-hidden">
+        <div className="bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl rounded-3xl shadow-lg border border-white overflow-hidden">
           {/* Box Header */}
           <div className="p-6 sm:p-8 border-b border-gray-100 bg-gradient-to-br from-white/60 to-white/10 space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
@@ -69,7 +69,7 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
                   <Skeleton className="h-5 w-5 rounded-md" />
                   <Skeleton className="h-6 w-28" />
                 </div>
-                <div className="bg-white/50 rounded-xl p-5 border border-gray-100 space-y-2">
+                <div className="bg-white/50 dark:bg-slate-900/40 rounded-xl p-5 border border-gray-100 space-y-2">
                   <Skeleton className="h-4 w-full" />
                   <Skeleton className="h-4 w-11/12" />
                   <Skeleton className="h-4 w-4/5" />
@@ -79,7 +79,7 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
 
             {/* Sidebar details Skeleton */}
             <div className="space-y-6">
-              <div className="bg-gray-50/50 rounded-2xl p-5 border border-gray-100/80 space-y-5">
+              <div className="bg-white/50 rounded-2xl p-5 border border-gray-100/80 space-y-5">
                 <div className="border-b border-gray-200 pb-3 flex items-center gap-2">
                   <Skeleton className="h-4 w-4 rounded-md" />
                   <Skeleton className="h-5 w-20" />
@@ -124,14 +124,14 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
     <div className="max-w-3xl mx-auto space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <Link href="/requests" className="p-2 rounded-full hover:bg-white/50 transition-colors shadow-sm bg-white/30 backdrop-blur-sm border border-white shrink-0">
+          <Link href="/requests" className="p-2 rounded-full hover:bg-white/50 dark:hover:bg-slate-800/50 dark:bg-slate-900/40 transition-colors shadow-sm bg-white/30 dark:bg-slate-900/20 backdrop-blur-sm border border-white shrink-0">
             <ArrowLeft className="h-5 w-5 text-gray-700" />
           </Link>
           <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900">{t("requests.detail.title")}</h2>
         </div>
         <div className="flex gap-3 w-full sm:w-auto">
           <Link href={`/requests/${id}/edit`} className="flex-1 sm:flex-initial">
-            <Button variant="secondary" className="w-full gap-2 bg-white/50 backdrop-blur-sm hover:bg-white">
+            <Button variant="secondary" className="w-full gap-2 bg-white/50 dark:bg-slate-900/40 backdrop-blur-sm hover:bg-white dark:bg-slate-900">
               <Edit className="h-4 w-4" /> {t("common.edit")}
             </Button>
           </Link>
@@ -141,7 +141,7 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
         </div>
       </div>
 
-      <div className="bg-white/70 backdrop-blur-xl rounded-3xl shadow-lg shadow-gray-200/50 border border-white overflow-hidden">
+      <div className="bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl rounded-3xl shadow-lg shadow-gray-200/50 border border-white overflow-hidden">
         <div className="p-6 sm:p-8 border-b border-gray-100 bg-gradient-to-br from-white/60 to-white/10">
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
             <div>
@@ -162,14 +162,14 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
                 <AlignLeft className="h-5 w-5 text-indigo-500" />
                 <h3>{t("requests.detail.description")}</h3>
               </div>
-              <div className="bg-white/50 rounded-xl p-5 border border-gray-100 text-gray-700 leading-relaxed shadow-sm">
+              <div className="bg-white/50 dark:bg-slate-900/40 rounded-xl p-5 border border-gray-100 text-gray-700 leading-relaxed shadow-sm">
                 {request.description}
               </div>
             </div>
           </div>
 
           <div className="space-y-6">
-            <div className="bg-gray-50/50 rounded-2xl p-5 border border-gray-100/80 space-y-5">
+            <div className="bg-white/50 rounded-2xl p-5 border border-gray-100/80 space-y-5">
               <h3 className="font-semibold text-gray-800 flex items-center gap-2 border-b border-gray-200 pb-3">
                 <Activity className="h-4 w-4 text-indigo-500" /> {language === "en" ? "Details" : "Detalles"}
               </h3>

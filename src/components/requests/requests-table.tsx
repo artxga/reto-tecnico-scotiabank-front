@@ -12,10 +12,10 @@ export function RequestsTable({ filtered, categoryTranslations }: RequestsTableP
   const { t, language } = useLanguage();
 
   return (
-    <div className="hidden md:block bg-white/70 backdrop-blur-xl rounded-2xl shadow-sm border border-white overflow-hidden">
+    <div className="hidden md:block bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl rounded-2xl shadow-sm border border-white overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full text-left text-sm whitespace-nowrap">
-          <thead className="bg-white/50 text-gray-600 font-semibold border-b border-gray-100">
+          <thead className="bg-white/50 dark:bg-slate-900/40 text-gray-600 font-semibold border-b border-gray-100">
             <tr>
               <th className="px-6 py-4">{language === "en" ? "Request Title" : "Título de la Solicitud"}</th>
               <th className="px-6 py-4">{language === "en" ? "Requester" : "Solicitante"}</th>
@@ -28,7 +28,7 @@ export function RequestsTable({ filtered, categoryTranslations }: RequestsTableP
           </thead>
           <tbody className="divide-y divide-gray-50">
             {filtered.map((req) => (
-              <tr key={req.id} className="hover:bg-white/60 transition-colors group">
+              <tr key={req.id} className="hover:bg-white/60 dark:hover:bg-slate-800/60 dark:bg-slate-900/50 transition-colors group">
                 <td className="px-6 py-4 font-semibold text-gray-900 max-w-[280px] truncate" title={req.title}>{req.title}</td>
                 <td className="px-6 py-4 text-gray-600">{req.requester}</td>
                 <td className="px-6 py-4 text-gray-600">{categoryTranslations[req.category] || req.category}</td>

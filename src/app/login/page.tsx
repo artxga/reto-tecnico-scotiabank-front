@@ -96,7 +96,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center p-4 bg-slate-50 dark:bg-slate-950 overflow-hidden transition-colors duration-300">
+    <div className="relative min-h-screen flex items-center justify-center p-4 bg-white dark:bg-slate-950 overflow-hidden transition-colors duration-300">
       {/* Apple Liquid Glass Background Blobs */}
       <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] rounded-full bg-blue-400/20 dark:bg-blue-600/10 blur-[120px] animate-pulse pointer-events-none" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[55%] h-[55%] rounded-full bg-indigo-400/20 dark:bg-indigo-600/10 blur-[130px] animate-pulse pointer-events-none" />
@@ -170,7 +170,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={isLoading}
-                className={`pl-11 rounded-xl h-11 border-gray-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 focus:bg-white dark:focus:bg-slate-900 text-gray-950 dark:text-white transition-all ${
+                className={`pl-11 rounded-xl h-11 border-gray-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 focus:bg-white dark:bg-slate-900 dark:focus:bg-slate-900 text-gray-950 dark:text-white transition-all ${
                   errors.email ? "border-red-500 focus:ring-red-500/20" : ""
                 }`}
               />
@@ -194,7 +194,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 disabled={isLoading}
-                className={`pl-11 rounded-xl h-11 border-gray-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 focus:bg-white dark:focus:bg-slate-900 text-gray-950 dark:text-white transition-all ${
+                className={`pl-11 rounded-xl h-11 border-gray-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 focus:bg-white dark:bg-slate-900 dark:focus:bg-slate-900 text-gray-950 dark:text-white transition-all ${
                   errors.password ? "border-red-500 focus:ring-red-500/20" : ""
                 }`}
               />
@@ -222,7 +222,7 @@ export default function LoginPage() {
           <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">
             {t("login.mockCredentials")}
           </p>
-          <div className="inline-flex flex-col sm:flex-row items-center gap-1 sm:gap-3 px-4 py-2 rounded-xl bg-gray-50/80 dark:bg-slate-950/40 border border-gray-100 dark:border-slate-900/50 text-xs font-medium text-gray-600 dark:text-gray-400">
+          <div className="inline-flex flex-col sm:flex-row items-center gap-1 sm:gap-3 px-4 py-2 rounded-xl bg-white/80 dark:bg-slate-950/40 border border-gray-100 dark:border-slate-900/50 text-xs font-medium text-gray-600 dark:text-gray-400">
             <span>
               <strong>User:</strong> admin@scotiabank.com
             </span>

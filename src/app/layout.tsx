@@ -47,7 +47,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col bg-gray-50 text-gray-900">
+      <body className="min-h-full flex flex-col bg-white dark:bg-[#030712] text-gray-900">
         <QueryProvider>
           <ToastProvider>
             <LanguageProvider>

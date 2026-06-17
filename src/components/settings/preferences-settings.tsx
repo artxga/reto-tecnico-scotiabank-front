@@ -21,7 +21,7 @@ export function PreferencesSettings({
   const { t } = useLanguage();
 
   return (
-    <div className="bg-white/70 backdrop-blur-xl rounded-2xl shadow-sm border border-white p-6 sm:p-8 space-y-6">
+    <div className="bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl rounded-2xl shadow-sm border border-white p-6 sm:p-8 space-y-6">
       <div className="flex items-center gap-3 border-b border-gray-100 pb-4">
         <div className="h-10 w-10 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600">
           <Sun className="h-5 w-5" />
@@ -51,7 +51,7 @@ export function PreferencesSettings({
                   className={`flex flex-col sm:flex-row items-center justify-center gap-2 py-3 px-4 rounded-xl border text-sm font-semibold transition-all cursor-pointer ${
                     active 
                       ? "bg-indigo-50 border-indigo-200 text-indigo-700 shadow-xs" 
-                      : "border-gray-200 bg-white/50 text-gray-600 hover:bg-white hover:text-gray-950"
+                      : "border-gray-200 bg-white/50 dark:bg-slate-900/40 text-gray-600 hover:bg-white dark:bg-slate-900 hover:text-gray-950"
                   }`}
                 >
                   <Icon className={`h-4.5 w-4.5 ${active ? "text-indigo-600" : "text-gray-400"}`} />
@@ -81,7 +81,7 @@ export function PreferencesSettings({
                   className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl border text-sm font-semibold transition-all cursor-pointer ${
                     active 
                       ? "bg-indigo-50 border-indigo-200 text-indigo-700 shadow-xs" 
-                      : "border-gray-200 bg-white/50 text-gray-600 hover:bg-white hover:text-gray-950"
+                      : "border-gray-200 bg-white/50 dark:bg-slate-900/40 text-gray-600 hover:bg-white dark:bg-slate-900 hover:text-gray-950"
                   }`}
                 >
                   <span>{item.label}</span>
@@ -104,7 +104,7 @@ export function PreferencesSettings({
           <select
             value={refreshInterval}
             onChange={(e) => setRefreshInterval(e.target.value)}
-            className="px-3 py-2 rounded-xl border border-gray-200 bg-white/50 text-gray-700 font-medium text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 outline-hidden"
+            className="px-3 py-2 rounded-xl border border-gray-200 bg-white/50 dark:bg-slate-900/40 text-gray-700 font-medium text-sm focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 outline-hidden"
           >
             <option value="10">{t("settings.preferences.refreshOption", { count: 10 })}</option>
             <option value="30">{t("settings.preferences.refreshOption", { count: 30 })}</option>
@@ -129,7 +129,7 @@ export function PreferencesSettings({
             }`}
           >
             <span
-              className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow-sm ring-0 transition duration-200 ease-in-out ${
+              className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white dark:bg-slate-900 shadow-sm ring-0 transition duration-200 ease-in-out ${
                 notifications ? "translate-x-5" : "translate-x-0"
               }`}
             />

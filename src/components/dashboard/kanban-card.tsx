@@ -34,7 +34,7 @@ export function KanbanCard({ request, index }: KanbanCardProps) {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className={`bg-white p-4 rounded-xl border shadow-sm group transition-all select-none ${
+          className={`bg-white dark:bg-slate-900 p-4 rounded-xl border shadow-sm group transition-all select-none ${
             snapshot.isDragging 
               ? "shadow-xl border-indigo-300 ring-2 ring-indigo-500/20 rotate-2 scale-105 z-50 relative" 
               : "border-gray-200/80 hover:border-gray-300 hover:shadow-md"

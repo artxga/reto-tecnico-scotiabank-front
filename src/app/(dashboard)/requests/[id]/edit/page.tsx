@@ -47,7 +47,7 @@ export default function EditRequestPage({ params }: { params: Promise<{ id: stri
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <div className="flex items-center gap-4">
-        <Link href={`/requests/${id}`} className="p-2 rounded-full hover:bg-white/60 transition-colors shadow-sm bg-white/30 backdrop-blur-sm border border-white">
+        <Link href={`/requests/${id}`} className="p-2 rounded-full hover:bg-white/60 dark:hover:bg-slate-800/60 dark:bg-slate-900/50 transition-colors shadow-sm bg-white/30 dark:bg-slate-900/20 backdrop-blur-sm border border-white">
           <ArrowLeft className="h-5 w-5 text-gray-700" />
         </Link>
         <div>
@@ -56,7 +56,7 @@ export default function EditRequestPage({ params }: { params: Promise<{ id: stri
         </div>
       </div>
 
-      <div className="bg-white/70 backdrop-blur-xl rounded-2xl shadow-sm border border-white p-6 sm:p-8">
+      <div className="bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl rounded-2xl shadow-sm border border-white p-6 sm:p-8">
         <RequestForm initialData={request} onSubmit={handleSubmit} isLoading={updateRequest.isPending} />
       </div>
     </div>

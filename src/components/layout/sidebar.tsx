@@ -26,7 +26,7 @@ export function Sidebar({ isMobileOpen, onCloseMobile }: SidebarProps) {
   return (
     <div 
       className={cn(
-        "flex h-full flex-col border-r border-gray-200 bg-white shadow-[2px_0_15px_-3px_rgba(0,0,0,0.05)] transition-all duration-300 glass-sidebar",
+        "flex h-full flex-col border-r border-gray-200 bg-white dark:bg-slate-900 shadow-[2px_0_15px_-3px_rgba(0,0,0,0.05)] transition-all duration-300 glass-sidebar",
         // Desktop behavior
         "md:relative md:z-20 md:translate-x-0",
         isCollapsed ? "md:w-20" : "md:w-64",
@@ -49,7 +49,7 @@ export function Sidebar({ isMobileOpen, onCloseMobile }: SidebarProps) {
         {/* Toggle desktop collapse */}
         <button 
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors focus:outline-none hidden md:block"
+          className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-white/80 transition-colors focus:outline-none hidden md:block"
         >
           {isCollapsed ? <ChevronRight className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
         </button>
@@ -77,7 +77,7 @@ export function Sidebar({ isMobileOpen, onCloseMobile }: SidebarProps) {
                 "group flex items-center py-2.5 text-sm font-medium rounded-lg transition-all duration-200 relative",
                 isActive
                   ? "bg-indigo-50 text-indigo-700 shadow-sm"
-                  : "text-gray-600 hover:bg-gray-50 hover:text-indigo-600",
+                  : "text-gray-600 hover:bg-white/60 hover:text-indigo-600",
                 isCollapsed ? "md:justify-center md:px-0 justify-start px-3" : "justify-start px-3"
               )}
             >
@@ -108,7 +108,7 @@ export function Sidebar({ isMobileOpen, onCloseMobile }: SidebarProps) {
             "group flex w-full items-center py-2.5 text-sm font-medium rounded-lg transition-all duration-200 relative",
             pathname === "/settings"
               ? "bg-indigo-50 text-indigo-700 shadow-sm"
-              : "text-gray-600 hover:bg-gray-50 hover:text-indigo-600",
+              : "text-gray-600 hover:bg-white/60 hover:text-indigo-600",
             isCollapsed ? "md:justify-center md:px-0 justify-start px-3" : "justify-start px-3"
           )}
         >

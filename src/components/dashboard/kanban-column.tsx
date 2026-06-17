@@ -21,26 +21,26 @@ export function KanbanColumn({ id, title, requests }: KanbanColumnProps) {
   const hasMoreClosed = isClosedColumn && requests.length > 5;
 
   const COLUMN_COLORS: Record<string, string> = {
-    pending: "bg-amber-50/50 border-amber-200/60",
-    in_review: "bg-purple-50/50 border-purple-200/60",
-    approved: "bg-emerald-50/50 border-emerald-200/60",
-    rejected: "bg-rose-50/50 border-rose-200/60",
-    closed: "bg-slate-100/50 border-slate-300/60",
+    pending: "bg-amber-50/50 border-amber-200/60 dark:bg-amber-950/20 dark:border-amber-900/40",
+    in_review: "bg-purple-50/50 border-purple-200/60 dark:bg-purple-950/20 dark:border-purple-900/40",
+    approved: "bg-emerald-50/50 border-emerald-200/60 dark:bg-emerald-950/20 dark:border-emerald-900/40",
+    rejected: "bg-rose-50/50 border-rose-200/60 dark:bg-rose-950/20 dark:border-rose-900/40",
+    closed: "bg-slate-100/50 border-slate-300/60 dark:bg-slate-900/50 dark:border-slate-800/60",
   };
 
   const HEADER_COLORS: Record<string, string> = {
-    pending: "bg-amber-100/80 text-amber-900",
-    in_review: "bg-purple-100/80 text-purple-900",
-    approved: "bg-emerald-100/80 text-emerald-900",
-    rejected: "bg-rose-100/80 text-rose-900",
-    closed: "bg-slate-200/80 text-slate-900",
+    pending: "bg-amber-100/80 text-amber-900 dark:bg-amber-900/30 dark:text-amber-200 dark:border-amber-900/50",
+    in_review: "bg-purple-100/80 text-purple-900 dark:bg-purple-900/30 dark:text-purple-200 dark:border-purple-900/50",
+    approved: "bg-emerald-100/80 text-emerald-900 dark:bg-emerald-900/30 dark:text-emerald-200 dark:border-emerald-900/50",
+    rejected: "bg-rose-100/80 text-rose-900 dark:bg-rose-900/30 dark:text-rose-200 dark:border-rose-900/50",
+    closed: "bg-slate-200/80 text-slate-900 dark:bg-slate-800/60 dark:text-slate-300 dark:border-slate-700/50",
   };
 
   return (
     <div className={`flex flex-col rounded-2xl min-w-[320px] w-[320px] shadow-sm snap-center self-start max-h-[650px] border ${COLUMN_COLORS[id] || "bg-gray-100/50 border-gray-200/60"}`}>
-      <div className={`p-4 border-b border-black/5 flex justify-between items-center rounded-t-2xl sticky top-0 z-10 backdrop-blur-md ${HEADER_COLORS[id] || "bg-white/70"}`}>
+      <div className={`p-4 border-b border-black/5 flex justify-between items-center rounded-t-2xl sticky top-0 z-10 backdrop-blur-md ${HEADER_COLORS[id] || "bg-white/70 dark:bg-slate-900/60"}`}>
         <h3 className="font-bold">{title}</h3>
-        <span className="text-xs font-bold bg-white/60 py-1 px-2.5 rounded-full shadow-sm">
+        <span className="text-xs font-bold bg-white/60 dark:bg-slate-900/50 py-1 px-2.5 rounded-full shadow-sm">
           {requests.length}
         </span>
       </div>

@@ -58,7 +58,7 @@ export function NotificationsMenu({ isOpen, onToggle, onClose }: NotificationsMe
           onClick={(e) => e.stopPropagation()}
           className="absolute right-0 mt-2 w-80 sm:w-96 rounded-2xl border border-gray-250 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl z-50 overflow-hidden"
         >
-          <div className="p-4 border-b border-gray-100 dark:border-slate-800 bg-gray-50/50 dark:bg-slate-900/50 flex justify-between items-center">
+          <div className="p-4 border-b border-gray-100 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 flex justify-between items-center">
             <span className="font-bold text-gray-900 dark:text-white">{t("header.notifications")}</span>
             <div className="flex gap-2">
               {unreadCount > 0 && (
@@ -87,7 +87,7 @@ export function NotificationsMenu({ isOpen, onToggle, onClose }: NotificationsMe
               <div
                 key={n.id}
                 onClick={() => markAsRead(n.id)}
-                className={`p-4 transition-colors cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/50 flex items-start gap-3 relative ${!n.read ? "bg-indigo-50/25 dark:bg-indigo-950/15" : ""}`}
+                className={`p-4 transition-colors cursor-pointer hover:bg-white/60 dark:hover:bg-slate-800/50 flex items-start gap-3 relative ${!n.read ? "bg-indigo-50/25 dark:bg-indigo-950/15" : ""}`}
               >
                 {!n.read && (
                   <span className="absolute left-2.5 top-5.5 h-1.5 w-1.5 rounded-full bg-indigo-600" />

@@ -10,7 +10,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
       <div className="relative">
         <select
           className={cn(
-            "flex h-10 w-full appearance-none rounded-md border border-gray-300 bg-white/50 backdrop-blur-sm px-3 py-2 pr-8 text-sm shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 disabled:cursor-not-allowed disabled:opacity-50 hover:border-gray-400 text-gray-400",
+            "flex h-10 w-full appearance-none rounded-md border border-gray-300 bg-white/50 dark:bg-slate-900/40 backdrop-blur-sm px-3 py-2 pr-8 text-sm shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 disabled:cursor-not-allowed disabled:opacity-50 hover:border-gray-400 text-gray-400",
             className
           )}
           ref={ref}

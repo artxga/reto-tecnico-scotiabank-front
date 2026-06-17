@@ -26,7 +26,7 @@ function RequestsSkeleton() {
           <Skeleton className="h-10 flex-1 sm:flex-initial sm:w-28" />
         </div>
       </div>
-      <div className="flex flex-col gap-4 p-5 bg-white/70 backdrop-blur-xl border border-white rounded-2xl shadow-md">
+      <div className="flex flex-col gap-4 p-5 bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-white rounded-2xl shadow-md">
         <div className="flex flex-col sm:flex-row gap-3">
           <Skeleton className="h-10.5 flex-1 rounded-xl" />
           <Skeleton className="h-10.5 w-28 rounded-xl" />
@@ -34,7 +34,7 @@ function RequestsSkeleton() {
       </div>
       <div className="grid gap-4 md:hidden">
         {Array.from({ length: 4 }).map((_, i) => (
-          <div key={i} className="p-5 bg-white/70 border border-white rounded-2xl shadow-sm space-y-4 animate-pulse">
+          <div key={i} className="p-5 bg-white/70 dark:bg-slate-900/60 border border-white rounded-2xl shadow-sm space-y-4 animate-pulse">
             <div className="flex justify-between items-start">
               <Skeleton className="h-5 w-2/3" />
               <Skeleton className="h-5 w-20 rounded-full" />
@@ -50,8 +50,8 @@ function RequestsSkeleton() {
           </div>
         ))}
       </div>
-      <div className="hidden md:block bg-white/70 backdrop-blur-xl rounded-2xl shadow-sm border border-white overflow-hidden">
-        <div className="p-4 border-b border-gray-100 bg-white/50 flex justify-between">
+      <div className="hidden md:block bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl rounded-2xl shadow-sm border border-white overflow-hidden">
+        <div className="p-4 border-b border-gray-100 bg-white/50 dark:bg-slate-900/40 flex justify-between">
           {Array.from({ length: 7 }).map((_, i) => (
             <Skeleton key={i} className="h-4 w-20" />
           ))}

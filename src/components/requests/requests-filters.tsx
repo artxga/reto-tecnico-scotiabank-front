@@ -60,7 +60,7 @@ export function RequestsFilters({
           onClick={() => setShowFilters(!showFilters)}
           className={`w-full sm:w-auto justify-center px-4 py-2.5 rounded-xl border font-medium inline-flex items-center gap-2 cursor-pointer transition-all shadow-sm hover:shadow h-10.5 ${showFilters || hasActiveFilters
               ? "bg-indigo-50 border-indigo-200 text-indigo-700 dark:bg-indigo-950/30 dark:border-indigo-800 dark:text-indigo-300"
-              : "bg-white border-gray-200 text-gray-700 hover:bg-gray-50 dark:bg-slate-950/20 dark:border-slate-800/80 dark:text-gray-200 dark:hover:bg-slate-950/45"
+              : "bg-white border-gray-200 text-gray-700 hover:bg-white/60 dark:bg-slate-950/20 dark:border-slate-800/80 dark:text-gray-200 dark:hover:bg-slate-950/45"
             }`}
         >
           <SlidersHorizontal className="h-4 w-4" />
