@@ -24,7 +24,7 @@ export default function NewRequestPage() {
       const errorMessage = error instanceof Error ? error.message : "";
       toast(
         errorMessage ||
-        (language === "en" ? "Error creating request" : "Error al crear la solicitud"),
+          (language === "en" ? "Error creating request" : "Error al crear la solicitud"),
         "error",
       );
     }
