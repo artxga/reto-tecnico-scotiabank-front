@@ -34,6 +34,8 @@ Un panel de administración moderno y de alto rendimiento diseñado para la gest
 - **Acceso a Datos:** Conector nativo de PostgreSQL `pg` para scripts y consultas estructuradas de base de datos.
 
 ### Calidad de Código y Pruebas
+- **Linter de alto rendimiento:** [Oxlint](https://oxc.rs/docs/guide/usage/linter.html) para identificar problemas estáticos en tiempo récord.
+- **Formateador de código:** [Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html) para mantener la consistencia de estilos compatible con Prettier.
 - **Pruebas Unitarias y de Integración:** [Jest](https://jestjs.io/) y [React Testing Library](https://testing-library.com/).
 - **Pruebas de Extremo a Extremo (E2E):** [Cypress](https://www.cypress.io/) para automatización de flujos críticos de usuario (Login, Dashboard, CRUD, Navegación).
 
@@ -148,6 +150,22 @@ pnpm run cypress:open
 
 # Ejecutar las pruebas Cypress en consola (headless)
 pnpm run cypress:run
+```
+
+### Linter y Formateador (Oxlint / Oxfmt)
+Herramientas ultra rápidas basadas en Rust para validación y formateo:
+```bash
+# Analizar el código con oxlint
+pnpm run oxlint
+
+# Corregir automáticamente errores solucionables con oxlint
+pnpm run oxlint:fix
+
+# Formatear todos los archivos con oxfmt
+pnpm run oxfmt
+
+# Verificar si los archivos están formateados correctamente
+pnpm run oxfmt:check
 ```
 
 ---

@@ -17,14 +17,6 @@ const STATUS_COLORS: Record<string, string> = {
   closed: "#475569", // slate-600
 };
 
-const STATUS_LABELS: Record<string, string> = {
-  pending: "Pendiente",
-  in_review: "En Revisión",
-  approved: "Aprobada",
-  rejected: "Rechazada",
-  closed: "Cerrada",
-};
-
 export function StatusChart({ requests }: StatusChartProps) {
   const router = useRouter();
   const { t, language } = useLanguage();

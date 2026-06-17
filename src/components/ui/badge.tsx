@@ -31,7 +31,7 @@ function Badge({ className, variant = "default", ...props }: BadgeProps) {
   try {
     const langCtx = useLanguage();
     language = langCtx.language;
-  } catch (e) {
+  } catch {
     // Fallback if not inside LanguageProvider (e.g. standalone tests)
   }
 

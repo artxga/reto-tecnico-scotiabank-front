@@ -1,7 +1,6 @@
 "use client";
 
 import { useRequests } from "@/hooks/use-requests";
-import { Badge } from "@/components/ui/badge";
 import { PieChart, Activity, Clock, CheckCircle, XCircle, Archive } from "lucide-react";
 import Link from "next/link";
 import { RequestStatus } from "@/lib/types";

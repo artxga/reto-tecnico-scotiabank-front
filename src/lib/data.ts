@@ -17,7 +17,7 @@ export async function getMockRequests(): Promise<Request[]> {
     console.error("Supabase Error during GET:", error);
     return [];
   }
-  
+
   return data as Request[];
 }
 
@@ -68,4 +68,4 @@ export async function deleteMockRequest(id: string | number) {
   }
 }
 
-export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+// export const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));

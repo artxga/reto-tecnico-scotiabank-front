@@ -12,14 +12,6 @@ interface KanbanBoardProps {
   requests: Request[];
 }
 
-const COLUMNS: { id: RequestStatus; title: string }[] = [
-  { id: "pending", title: "Pendientes" },
-  { id: "in_review", title: "En Revisión" },
-  { id: "approved", title: "Aprobadas" },
-  { id: "rejected", title: "Rechazadas" },
-  { id: "closed", title: "Cerradas" },
-];
-
 export function KanbanBoard({ requests }: KanbanBoardProps) {
   const [mounted, setMounted] = useState(false);
   const [localRequests, setLocalRequests] = useState<Request[]>(requests);
@@ -70,7 +62,7 @@ export function KanbanBoard({ requests }: KanbanBoardProps) {
     try {
       await updateRequest.mutateAsync({ id: draggableId, data: { status: newStatus } });
       toast(language === "en" ? `Request moved to ${colTitle}` : `Solicitud movida a ${colTitle}`, "success");
-    } catch (error) {
+    } catch {
       // Revert on error
       setLocalRequests(requests);
       toast(language === "en" ? "Error moving request" : "Error al mover la solicitud", "error");

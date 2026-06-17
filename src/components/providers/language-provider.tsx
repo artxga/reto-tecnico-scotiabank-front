@@ -16,7 +16,6 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [language, setLanguageState] = useState<Language>("es");
-  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const savedLang = localStorage.getItem("language") as Language;
@@ -28,7 +27,6 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
         setLanguageState(browserLang as Language);
       }
     }
-    setMounted(true);
   }, []);
 
   const setLanguage = (lang: Language) => {
@@ -39,11 +37,11 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   const t = (key: string, variables?: Record<string, string | number>) => {
     const dictionary = language === "en" ? en : es;
-    
+
     // Support nested keys like "settings.profile.title"
     const keys = key.split(".");
     let value: any = dictionary;
-    
+
     for (const k of keys) {
       if (value && typeof value === "object" && k in value) {
         value = value[k];
@@ -84,7 +82,7 @@ export function useLanguage() {
       const dictionary = es;
       const keys = key.split(".");
       let value: any = dictionary;
-      
+
       for (const k of keys) {
         if (value && typeof value === "object" && k in value) {
           value = value[k];
@@ -109,7 +107,7 @@ export function useLanguage() {
 
     return {
       language: "es" as Language,
-      setLanguage: () => {},
+      setLanguage: () => { },
       t: tFallback,
     };
   }

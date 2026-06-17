@@ -26,8 +26,10 @@ export default function DashboardLayout({
       <Sidebar isMobileOpen={isMobileOpen} onCloseMobile={() => setIsMobileOpen(false)} />
 
       {isMobileOpen && (
-        <div
-          className="fixed inset-0 z-30 bg-black/40 backdrop-blur-xs md:hidden"
+        <button
+          type="button"
+          aria-label="Cerrar menú"
+          className="fixed inset-0 z-30 bg-black/40 backdrop-blur-xs md:hidden w-full h-full border-none outline-none cursor-pointer"
           onClick={() => setIsMobileOpen(false)}
         />
       )}

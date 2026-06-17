@@ -1,4 +1,3 @@
-import { Priority } from "@/lib/types";
 
 interface ExportParams {
   filtered: any[];

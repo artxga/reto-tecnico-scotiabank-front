@@ -1,16 +1,14 @@
 import { NextResponse } from "next/server";
-import { getMockRequests, addMockRequest, delay } from "@/lib/data";
+import { getMockRequests, addMockRequest } from "@/lib/data";
 import { Request as RequestModel } from "@/lib/types";
 import { requestSchema } from "@/lib/validations";
 
 export async function GET() {
-  await delay(800);
   const requests = await getMockRequests();
   return NextResponse.json(requests);
 }
 
 export async function POST(request: Request) {
-  await delay(800);
   try {
     const body = await request.json();
 
@@ -41,7 +39,7 @@ export async function POST(request: Request) {
 
     await addMockRequest(newRequest);
     return NextResponse.json(newRequest, { status: 201 });
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Invalid JSON data structure" }, { status: 400 });
   }
 }

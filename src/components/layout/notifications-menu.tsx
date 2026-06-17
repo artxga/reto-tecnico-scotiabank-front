@@ -56,6 +56,9 @@ export function NotificationsMenu({ isOpen, onToggle, onClose }: NotificationsMe
       {isOpen && (
         <div
           onClick={(e) => e.stopPropagation()}
+          onKeyDown={(e) => e.stopPropagation()}
+          role="menu"
+          tabIndex={0}
           className="absolute right-0 mt-2 w-80 sm:w-96 rounded-2xl border border-gray-100/70 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl z-50 overflow-hidden"
         >
           <div className="p-4 border-b border-gray-100 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 flex justify-between items-center">
@@ -84,10 +87,10 @@ export function NotificationsMenu({ isOpen, onToggle, onClose }: NotificationsMe
 
           <div className="divide-y divide-gray-100 dark:divide-slate-800 max-h-85 overflow-y-auto hide-scrollbar">
             {notifications.map((n) => (
-              <div
+              <button
                 key={n.id}
                 onClick={() => markAsRead(n.id)}
-                className={`p-4 transition-colors cursor-pointer hover:bg-white/60 dark:hover:bg-slate-800/50 flex items-start gap-3 relative ${!n.read ? "bg-indigo-50/25 dark:bg-indigo-950/15" : ""}`}
+                className={`w-full p-4 transition-colors cursor-pointer hover:bg-white/60 dark:hover:bg-slate-800/50 flex items-start gap-3 relative text-left border-none outline-none ${!n.read ? "bg-indigo-50/25 dark:bg-indigo-950/15" : ""}`}
               >
                 {!n.read && (
                   <span className="absolute left-2.5 top-5.5 h-1.5 w-1.5 rounded-full bg-indigo-600" />
@@ -97,7 +100,7 @@ export function NotificationsMenu({ isOpen, onToggle, onClose }: NotificationsMe
                   <p className="text-xs text-gray-500 dark:text-gray-400 leading-snug">{translateNotificationDesc(n.desc)}</p>
                   <p className="text-[10px] text-gray-400 dark:text-gray-500 mt-1">{translateNotificationTime(n.time)}</p>
                 </div>
-              </div>
+              </button>
             ))}
 
             {notifications.length === 0 && (

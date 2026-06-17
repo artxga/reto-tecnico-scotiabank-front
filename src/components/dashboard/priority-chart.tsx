@@ -16,13 +16,6 @@ const PRIORITY_COLORS: Record<string, string> = {
   critical: "#991b1b", // red-800
 };
 
-const PRIORITY_LABELS: Record<string, string> = {
-  low: "Baja",
-  medium: "Media",
-  high: "Alta",
-  critical: "Crítica",
-};
-
 export function PriorityChart({ requests }: PriorityChartProps) {
   const router = useRouter();
   const { t, language } = useLanguage();

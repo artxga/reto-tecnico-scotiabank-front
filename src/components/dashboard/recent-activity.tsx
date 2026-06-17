@@ -28,31 +28,31 @@ interface ActivityEvent {
 export function RecentActivity({ requests }: RecentActivityProps) {
   const { t, language } = useLanguage();
 
-  // Helper to format relative time
-  const formatTimeAgo = (dateStr: string) => {
-    try {
-      const date = new Date(dateStr);
-      const now = new Date();
-      const diffMs = now.getTime() - date.getTime();
-      const diffMins = Math.floor(diffMs / (1000 * 60));
-      const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
-      const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-
-      if (diffMins < 1) return t("dashboard.recentActivity.time.now");
-      if (diffMins < 60) return t("dashboard.recentActivity.time.mins", { count: diffMins });
-      if (diffHours < 24) return diffHours === 1 
-        ? t("dashboard.recentActivity.time.hour")
-        : t("dashboard.recentActivity.time.hours", { count: diffHours });
-      if (diffDays < 30) return diffDays === 1
-        ? t("dashboard.recentActivity.time.day")
-        : t("dashboard.recentActivity.time.days", { count: diffDays });
-      return date.toLocaleDateString(language === "en" ? "en-US" : "es-ES", { day: "numeric", month: "short" });
-    } catch (e) {
-      return language === "en" ? "Recently" : "Recientemente";
-    }
-  };
-
   const activities = useMemo(() => {
+    // Helper to format relative time
+    const formatTimeAgo = (dateStr: string) => {
+      try {
+        const date = new Date(dateStr);
+        const now = new Date();
+        const diffMs = now.getTime() - date.getTime();
+        const diffMins = Math.floor(diffMs / (1000 * 60));
+        const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+        const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+        if (diffMins < 1) return t("dashboard.recentActivity.time.now");
+        if (diffMins < 60) return t("dashboard.recentActivity.time.mins", { count: diffMins });
+        if (diffHours < 24) return diffHours === 1 
+          ? t("dashboard.recentActivity.time.hour")
+          : t("dashboard.recentActivity.time.hours", { count: diffHours });
+        if (diffDays < 30) return diffDays === 1
+          ? t("dashboard.recentActivity.time.day")
+          : t("dashboard.recentActivity.time.days", { count: diffDays });
+        return date.toLocaleDateString(language === "en" ? "en-US" : "es-ES", { day: "numeric", month: "short" });
+      } catch {
+        return language === "en" ? "Recently" : "Recientemente";
+      }
+    };
+
     const list: ActivityEvent[] = [];
 
     const localStatusTranslations: Record<string, string> = {

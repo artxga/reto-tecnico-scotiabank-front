@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getMockRequest, updateMockRequest, deleteMockRequest, delay } from "@/lib/data";
+import { getMockRequest, updateMockRequest } from "@/lib/data";
 import { Priority } from "@/lib/types";
 import { requestSchema, updatePrioritySchema } from "@/lib/validations";
 
@@ -7,7 +7,6 @@ export async function GET(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  await delay(500);
   const { id } = await params;
   const request = await getMockRequest(id);
 
@@ -22,7 +21,6 @@ export async function PUT(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  await delay(800);
   const { id } = await params;
   const request = await getMockRequest(id);
 
@@ -49,7 +47,7 @@ export async function PUT(
 
     const updated = await getMockRequest(id);
     return NextResponse.json(updated);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Invalid JSON data structure" }, { status: 400 });
   }
 }
@@ -58,7 +56,6 @@ export async function PATCH(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  await delay(800);
   const { id } = await params;
   const request = await getMockRequest(id);
 
@@ -85,7 +82,7 @@ export async function PATCH(
 
     const updated = await getMockRequest(id);
     return NextResponse.json(updated);
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: "Invalid JSON data structure" }, { status: 400 });
   }
 }
@@ -94,7 +91,6 @@ export async function DELETE(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  await delay(800);
   const { id } = await params;
   const request = await getMockRequest(id);
 

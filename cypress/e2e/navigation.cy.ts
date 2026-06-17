@@ -16,7 +16,7 @@ describe("Navigation & Header", () => {
       const text = $body.text();
       const isEnglish = /Requests|Settings/i.test(text);
       const isSpanish = /Solicitudes|Ajustes/i.test(text);
-      expect(isEnglish || isSpanish).to.be.true;
+      expect(isEnglish || isSpanish).to.equal(true);
     });
   });
 

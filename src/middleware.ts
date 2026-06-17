@@ -11,7 +11,6 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const authToken = request.cookies.get("auth_token")?.value;
   const isLoginPage = pathname === "/login";
-  const isApiRoute = pathname.startsWith("/api");
 
   if (!authToken && !isLoginPage) {
     const loginUrl = new URL("/login", request.url);
