@@ -20,10 +20,11 @@ export default function NewRequestPage() {
       await createRequest.mutateAsync(data);
       toast(t("requests.form.toastCreated"), "success");
       router.push("/requests");
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "";
       toast(
-        error.message ||
-          (language === "en" ? "Error creating request" : "Error al crear la solicitud"),
+        errorMessage ||
+        (language === "en" ? "Error creating request" : "Error al crear la solicitud"),
         "error",
       );
     }

@@ -1,5 +1,5 @@
 "use client";
-
+import React, { useMemo } from "react";
 import { Request } from "@/lib/types";
 import {
   PlusCircle,
@@ -10,7 +10,6 @@ import {
   History,
   ChevronRight,
 } from "lucide-react";
-import { useMemo } from "react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { useLanguage } from "@/components/providers/language-provider";
@@ -28,7 +27,7 @@ interface ActivityEvent {
   time: string;
   timestamp: number;
   color: string;
-  icon: any;
+  icon: React.ElementType;
   category: string;
   priority: string;
 }

@@ -39,10 +39,11 @@ export default function EditRequestPage({ params }: { params: Promise<{ id: stri
       await updateRequest.mutateAsync({ id, data: { ...data } });
       toast(t("requests.form.toastUpdated"), "success");
       router.push(`/requests/${id}`);
-    } catch (error: any) {
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "";
       toast(
-        error.message ||
-          (language === "en" ? "Error updating request" : "Error al actualizar la solicitud"),
+        errorMessage ||
+        (language === "en" ? "Error updating request" : "Error al actualizar la solicitud"),
         "error",
       );
     }

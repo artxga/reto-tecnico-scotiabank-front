@@ -40,11 +40,11 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
     // Support nested keys like "settings.profile.title"
     const keys = key.split(".");
-    let value: any = dictionary;
+    let value: unknown = dictionary;
 
     for (const k of keys) {
       if (value && typeof value === "object" && k in value) {
-        value = value[k];
+        value = (value as Record<string, unknown>)[k];
       } else {
         value = undefined;
         break;
@@ -81,11 +81,11 @@ export function useLanguage() {
     const tFallback = (key: string, variables?: Record<string, string | number>) => {
       const dictionary = es;
       const keys = key.split(".");
-      let value: any = dictionary;
+      let value: unknown = dictionary;
 
       for (const k of keys) {
         if (value && typeof value === "object" && k in value) {
-          value = value[k];
+          value = (value as Record<string, unknown>)[k];
         } else {
           value = undefined;
           break;
@@ -107,7 +107,7 @@ export function useLanguage() {
 
     return {
       language: "es" as Language,
-      setLanguage: () => {},
+      setLanguage: () => { },
       t: tFallback,
     };
   }

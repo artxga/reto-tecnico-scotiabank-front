@@ -1,5 +1,7 @@
+import { Request } from "@/lib/types";
+
 interface ExportParams {
-  filtered: any[];
+  filtered: Request[];
   language: string;
   categoryTranslations: Record<string, string>;
   priorityTranslations: Record<string, string>;

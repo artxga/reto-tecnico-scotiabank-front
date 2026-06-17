@@ -3,7 +3,7 @@ import { useLanguage } from "@/components/providers/language-provider";
 
 interface ProfileSettingsProps {
   profile: { name: string; role: string; department: string };
-  setProfile: (profile: any) => void;
+  setProfile: (profile: { name: string; role: string; department: string }) => void;
 }
 
 export function ProfileSettings({ profile, setProfile }: ProfileSettingsProps) {

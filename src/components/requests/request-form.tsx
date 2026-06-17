@@ -34,7 +34,7 @@ export function RequestForm({ initialData, onSubmit, isLoading }: RequestFormPro
     },
   });
 
-  const getErrorMessage = (err: any) => {
+  const getErrorMessage = (err: { message?: string } | undefined) => {
     if (!err || !err.message) return "";
     const msg = err.message;
     if (msg.includes("al menos 5 caracteres")) {

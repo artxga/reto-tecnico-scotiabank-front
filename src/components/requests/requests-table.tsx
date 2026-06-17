@@ -3,8 +3,10 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { useLanguage } from "@/components/providers/language-provider";
 
+import { Request } from "@/lib/types";
+
 interface RequestsTableProps {
-  filtered: any[];
+  filtered: Request[];
   categoryTranslations: Record<string, string>;
 }
 
