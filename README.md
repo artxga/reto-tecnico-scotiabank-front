@@ -2,6 +2,9 @@
 
 Un panel de administración moderno y de alto rendimiento diseñado para la gestión y seguimiento de solicitudes dentro de una organización. Desarrollado con el ecosistema de **Next.js (App Router)**, **TypeScript**, y **Tailwind CSS**.
 
+🔗 **Sitio Web en Producción:** [reto-tecnico-scotiabank-front.vercel.app](https://reto-tecnico-scotiabank-front.vercel.app)  
+🎨 **Diseño en Figma:** [Reto técnico Scotiabank](https://www.figma.com/design/wIHsqroLJ2quS5Ds5matVA/Reto-t%C3%A9cnico-Scotiabank?node-id=0-1&t=TThsUo0XOARE3btn-1)
+
 ---
 
 ## 🚀 Características Principales
