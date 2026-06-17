@@ -63,8 +63,12 @@ export function UserProfileMenu({ isOpen, onToggle, onClose }: UserProfileMenuPr
               <User className="h-8 w-8" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-gray-950 dark:text-white leading-tight">{profileName}</h3>
-              <p className="text-xs text-gray-500 dark:text-gray-400 font-medium mt-0.5">{profileRole}</p>
+              <h3 className="text-base font-bold text-gray-950 dark:text-white leading-tight">
+                {profileName}
+              </h3>
+              <p className="text-xs text-gray-500 dark:text-gray-400 font-medium mt-0.5">
+                {profileRole}
+              </p>
             </div>
           </div>
 
@@ -72,9 +76,7 @@ export function UserProfileMenu({ isOpen, onToggle, onClose }: UserProfileMenuPr
             <span className="text-[10px] uppercase font-bold text-gray-400 dark:text-gray-500 tracking-wider">
               {language === "en" ? "Department" : "Departamento"}
             </span>
-            <p className="text-xs font-semibold text-gray-700 dark:text-gray-300">
-              {profileDept}
-            </p>
+            <p className="text-xs font-semibold text-gray-700 dark:text-gray-300">{profileDept}</p>
           </div>
 
           <Link

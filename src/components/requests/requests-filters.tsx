@@ -22,20 +22,26 @@ interface RequestsFiltersProps {
 }
 
 export function RequestsFilters({
-  search, setSearch,
-  statusFilter, setStatusFilter,
-  priorityFilter, setPriorityFilter,
-  sortBy, setSortBy,
-  showFilters, setShowFilters,
+  search,
+  setSearch,
+  statusFilter,
+  setStatusFilter,
+  priorityFilter,
+  setPriorityFilter,
+  sortBy,
+  setSortBy,
+  showFilters,
+  setShowFilters,
   clearAllFilters,
-  activeFiltersCount, hasActiveFilters,
-  statusTranslations, priorityTranslations
+  activeFiltersCount,
+  hasActiveFilters,
+  statusTranslations,
+  priorityTranslations,
 }: RequestsFiltersProps) {
   const { t, language } = useLanguage();
 
   return (
     <div className="flex flex-col gap-4 p-5 bg-white/70 dark:bg-slate-900/60 backdrop-blur-xl border border-white dark:border-slate-800 rounded-2xl shadow-md transition-all duration-300">
-      
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
           <Search className="absolute left-3.5 top-3.5 h-4 w-4 text-gray-400 dark:text-gray-500" />
@@ -58,10 +64,11 @@ export function RequestsFilters({
 
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className={`w-full sm:w-auto justify-center px-4 py-2.5 rounded-xl border font-medium inline-flex items-center gap-2 cursor-pointer transition-all shadow-sm hover:shadow h-10.5 ${showFilters || hasActiveFilters
+          className={`w-full sm:w-auto justify-center px-4 py-2.5 rounded-xl border font-medium inline-flex items-center gap-2 cursor-pointer transition-all shadow-sm hover:shadow h-10.5 ${
+            showFilters || hasActiveFilters
               ? "bg-indigo-50 border-indigo-200 text-indigo-700 dark:bg-indigo-950/30 dark:border-indigo-800 dark:text-indigo-300"
               : "bg-white border-gray-200 text-gray-700 hover:bg-white/60 dark:bg-slate-950/20 dark:border-slate-800/80 dark:text-gray-200 dark:hover:bg-slate-950/45"
-            }`}
+          }`}
         >
           <SlidersHorizontal className="h-4 w-4" />
           <span className="text-sm">{language === "en" ? "Filters" : "Filtros"}</span>
@@ -76,7 +83,9 @@ export function RequestsFilters({
       {showFilters && (
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-gray-150/60 dark:border-slate-800/50 animate-in slide-in-from-top-2 duration-300">
           <div className="space-y-1.5">
-            <label className="text-[11px] font-bold tracking-wider text-gray-400 dark:text-gray-500 uppercase">{language === "en" ? "Status" : "Estado"}</label>
+            <label className="text-[11px] font-bold tracking-wider text-gray-400 dark:text-gray-500 uppercase">
+              {language === "en" ? "Status" : "Estado"}
+            </label>
             <Select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
@@ -92,7 +101,9 @@ export function RequestsFilters({
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-[11px] font-bold tracking-wider text-gray-400 dark:text-gray-500 uppercase">{language === "en" ? "Priority" : "Prioridad"}</label>
+            <label className="text-[11px] font-bold tracking-wider text-gray-400 dark:text-gray-500 uppercase">
+              {language === "en" ? "Priority" : "Prioridad"}
+            </label>
             <Select
               value={priorityFilter}
               onChange={(e) => setPriorityFilter(e.target.value)}
@@ -107,7 +118,9 @@ export function RequestsFilters({
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-[11px] font-bold tracking-wider text-gray-400 dark:text-gray-500 uppercase">{language === "en" ? "Order by" : "Ordenar por"}</label>
+            <label className="text-[11px] font-bold tracking-wider text-gray-400 dark:text-gray-500 uppercase">
+              {language === "en" ? "Order by" : "Ordenar por"}
+            </label>
             <Select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
@@ -115,7 +128,9 @@ export function RequestsFilters({
             >
               <option value="recent">{language === "en" ? "Most recent" : "Más recientes"}</option>
               <option value="oldest">{language === "en" ? "Oldest" : "Más antiguas"}</option>
-              <option value="priority">{language === "en" ? "Highest priority" : "Mayor prioridad"}</option>
+              <option value="priority">
+                {language === "en" ? "Highest priority" : "Mayor prioridad"}
+              </option>
             </Select>
           </div>
         </div>
@@ -123,7 +138,9 @@ export function RequestsFilters({
 
       {hasActiveFilters && (
         <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-gray-150/40 dark:border-slate-800/30 animate-in fade-in duration-300">
-          <span className="text-xs font-semibold text-gray-400 dark:text-gray-500 mr-1">{t("requests.activeFilters")}</span>
+          <span className="text-xs font-semibold text-gray-400 dark:text-gray-500 mr-1">
+            {t("requests.activeFilters")}
+          </span>
           {search && (
             <span className="inline-flex items-center gap-1 bg-indigo-50/70 dark:bg-indigo-950/20 text-indigo-700 dark:text-indigo-300 text-xs font-medium px-2.5 py-1 rounded-full border border-indigo-100/50 dark:border-indigo-950/50">
               {language === "en" ? "Search:" : "Búsqueda:"} "{search}"
@@ -138,7 +155,8 @@ export function RequestsFilters({
           )}
           {statusFilter !== "todos" && (
             <span className="inline-flex items-center gap-1 bg-indigo-50/70 dark:bg-indigo-950/20 text-indigo-700 dark:text-indigo-300 text-xs font-medium px-2.5 py-1 rounded-full border border-indigo-100/50 dark:border-indigo-950/50">
-              {language === "en" ? "Status:" : "Estado:"} {statusTranslations[statusFilter] || statusFilter}
+              {language === "en" ? "Status:" : "Estado:"}{" "}
+              {statusTranslations[statusFilter] || statusFilter}
               <button
                 onClick={() => setStatusFilter("todos")}
                 className="hover:bg-indigo-100 dark:hover:bg-indigo-900 rounded-full p-0.5 ml-1 transition-colors cursor-pointer"
@@ -150,7 +168,8 @@ export function RequestsFilters({
           )}
           {priorityFilter !== "todos" && (
             <span className="inline-flex items-center gap-1 bg-indigo-50/70 dark:bg-indigo-950/20 text-indigo-700 dark:text-indigo-300 text-xs font-medium px-2.5 py-1 rounded-full border border-indigo-100/50 dark:border-indigo-950/50">
-              {language === "en" ? "Priority:" : "Prioridad:"} {priorityTranslations[priorityFilter] || priorityFilter}
+              {language === "en" ? "Priority:" : "Prioridad:"}{" "}
+              {priorityTranslations[priorityFilter] || priorityFilter}
               <button
                 onClick={() => setPriorityFilter("todos")}
                 className="hover:bg-indigo-100 dark:hover:bg-indigo-900 rounded-full p-0.5 ml-1 transition-colors cursor-pointer"

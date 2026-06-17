@@ -6,13 +6,14 @@ import React from "react";
 // Mock fetch global para interceptar las llamadas a la API
 global.fetch = jest.fn();
 
-const createTestQueryClient = () => new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false, // Desactivar reintentos en pruebas para evitar demoras
+const createTestQueryClient = () =>
+  new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false, // Desactivar reintentos en pruebas para evitar demoras
+      },
     },
-  },
-});
+  });
 
 describe("Hooks de consumo de API (useRequests)", () => {
   afterEach(() => {
@@ -20,10 +21,8 @@ describe("Hooks de consumo de API (useRequests)", () => {
   });
 
   it("obtiene la lista de solicitudes con éxito (Mocks de API y estados de éxito)", async () => {
-    const mockData = [
-      { id: "1", title: "Test Request", priority: "high", status: "pending" }
-    ];
-    
+    const mockData = [{ id: "1", title: "Test Request", priority: "high", status: "pending" }];
+
     // Configuramos el mock de fetch para simular respuesta exitosa
     (global.fetch as jest.Mock).mockResolvedValueOnce({
       ok: true,
@@ -32,9 +31,7 @@ describe("Hooks de consumo de API (useRequests)", () => {
 
     const queryClient = createTestQueryClient();
     const wrapper = ({ children }: { children: React.ReactNode }) => (
-      <QueryClientProvider client={queryClient}>
-        {children}
-      </QueryClientProvider>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     );
 
     const { result } = renderHook(() => useRequests(), { wrapper });
@@ -60,9 +57,7 @@ describe("Hooks de consumo de API (useRequests)", () => {
 
     const queryClient = createTestQueryClient();
     const wrapper = ({ children }: { children: React.ReactNode }) => (
-      <QueryClientProvider client={queryClient}>
-        {children}
-      </QueryClientProvider>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     );
 
     const { result } = renderHook(() => useRequests(), { wrapper });

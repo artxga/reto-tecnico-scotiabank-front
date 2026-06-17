@@ -34,7 +34,10 @@ function RequestsSkeleton() {
       </div>
       <div className="grid gap-4 md:hidden">
         {Array.from({ length: 4 }).map((_, i) => (
-          <div key={i} className="p-5 bg-white/70 dark:bg-slate-900/60 border border-white rounded-2xl shadow-sm space-y-4 animate-pulse">
+          <div
+            key={i}
+            className="p-5 bg-white/70 dark:bg-slate-900/60 border border-white rounded-2xl shadow-sm space-y-4 animate-pulse"
+          >
             <div className="flex justify-between items-start">
               <Skeleton className="h-5 w-2/3" />
               <Skeleton className="h-5 w-20 rounded-full" />
@@ -87,31 +90,42 @@ function RequestsList() {
   const [statusFilter, setStatusFilter] = useState(initialStatus);
   const [priorityFilter, setPriorityFilter] = useState(initialPriority);
   const [sortBy, setSortBy] = useState("recent");
-  const [showFilters, setShowFilters] = useState(initialStatus !== "todos" || initialPriority !== "todos");
+  const [showFilters, setShowFilters] = useState(
+    initialStatus !== "todos" || initialPriority !== "todos",
+  );
 
-  const statusTranslations = useMemo(() => ({
-    pending: t("dashboard.stats.pending"),
-    in_review: t("dashboard.stats.in_review"),
-    approved: t("dashboard.stats.approved"),
-    rejected: t("dashboard.stats.rejected"),
-    closed: t("dashboard.stats.closed"),
-  }), [t]);
+  const statusTranslations = useMemo(
+    () => ({
+      pending: t("dashboard.stats.pending"),
+      in_review: t("dashboard.stats.in_review"),
+      approved: t("dashboard.stats.approved"),
+      rejected: t("dashboard.stats.rejected"),
+      closed: t("dashboard.stats.closed"),
+    }),
+    [t],
+  );
 
-  const priorityTranslations = useMemo(() => ({
-    low: language === "en" ? "Low" : "Baja",
-    medium: language === "en" ? "Medium" : "Media",
-    high: language === "en" ? "High" : "Alta",
-    critical: language === "en" ? "Critical" : "Crítica",
-  }), [language]);
+  const priorityTranslations = useMemo(
+    () => ({
+      low: language === "en" ? "Low" : "Baja",
+      medium: language === "en" ? "Medium" : "Media",
+      high: language === "en" ? "High" : "Alta",
+      critical: language === "en" ? "Critical" : "Crítica",
+    }),
+    [language],
+  );
 
-  const categoryTranslations = useMemo(() => ({
-    "Hardware": language === "en" ? "Hardware" : "Hardware",
-    "Accesos": language === "en" ? "Access" : "Accesos",
-    "Software": language === "en" ? "Software" : "Software",
-    "Infraestructura": language === "en" ? "Infrastructure" : "Infraestructura",
-    "Recursos Humanos": language === "en" ? "Human Resources" : "Recursos Humanos",
-    "Otros": language === "en" ? "Others" : "Otros",
-  }), [language]);
+  const categoryTranslations = useMemo(
+    () => ({
+      Hardware: language === "en" ? "Hardware" : "Hardware",
+      Accesos: language === "en" ? "Access" : "Accesos",
+      Software: language === "en" ? "Software" : "Software",
+      Infraestructura: language === "en" ? "Infrastructure" : "Infraestructura",
+      "Recursos Humanos": language === "en" ? "Human Resources" : "Recursos Humanos",
+      Otros: language === "en" ? "Others" : "Otros",
+    }),
+    [language],
+  );
 
   const activeFiltersCount =
     (statusFilter !== "todos" ? 1 : 0) +
@@ -133,7 +147,7 @@ function RequestsList() {
       result = result.filter(
         (r) =>
           r.title.toLowerCase().includes(search.toLowerCase()) ||
-          r.requester.toLowerCase().includes(search.toLowerCase())
+          r.requester.toLowerCase().includes(search.toLowerCase()),
       );
     }
 
@@ -146,8 +160,10 @@ function RequestsList() {
     }
 
     return result.sort((a, b) => {
-      if (sortBy === "recent") return new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime();
-      if (sortBy === "oldest") return new Date(a.creationDate).getTime() - new Date(b.creationDate).getTime();
+      if (sortBy === "recent")
+        return new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime();
+      if (sortBy === "oldest")
+        return new Date(a.creationDate).getTime() - new Date(b.creationDate).getTime();
       if (sortBy === "priority") {
         const p: Record<Priority, number> = { critical: 4, high: 3, medium: 2, low: 1 };
         return (p[b.priority] || 0) - (p[a.priority] || 0);
@@ -158,12 +174,20 @@ function RequestsList() {
 
   return (
     <div className="space-y-6">
-      <RequestsHeader 
-        onExportCSV={() => exportToCSV({ filtered, language, categoryTranslations, priorityTranslations, statusTranslations })} 
-        exportDisabled={filtered.length === 0} 
+      <RequestsHeader
+        onExportCSV={() =>
+          exportToCSV({
+            filtered,
+            language,
+            categoryTranslations,
+            priorityTranslations,
+            statusTranslations,
+          })
+        }
+        exportDisabled={filtered.length === 0}
       />
 
-      <RequestsFilters 
+      <RequestsFilters
         search={search}
         setSearch={setSearch}
         statusFilter={statusFilter}
@@ -181,15 +205,9 @@ function RequestsList() {
         priorityTranslations={priorityTranslations}
       />
 
-      <RequestsMobileList 
-        filtered={filtered} 
-        categoryTranslations={categoryTranslations} 
-      />
+      <RequestsMobileList filtered={filtered} categoryTranslations={categoryTranslations} />
 
-      <RequestsTable 
-        filtered={filtered} 
-        categoryTranslations={categoryTranslations} 
-      />
+      <RequestsTable filtered={filtered} categoryTranslations={categoryTranslations} />
     </div>
   );
 }

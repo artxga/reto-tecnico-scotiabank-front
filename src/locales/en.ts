@@ -57,9 +57,9 @@ export const en = {
       newEvent: "New Request",
       statusUpdated: "Status Updated",
       requestEdited: "Request Edited",
-      createdDesc: "{requester} created request \"{title}\"",
-      statusDesc: "Request \"{title}\" changed to {status}",
-      editedDesc: "Details for request \"{title}\" were updated",
+      createdDesc: '{requester} created request "{title}"',
+      statusDesc: 'Request "{title}" changed to {status}',
+      editedDesc: 'Details for request "{title}" were updated',
       noActivity: "No activity registered",
       time: {
         now: "Just now",
@@ -68,8 +68,8 @@ export const en = {
         hours: "{count} hours ago",
         day: "1 day ago",
         days: "{count} days ago",
-      }
-    }
+      },
+    },
   },
   requests: {
     title: "Requests Inbox",
@@ -129,8 +129,8 @@ export const en = {
         titleMax: "Title cannot exceed 100 characters",
         descMin: "Description must be at least 10 characters",
         requesterMin: "Name must be at least 3 characters",
-      }
-    }
+      },
+    },
   },
   settings: {
     title: "Settings",
@@ -177,5 +177,5 @@ export const en = {
     passwordMin: "Password must be at least 6 characters",
     invalidCredentials: "Incorrect email or password (Try: admin@scotiabank.com / admin123)",
     signOut: "Sign Out",
-  }
+  },
 };

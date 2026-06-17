@@ -13,8 +13,20 @@ export function useMockNotifications() {
   const { t, language } = useLanguage();
   const [mounted, setMounted] = useState(false);
   const [notifications, setNotifications] = useState<NotificationItem[]>([
-    { id: "1", title: "Actualización de Estado", desc: "La solicitud #42a fue Aprobada por Operaciones.", time: "Hace 5 min", read: false },
-    { id: "2", title: "Nueva Solicitud", desc: "Ángel Arteaga creó la solicitud 'Licencias de Software'.", time: "Hace 1 hora", read: true }
+    {
+      id: "1",
+      title: "Actualización de Estado",
+      desc: "La solicitud #42a fue Aprobada por Operaciones.",
+      time: "Hace 5 min",
+      read: false,
+    },
+    {
+      id: "2",
+      title: "Nueva Solicitud",
+      desc: "Ángel Arteaga creó la solicitud 'Licencias de Software'.",
+      time: "Hace 1 hora",
+      read: true,
+    },
   ]);
 
   useEffect(() => {
@@ -58,10 +70,22 @@ export function useMockNotifications() {
     if (!mounted) return;
 
     const mockNotificationsPool = [
-      { title: "Nueva Solicitud", desc: "Sofía Castro ha registrado una solicitud de 'Acceso VPN'." },
-      { title: "Actualización de Estado", desc: "La solicitud 'Renovación Laptop' cambió a En Revisión." },
-      { title: "Solicitud Cerrada", desc: "El ticket 'Mouse Ergonómico' ha sido marcado como cerrado." },
-      { title: "Nueva Solicitud", desc: "Marcos Ruiz envió solicitud crítica 'Teclado de repuesto'." },
+      {
+        title: "Nueva Solicitud",
+        desc: "Sofía Castro ha registrado una solicitud de 'Acceso VPN'.",
+      },
+      {
+        title: "Actualización de Estado",
+        desc: "La solicitud 'Renovación Laptop' cambió a En Revisión.",
+      },
+      {
+        title: "Solicitud Cerrada",
+        desc: "El ticket 'Mouse Ergonómico' ha sido marcado como cerrado.",
+      },
+      {
+        title: "Nueva Solicitud",
+        desc: "Marcos Ruiz envió solicitud crítica 'Teclado de repuesto'.",
+      },
     ];
 
     const interval = setInterval(() => {
@@ -73,7 +97,7 @@ export function useMockNotifications() {
         title: chosen.title,
         desc: chosen.desc,
         time: "Hace un momento",
-        read: false
+        read: false,
       };
 
       setNotifications((prev) => [newNotif, ...prev]);
@@ -88,9 +112,7 @@ export function useMockNotifications() {
   };
 
   const markAsRead = (id: string) => {
-    setNotifications((prev) =>
-      prev.map((n) => (n.id === id ? { ...n, read: true } : n))
-    );
+    setNotifications((prev) => prev.map((n) => (n.id === id ? { ...n, read: true } : n)));
   };
 
   const clearAllNotifications = () => {
@@ -108,11 +130,16 @@ export function useMockNotifications() {
     if (language === "es") return desc;
     const map: Record<string, string> = {
       "La solicitud #42a fue Aprobada por Operaciones.": "Request #42a was Approved by Operations.",
-      "Ángel Arteaga creó la solicitud 'Licencias de Software'.": "Ángel Arteaga created request 'Software Licenses'.",
-      "Sofía Castro ha registrado una solicitud de 'Acceso VPN'.": "Sofía Castro has registered a request for 'VPN Access'.",
-      "La solicitud 'Renovación Laptop' cambió a En Revisión.": "Request 'Laptop Renewal' changed to In Review.",
-      "El ticket 'Mouse Ergonómico' ha sido marcado como cerrado.": "Ticket 'Ergonomic Mouse' has been marked as closed.",
-      "Marcos Ruiz envió solicitud crítica 'Teclado de repuesto'.": "Marcos Ruiz sent critical request 'Spare keyboard'."
+      "Ángel Arteaga creó la solicitud 'Licencias de Software'.":
+        "Ángel Arteaga created request 'Software Licenses'.",
+      "Sofía Castro ha registrado una solicitud de 'Acceso VPN'.":
+        "Sofía Castro has registered a request for 'VPN Access'.",
+      "La solicitud 'Renovación Laptop' cambió a En Revisión.":
+        "Request 'Laptop Renewal' changed to In Review.",
+      "El ticket 'Mouse Ergonómico' ha sido marcado como cerrado.":
+        "Ticket 'Ergonomic Mouse' has been marked as closed.",
+      "Marcos Ruiz envió solicitud crítica 'Teclado de repuesto'.":
+        "Marcos Ruiz sent critical request 'Spare keyboard'.",
     };
     return map[desc] || desc;
   };
@@ -134,6 +161,6 @@ export function useMockNotifications() {
     clearAllNotifications,
     translateNotificationTitle,
     translateNotificationDesc,
-    translateNotificationTime
+    translateNotificationTime,
   };
 }

@@ -60,5 +60,4 @@ describe("Navigation & Header", () => {
     cy.url({ timeout: 5000 }).should("include", "/login");
     cy.getCookie("auth_token").should("not.exist");
   });
-
 });

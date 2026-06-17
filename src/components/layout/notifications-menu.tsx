@@ -21,7 +21,7 @@ export function NotificationsMenu({ isOpen, onToggle, onClose }: NotificationsMe
     clearAllNotifications,
     translateNotificationTitle,
     translateNotificationDesc,
-    translateNotificationTime
+    translateNotificationTime,
   } = useMockNotifications();
 
   useEffect(() => {
@@ -62,7 +62,9 @@ export function NotificationsMenu({ isOpen, onToggle, onClose }: NotificationsMe
           className="absolute right-0 mt-2 w-80 sm:w-96 rounded-2xl border border-gray-100/70 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl z-50 overflow-hidden"
         >
           <div className="p-4 border-b border-gray-100 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 flex justify-between items-center">
-            <span className="font-bold text-gray-900 dark:text-white">{t("header.notifications")}</span>
+            <span className="font-bold text-gray-900 dark:text-white">
+              {t("header.notifications")}
+            </span>
             <div className="flex gap-2">
               {unreadCount > 0 && (
                 <button
@@ -96,9 +98,15 @@ export function NotificationsMenu({ isOpen, onToggle, onClose }: NotificationsMe
                   <span className="absolute left-2.5 top-5.5 h-1.5 w-1.5 rounded-full bg-indigo-600" />
                 )}
                 <div className="flex-1 space-y-0.5 pl-1.5">
-                  <p className="text-sm font-bold text-gray-900 dark:text-gray-100">{translateNotificationTitle(n.title)}</p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 leading-snug">{translateNotificationDesc(n.desc)}</p>
-                  <p className="text-[10px] text-gray-400 dark:text-gray-500 mt-1">{translateNotificationTime(n.time)}</p>
+                  <p className="text-sm font-bold text-gray-900 dark:text-gray-100">
+                    {translateNotificationTitle(n.title)}
+                  </p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 leading-snug">
+                    {translateNotificationDesc(n.desc)}
+                  </p>
+                  <p className="text-[10px] text-gray-400 dark:text-gray-500 mt-1">
+                    {translateNotificationTime(n.time)}
+                  </p>
                 </div>
               </button>
             ))}

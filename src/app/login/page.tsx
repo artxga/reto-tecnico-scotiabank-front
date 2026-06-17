@@ -13,11 +13,11 @@ export default function LoginPage() {
   const router = useRouter();
   const { toast } = useToast();
   const { t, language, setLanguage } = useLanguage();
-  
+
   // Theme state
   const [mounted, setMounted] = useState(false);
   const [currentTheme, setCurrentTheme] = useState<string>("light");
-  
+
   // Form states
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -82,14 +82,14 @@ export default function LoginPage() {
     if (email.toLowerCase() === "admin@scotiabank.com" && password === "admin123") {
       // Set session cookie (valid for 1 day)
       document.cookie = "auth_token=mock-jwt-session-token; path=/; max-age=86400; SameSite=Strict";
-      
+
       toast(language === "en" ? "Welcome back!" : "¡Bienvenido de nuevo!", "success");
-      
+
       // Redirect to dashboard
       router.push("/");
     } else {
       setErrors({
-        auth: t("login.invalidCredentials")
+        auth: t("login.invalidCredentials"),
       });
       setIsLoading(false);
     }
@@ -158,7 +158,10 @@ export default function LoginPage() {
 
           {/* Email field */}
           <div className="space-y-1.5">
-            <label htmlFor="email" className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
+            <label
+              htmlFor="email"
+              className="block text-sm font-semibold text-gray-700 dark:text-gray-300"
+            >
               {t("login.email")}
             </label>
             <div className="relative">
@@ -176,13 +179,18 @@ export default function LoginPage() {
               />
             </div>
             {errors.email && (
-              <p className="text-xs font-medium text-red-600 dark:text-red-400 mt-1">{errors.email}</p>
+              <p className="text-xs font-medium text-red-600 dark:text-red-400 mt-1">
+                {errors.email}
+              </p>
             )}
           </div>
 
           {/* Password field */}
           <div className="space-y-1.5">
-            <label htmlFor="password" className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
+            <label
+              htmlFor="password"
+              className="block text-sm font-semibold text-gray-700 dark:text-gray-300"
+            >
               {t("login.password")}
             </label>
             <div className="relative">
@@ -200,7 +208,9 @@ export default function LoginPage() {
               />
             </div>
             {errors.password && (
-              <p className="text-xs font-medium text-red-600 dark:text-red-400 mt-1">{errors.password}</p>
+              <p className="text-xs font-medium text-red-600 dark:text-red-400 mt-1">
+                {errors.password}
+              </p>
             )}
           </div>
 

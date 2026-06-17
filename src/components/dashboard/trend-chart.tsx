@@ -1,7 +1,15 @@
 "use client";
 
 import { Request } from "@/lib/types";
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 import { TrendingUp } from "lucide-react";
 import { useLanguage } from "@/components/providers/language-provider";
 
@@ -18,7 +26,10 @@ export function TrendChart({ requests }: TrendChartProps) {
     for (let i = 6; i >= 0; i--) {
       const d = new Date();
       d.setDate(d.getDate() - i);
-      const dateLabel = d.toLocaleDateString(language === "en" ? "en-US" : "es-ES", { day: "numeric", month: "short" });
+      const dateLabel = d.toLocaleDateString(language === "en" ? "en-US" : "es-ES", {
+        day: "numeric",
+        month: "short",
+      });
       const dateKey = d.toISOString().split("T")[0];
 
       // Count requests created on this day
@@ -57,16 +68,21 @@ export function TrendChart({ requests }: TrendChartProps) {
                 <stop offset="95%" stopColor="#6366f1" stopOpacity={0.0} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.06)" className="dark:stroke-slate-800/40" />
-            <XAxis 
-              dataKey="name" 
-              stroke="#94a3b8" 
+            <CartesianGrid
+              strokeDasharray="3 3"
+              vertical={false}
+              stroke="rgba(255,255,255,0.06)"
+              className="dark:stroke-slate-800/40"
+            />
+            <XAxis
+              dataKey="name"
+              stroke="#94a3b8"
               fontSize={10}
               tickLine={false}
               axisLine={false}
             />
-            <YAxis 
-              stroke="#94a3b8" 
+            <YAxis
+              stroke="#94a3b8"
               fontSize={10}
               tickLine={false}
               axisLine={false}
@@ -84,13 +100,13 @@ export function TrendChart({ requests }: TrendChartProps) {
               itemStyle={{ color: "#4f46e5", fontWeight: "bold" }}
               labelStyle={{ fontWeight: "bold", fontSize: "11px", marginBottom: "4px" }}
             />
-            <Area 
-              type="monotone" 
-              dataKey="cantidad" 
-              stroke="#6366f1" 
+            <Area
+              type="monotone"
+              dataKey="cantidad"
+              stroke="#6366f1"
               strokeWidth={2.5}
-              fillOpacity={1} 
-              fill="url(#colorTrend)" 
+              fillOpacity={1}
+              fill="url(#colorTrend)"
             />
           </AreaChart>
         </ResponsiveContainer>

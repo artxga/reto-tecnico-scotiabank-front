@@ -41,7 +41,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
               "flex items-center gap-3 rounded-lg p-4 shadow-xl border backdrop-blur-md transition-all duration-300 animate-in slide-in-from-right-8 fade-in",
               t.type === "success" && "bg-emerald-50/90 text-emerald-900 border-emerald-200",
               t.type === "error" && "bg-rose-50/90 text-rose-900 border-rose-200",
-              t.type === "info" && "bg-blue-50/90 text-blue-900 border-blue-200"
+              t.type === "info" && "bg-blue-50/90 text-blue-900 border-blue-200",
             )}
           >
             {t.type === "success" && <CheckCircle className="h-5 w-5 text-emerald-600" />}

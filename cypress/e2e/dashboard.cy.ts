@@ -14,9 +14,7 @@ describe("Dashboard", () => {
 
   it("displays stats cards after loading", () => {
     // Wait for skeleton to disappear and stats to render
-    cy.contains(/Total|Pendientes|Pending/i, { timeout: 10000 }).should(
-      "be.visible"
-    );
+    cy.contains(/Total|Pendientes|Pending/i, { timeout: 10000 }).should("be.visible");
   });
 
   it("displays charts section", () => {

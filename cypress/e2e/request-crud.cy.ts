@@ -10,12 +10,11 @@ describe("Request CRUD Flow (E2E)", () => {
 
     // 1. Navigate to new request form
     cy.visit("/requests/new");
-    cy.contains(/Nueva Solicitud|New Request/i, { timeout: 10000 }).should(
-      "be.visible"
-    );
+    cy.contains(/Nueva Solicitud|New Request/i, { timeout: 10000 }).should("be.visible");
 
     // 2. Fill the form fields (matching the actual form IDs)
-    cy.get("#title").clear({ timeout: 10000 }).type(uniqueTitle);
+    cy.get("#title", { timeout: 10000 }).clear();
+    cy.get("#title").type(uniqueTitle);
     cy.get("#requester").clear().type("Cypress Tester");
     cy.get("#priority").select("high");
     cy.get("#category").clear().type("Testing");

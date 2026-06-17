@@ -1,6 +1,6 @@
-export type RequestStatus = 'pending' | 'in_review' | 'approved' | 'rejected' | 'closed';
+export type RequestStatus = "pending" | "in_review" | "approved" | "rejected" | "closed";
 
-export type Priority = 'low' | 'medium' | 'high' | 'critical';
+export type Priority = "low" | "medium" | "high" | "critical";
 
 export interface Request {
   id: string | number;

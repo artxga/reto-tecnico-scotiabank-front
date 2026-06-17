@@ -68,7 +68,9 @@ export function useUpdateRequest() {
       if (previousRequests) {
         queryClient.setQueryData<Request[]>(
           ["requests"],
-          previousRequests.map((req) => (String(req.id) === String(id) ? { ...req, ...data } : req))
+          previousRequests.map((req) =>
+            String(req.id) === String(id) ? { ...req, ...data } : req,
+          ),
         );
       }
       return { previousRequests };

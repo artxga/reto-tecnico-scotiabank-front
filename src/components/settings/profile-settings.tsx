@@ -23,7 +23,9 @@ export function ProfileSettings({ profile, setProfile }: ProfileSettingsProps) {
 
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1.5">{t("settings.profile.name")}</label>
+          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1.5">
+            {t("settings.profile.name")}
+          </label>
           <input
             id="name"
             type="text"
@@ -34,7 +36,9 @@ export function ProfileSettings({ profile, setProfile }: ProfileSettingsProps) {
         </div>
 
         <div>
-          <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-1.5">{t("settings.profile.role")}</label>
+          <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-1.5">
+            {t("settings.profile.role")}
+          </label>
           <input
             id="role"
             type="text"
@@ -45,7 +49,9 @@ export function ProfileSettings({ profile, setProfile }: ProfileSettingsProps) {
         </div>
 
         <div className="sm:col-span-2">
-          <label htmlFor="department" className="block text-sm font-medium text-gray-700 mb-1.5">{t("settings.profile.department")}</label>
+          <label htmlFor="department" className="block text-sm font-medium text-gray-700 mb-1.5">
+            {t("settings.profile.department")}
+          </label>
           <input
             id="department"
             type="text"

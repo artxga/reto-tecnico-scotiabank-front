@@ -17,15 +17,12 @@ Cypress.Commands.add("login", () => {
 /**
  * Login via the UI form (for E2E login flow tests).
  */
-Cypress.Commands.add(
-  "loginViaUI",
-  (email = "admin@scotiabank.com", password = "admin123") => {
-    cy.visit("/login");
-    cy.get("#email").clear().type(email);
-    cy.get("#password").clear().type(password);
-    cy.get('button[type="submit"]').click();
-  }
-);
+Cypress.Commands.add("loginViaUI", (email = "admin@scotiabank.com", password = "admin123") => {
+  cy.visit("/login");
+  cy.get("#email").clear().type(email);
+  cy.get("#password").clear().type(password);
+  cy.get('button[type="submit"]').click();
+});
 
 /**
  * Logout by clearing the auth cookie.

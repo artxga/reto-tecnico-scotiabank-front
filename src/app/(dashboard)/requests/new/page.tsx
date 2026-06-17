@@ -21,18 +21,27 @@ export default function NewRequestPage() {
       toast(t("requests.form.toastCreated"), "success");
       router.push("/requests");
     } catch (error: any) {
-      toast(error.message || (language === "en" ? "Error creating request" : "Error al crear la solicitud"), "error");
+      toast(
+        error.message ||
+          (language === "en" ? "Error creating request" : "Error al crear la solicitud"),
+        "error",
+      );
     }
   };
 
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <div className="flex items-center gap-4">
-        <Link href="/requests" className="p-2 rounded-full hover:bg-white/60 dark:hover:bg-slate-800/60 dark:bg-slate-900/50 transition-colors shadow-sm bg-white/30 dark:bg-slate-900/20 backdrop-blur-sm border border-white">
+        <Link
+          href="/requests"
+          className="p-2 rounded-full hover:bg-white/60 dark:hover:bg-slate-800/60 dark:bg-slate-900/50 transition-colors shadow-sm bg-white/30 dark:bg-slate-900/20 backdrop-blur-sm border border-white"
+        >
           <ArrowLeft className="h-5 w-5 text-gray-700" />
         </Link>
         <div>
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900">{t("requests.form.newTitle")}</h2>
+          <h2 className="text-2xl font-bold tracking-tight text-gray-900">
+            {t("requests.form.newTitle")}
+          </h2>
           <p className="text-sm text-gray-500">{t("requests.form.newSubtitle")}</p>
         </div>
       </div>

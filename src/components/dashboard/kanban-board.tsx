@@ -42,26 +42,24 @@ export function KanbanBoard({ requests }: KanbanBoardProps) {
 
     if (!destination) return;
 
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
+    if (destination.droppableId === source.droppableId && destination.index === source.index) {
       return;
     }
 
     const newStatus = destination.droppableId as RequestStatus;
-    const colTitle = localColumns.find(c => c.id === newStatus)?.title || newStatus;
-    
+    const colTitle = localColumns.find((c) => c.id === newStatus)?.title || newStatus;
+
     // Optimistic local update to prevent snap-back
-    setLocalRequests(prev => 
-      prev.map(req => 
-        String(req.id) === draggableId ? { ...req, status: newStatus } : req
-      )
+    setLocalRequests((prev) =>
+      prev.map((req) => (String(req.id) === draggableId ? { ...req, status: newStatus } : req)),
     );
-    
+
     try {
       await updateRequest.mutateAsync({ id: draggableId, data: { status: newStatus } });
-      toast(language === "en" ? `Request moved to ${colTitle}` : `Solicitud movida a ${colTitle}`, "success");
+      toast(
+        language === "en" ? `Request moved to ${colTitle}` : `Solicitud movida a ${colTitle}`,
+        "success",
+      );
     } catch {
       // Revert on error
       setLocalRequests(requests);
@@ -75,16 +73,21 @@ export function KanbanBoard({ requests }: KanbanBoardProps) {
         <h3 className="font-bold text-gray-900 text-2xl">{t("dashboard.kanban.title")}</h3>
         <p className="text-gray-500 mt-1">{t("dashboard.kanban.subtitle")}</p>
       </div>
-      
+
       <div className="w-full">
         <DragDropContext onDragEnd={onDragEnd}>
           <div className="flex gap-5 overflow-x-auto pb-6 pt-2 snap-x hide-scrollbar items-start">
             {localColumns.map((col) => (
-              <KanbanColumn 
-                key={col.id} 
-                id={col.id} 
-                title={col.title} 
-                requests={localRequests.filter(r => r.status === col.id).sort((a, b) => new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime())} 
+              <KanbanColumn
+                key={col.id}
+                id={col.id}
+                title={col.title}
+                requests={localRequests
+                  .filter((r) => r.status === col.id)
+                  .sort(
+                    (a, b) =>
+                      new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime(),
+                  )}
               />
             ))}
           </div>

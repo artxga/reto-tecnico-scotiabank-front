@@ -1,12 +1,13 @@
-const { Client } = require('pg');
-require('dotenv').config({ path: '.env' });
-require('dotenv').config({ path: '.env.local' });
+const { Client } = require("pg");
+require("dotenv").config({ path: ".env" });
+require("dotenv").config({ path: ".env.local" });
 
 const initialData = [
   {
     id: "1",
     title: "Renovación de equipo de cómputo",
-    description: "Mi laptop actual presenta fallas constantes y lentitud. Necesito un equipo de reemplazo para poder trabajar correctamente.",
+    description:
+      "Mi laptop actual presenta fallas constantes y lentitud. Necesito un equipo de reemplazo para poder trabajar correctamente.",
     status: "pending",
     priority: "medium",
     category: "Hardware",
@@ -28,7 +29,8 @@ const initialData = [
   {
     id: "3",
     title: "Servidor de producción caído",
-    description: "El servidor principal no responde a las peticiones, error 502 Bad Gateway continuo.",
+    description:
+      "El servidor principal no responde a las peticiones, error 502 Bad Gateway continuo.",
     status: "in_review",
     priority: "critical",
     category: "Infraestructura",
@@ -39,7 +41,8 @@ const initialData = [
   {
     id: "4",
     title: "Licencia de software de diseño",
-    description: "Renovación de la licencia anual para la suite de diseño requerida para el proyecto de marketing.",
+    description:
+      "Renovación de la licencia anual para la suite de diseño requerida para el proyecto de marketing.",
     status: "rejected",
     priority: "medium",
     category: "Software",
@@ -57,7 +60,7 @@ const initialData = [
     requester: "Luis Martínez",
     creationDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 20).toISOString(),
     lastChangeDate: new Date(Date.now() - 1000 * 60 * 60 * 24 * 15).toISOString(),
-  }
+  },
 ];
 
 async function setup() {
@@ -69,11 +72,11 @@ async function setup() {
   }
 
   // Remove sslmode from query string to let pg config take over
-  connectionString = connectionString.split('?')[0];
+  connectionString = connectionString.split("?")[0];
 
   const client = new Client({
     connectionString,
-    ssl: { rejectUnauthorized: false }
+    ssl: { rejectUnauthorized: false },
   });
 
   try {
@@ -97,7 +100,7 @@ async function setup() {
     console.log("Table 'requests' created or already exists.");
 
     // Check if empty
-    const res = await client.query('SELECT COUNT(*) FROM requests');
+    const res = await client.query("SELECT COUNT(*) FROM requests");
     if (parseInt(res.rows[0].count) === 0) {
       console.log("Table is empty. Inserting initial data...");
 
@@ -123,7 +126,6 @@ async function setup() {
     } else {
       console.log("Table already contains data. Skipping insertion.");
     }
-
   } catch (err) {
     console.error("Error during database setup:", err);
   } finally {

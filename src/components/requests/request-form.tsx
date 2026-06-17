@@ -19,7 +19,11 @@ interface RequestFormProps {
 export function RequestForm({ initialData, onSubmit, isLoading }: RequestFormProps) {
   const { t, language } = useLanguage();
 
-  const { register, handleSubmit, formState: { errors } } = useForm<SolicitudFormData>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SolicitudFormData>({
     resolver: zodResolver(requestSchema),
     defaultValues: {
       title: initialData?.title || "",
@@ -34,8 +38,8 @@ export function RequestForm({ initialData, onSubmit, isLoading }: RequestFormPro
     if (!err || !err.message) return "";
     const msg = err.message;
     if (msg.includes("al menos 5 caracteres")) {
-      return language === "en" 
-        ? "Title must be at least 5 characters" 
+      return language === "en"
+        ? "Title must be at least 5 characters"
         : "El título debe tener al menos 5 caracteres";
     }
     if (msg.includes("exceder los 100 caracteres")) {
@@ -52,8 +56,8 @@ export function RequestForm({ initialData, onSubmit, isLoading }: RequestFormPro
       return language === "en" ? "Category is required" : "La categoría es obligatoria";
     }
     if (msg.includes("solicitante es obligatorio")) {
-      return language === "en" 
-        ? "Requester name is required" 
+      return language === "en"
+        ? "Requester name is required"
         : "El nombre del solicitante es obligatorio";
     }
     return msg;
@@ -73,7 +77,9 @@ export function RequestForm({ initialData, onSubmit, isLoading }: RequestFormPro
             disabled={isLoading || !!initialData}
             className={errors.title ? "border-red-500 focus:ring-red-500" : ""}
           />
-          {errors.title && <p className="mt-1.5 text-sm text-red-600">{getErrorMessage(errors.title)}</p>}
+          {errors.title && (
+            <p className="mt-1.5 text-sm text-red-600">{getErrorMessage(errors.title)}</p>
+          )}
         </div>
 
         <div>
@@ -87,7 +93,9 @@ export function RequestForm({ initialData, onSubmit, isLoading }: RequestFormPro
             disabled={isLoading || !!initialData}
             className={errors.requester ? "border-red-500 focus:ring-red-500" : ""}
           />
-          {errors.requester && <p className="mt-1.5 text-sm text-red-600">{getErrorMessage(errors.requester)}</p>}
+          {errors.requester && (
+            <p className="mt-1.5 text-sm text-red-600">{getErrorMessage(errors.requester)}</p>
+          )}
         </div>
 
         <div>
@@ -99,16 +107,18 @@ export function RequestForm({ initialData, onSubmit, isLoading }: RequestFormPro
               {language === "en" ? "Low - Can wait" : "Baja - Puede esperar"}
             </option>
             <option value="medium">
-              {language === "en" ? "Medium - Requires attention soon" : "Media - Requiere atención pronto"}
+              {language === "en"
+                ? "Medium - Requires attention soon"
+                : "Media - Requiere atención pronto"}
             </option>
-            <option value="high">
-              {language === "en" ? "High - Urgent" : "Alta - Urgente"}
-            </option>
+            <option value="high">{language === "en" ? "High - Urgent" : "Alta - Urgente"}</option>
             <option value="critical">
               {language === "en" ? "Critical - Immediate Action" : "Crítica - Acción Inmediata"}
             </option>
           </Select>
-          {errors.priority && <p className="mt-1.5 text-sm text-red-600">{getErrorMessage(errors.priority)}</p>}
+          {errors.priority && (
+            <p className="mt-1.5 text-sm text-red-600">{getErrorMessage(errors.priority)}</p>
+          )}
         </div>
 
         <div>
@@ -118,11 +128,15 @@ export function RequestForm({ initialData, onSubmit, isLoading }: RequestFormPro
           <Input
             {...register("category")}
             id="category"
-            placeholder={language === "en" ? "e.g. Hardware, Software, HR" : "Ej. Hardware, Software, RRHH"}
+            placeholder={
+              language === "en" ? "e.g. Hardware, Software, HR" : "Ej. Hardware, Software, RRHH"
+            }
             disabled={isLoading || !!initialData}
             className={errors.category ? "border-red-500 focus:ring-red-500" : ""}
           />
-          {errors.category && <p className="mt-1.5 text-sm text-red-600">{getErrorMessage(errors.category)}</p>}
+          {errors.category && (
+            <p className="mt-1.5 text-sm text-red-600">{getErrorMessage(errors.category)}</p>
+          )}
         </div>
 
         <div>
@@ -136,16 +150,18 @@ export function RequestForm({ initialData, onSubmit, isLoading }: RequestFormPro
             disabled={isLoading}
             className={errors.description ? "border-red-500 focus:ring-red-500" : ""}
           />
-          {errors.description && <p className="mt-1.5 text-sm text-red-600">{getErrorMessage(errors.description)}</p>}
+          {errors.description && (
+            <p className="mt-1.5 text-sm text-red-600">{getErrorMessage(errors.description)}</p>
+          )}
         </div>
       </div>
 
       <div className="flex justify-end gap-3 pt-6 border-t border-gray-100">
         <Button type="submit" disabled={isLoading}>
-          {isLoading 
-            ? t("common.saving") 
-            : initialData 
-              ? t("requests.form.submitSave") 
+          {isLoading
+            ? t("common.saving")
+            : initialData
+              ? t("requests.form.submitSave")
               : t("requests.form.submitCreate")}
         </Button>
       </div>

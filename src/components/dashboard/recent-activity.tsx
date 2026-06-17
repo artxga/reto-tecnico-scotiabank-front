@@ -1,7 +1,15 @@
 "use client";
 
 import { Request } from "@/lib/types";
-import { PlusCircle, Clock, CheckCircle2, XCircle, Archive, History, ChevronRight } from "lucide-react";
+import {
+  PlusCircle,
+  Clock,
+  CheckCircle2,
+  XCircle,
+  Archive,
+  History,
+  ChevronRight,
+} from "lucide-react";
 import { useMemo } from "react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
@@ -41,13 +49,18 @@ export function RecentActivity({ requests }: RecentActivityProps) {
 
         if (diffMins < 1) return t("dashboard.recentActivity.time.now");
         if (diffMins < 60) return t("dashboard.recentActivity.time.mins", { count: diffMins });
-        if (diffHours < 24) return diffHours === 1 
-          ? t("dashboard.recentActivity.time.hour")
-          : t("dashboard.recentActivity.time.hours", { count: diffHours });
-        if (diffDays < 30) return diffDays === 1
-          ? t("dashboard.recentActivity.time.day")
-          : t("dashboard.recentActivity.time.days", { count: diffDays });
-        return date.toLocaleDateString(language === "en" ? "en-US" : "es-ES", { day: "numeric", month: "short" });
+        if (diffHours < 24)
+          return diffHours === 1
+            ? t("dashboard.recentActivity.time.hour")
+            : t("dashboard.recentActivity.time.hours", { count: diffHours });
+        if (diffDays < 30)
+          return diffDays === 1
+            ? t("dashboard.recentActivity.time.day")
+            : t("dashboard.recentActivity.time.days", { count: diffDays });
+        return date.toLocaleDateString(language === "en" ? "en-US" : "es-ES", {
+          day: "numeric",
+          month: "short",
+        });
       } catch {
         return language === "en" ? "Recently" : "Recientemente";
       }
@@ -88,7 +101,10 @@ export function RecentActivity({ requests }: RecentActivityProps) {
 
         if (r.status !== "pending") {
           title = t("dashboard.recentActivity.statusUpdated");
-          desc = t("dashboard.recentActivity.statusDesc", { title: r.title, status: localStatusTranslations[r.status] || r.status });
+          desc = t("dashboard.recentActivity.statusDesc", {
+            title: r.title,
+            status: localStatusTranslations[r.status] || r.status,
+          });
           if (r.status === "approved") {
             icon = CheckCircle2;
             color = "text-emerald-500 bg-emerald-50 dark:bg-emerald-950/30";
@@ -151,17 +167,24 @@ export function RecentActivity({ requests }: RecentActivityProps) {
               className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl border border-white/40 dark:border-white/5 bg-white/30 dark:bg-slate-900/30 backdrop-blur-md hover:bg-white/60 dark:bg-slate-900/50 dark:hover:bg-slate-900/50 hover:border-indigo-500/30 transition-all duration-300 group shadow-xs hover:shadow-sm"
             >
               <div className="flex items-center gap-4 flex-1 min-w-0">
-                <div className={`p-2.5 rounded-xl shrink-0 ${act.color} ring-1 ring-black/5 dark:ring-white/5 shadow-xs`}>
+                <div
+                  className={`p-2.5 rounded-xl shrink-0 ${act.color} ring-1 ring-black/5 dark:ring-white/5 shadow-xs`}
+                >
                   <Icon className="h-5 w-5" />
                 </div>
-                
+
                 <div className="space-y-1 flex-1 min-w-0">
                   <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-2">
                     <span className="text-xs font-bold text-gray-800 dark:text-gray-200">
                       {act.title}
                     </span>
-                    <span className="hidden md:inline text-xs text-gray-450 dark:text-gray-500">•</span>
-                    <p className="text-xs text-gray-600 dark:text-gray-400 truncate max-w-2xl" title={act.desc}>
+                    <span className="hidden md:inline text-xs text-gray-450 dark:text-gray-500">
+                      •
+                    </span>
+                    <p
+                      className="text-xs text-gray-600 dark:text-gray-400 truncate max-w-2xl"
+                      title={act.desc}
+                    >
                       {act.desc}
                     </p>
                   </div>
@@ -177,7 +200,7 @@ export function RecentActivity({ requests }: RecentActivityProps) {
                   </div>
                 </div>
               </div>
-              
+
               <div className="flex items-center justify-between sm:justify-end gap-4 shrink-0 border-t sm:border-t-0 pt-2 sm:pt-0 border-gray-150/40 dark:border-slate-800/40">
                 <span className="text-xs text-gray-450 dark:text-gray-500 font-medium">
                   {act.time}

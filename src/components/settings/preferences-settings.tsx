@@ -13,10 +13,14 @@ interface PreferencesSettingsProps {
 }
 
 export function PreferencesSettings({
-  theme, handleThemeSelect,
-  language, setLanguage,
-  refreshInterval, setRefreshInterval,
-  notifications, setNotifications
+  theme,
+  handleThemeSelect,
+  language,
+  setLanguage,
+  refreshInterval,
+  setRefreshInterval,
+  notifications,
+  setNotifications,
 }: PreferencesSettingsProps) {
   const { t } = useLanguage();
 
@@ -34,12 +38,14 @@ export function PreferencesSettings({
 
       <div className="space-y-5">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2.5">{t("settings.preferences.theme")}</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2.5">
+            {t("settings.preferences.theme")}
+          </label>
           <div className="grid grid-cols-3 gap-3">
             {[
               { value: "light", label: t("settings.preferences.themeLight"), icon: Sun },
               { value: "dark", label: t("settings.preferences.themeDark"), icon: Moon },
-              { value: "system", label: t("settings.preferences.themeSystem"), icon: Shield }
+              { value: "system", label: t("settings.preferences.themeSystem"), icon: Shield },
             ].map((item) => {
               const Icon = item.icon;
               const active = theme === item.value;
@@ -49,8 +55,8 @@ export function PreferencesSettings({
                   type="button"
                   onClick={() => handleThemeSelect(item.value)}
                   className={`flex flex-col sm:flex-row items-center justify-center gap-2 py-3 px-4 rounded-xl border text-sm font-semibold transition-all cursor-pointer ${
-                    active 
-                      ? "bg-indigo-50 border-indigo-200 text-indigo-700 shadow-xs" 
+                    active
+                      ? "bg-indigo-50 border-indigo-200 text-indigo-700 shadow-xs"
                       : "border-gray-200 bg-white/50 dark:bg-slate-900/40 text-gray-600 hover:bg-white dark:bg-slate-900 hover:text-gray-950"
                   }`}
                 >
@@ -70,7 +76,7 @@ export function PreferencesSettings({
           <div className="grid grid-cols-2 gap-3">
             {[
               { value: "es", label: t("settings.preferences.langEs") },
-              { value: "en", label: t("settings.preferences.langEn") }
+              { value: "en", label: t("settings.preferences.langEn") },
             ].map((item) => {
               const active = language === item.value;
               return (
@@ -79,8 +85,8 @@ export function PreferencesSettings({
                   type="button"
                   onClick={() => setLanguage(item.value as "es" | "en")}
                   className={`flex items-center justify-center gap-2 py-3 px-4 rounded-xl border text-sm font-semibold transition-all cursor-pointer ${
-                    active 
-                      ? "bg-indigo-50 border-indigo-200 text-indigo-700 shadow-xs" 
+                    active
+                      ? "bg-indigo-50 border-indigo-200 text-indigo-700 shadow-xs"
                       : "border-gray-200 bg-white/50 dark:bg-slate-900/40 text-gray-600 hover:bg-white dark:bg-slate-900 hover:text-gray-950"
                   }`}
                 >
@@ -95,9 +101,13 @@ export function PreferencesSettings({
           <div className="flex items-center gap-2">
             <RefreshCw className="h-4.5 w-4.5 text-gray-400" />
             <div>
-              <p className="text-sm font-semibold text-gray-800">{t("settings.preferences.refresh")}</p>
+              <p className="text-sm font-semibold text-gray-800">
+                {t("settings.preferences.refresh")}
+              </p>
               <p className="text-xs text-gray-500">
-                {language === "en" ? "Auto-refresh frequency for requests lists." : "Frecuencia de refresco para la lista de solicitudes."}
+                {language === "en"
+                  ? "Auto-refresh frequency for requests lists."
+                  : "Frecuencia de refresco para la lista de solicitudes."}
               </p>
             </div>
           </div>
@@ -117,7 +127,9 @@ export function PreferencesSettings({
           <div className="flex items-center gap-2">
             <Volume2 className="h-4.5 w-4.5 text-gray-400" />
             <div>
-              <p className="text-sm font-semibold text-gray-800">{t("settings.preferences.sound")}</p>
+              <p className="text-sm font-semibold text-gray-800">
+                {t("settings.preferences.sound")}
+              </p>
               <p className="text-xs text-gray-500">{t("settings.preferences.soundDesc")}</p>
             </div>
           </div>

@@ -107,7 +107,7 @@ export function useLanguage() {
 
     return {
       language: "es" as Language,
-      setLanguage: () => { },
+      setLanguage: () => {},
       t: tFallback,
     };
   }

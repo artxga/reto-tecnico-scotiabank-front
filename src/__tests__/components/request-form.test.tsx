@@ -25,7 +25,9 @@ describe("RequestForm Component", () => {
       expect(screen.getByText(/El título debe tener al menos 5 caracteres/i)).toBeInTheDocument();
       expect(screen.getByText(/El nombre del solicitante es obligatorio/i)).toBeInTheDocument();
       expect(screen.getByText(/La categoría es obligatoria/i)).toBeInTheDocument();
-      expect(screen.getByText(/La descripción debe tener al menos 10 caracteres/i)).toBeInTheDocument();
+      expect(
+        screen.getByText(/La descripción debe tener al menos 10 caracteres/i),
+      ).toBeInTheDocument();
     });
 
     expect(mockOnSubmit).not.toHaveBeenCalled();
@@ -34,10 +36,14 @@ describe("RequestForm Component", () => {
   it("envía el formulario correctamente con datos válidos (Interacción de usuario)", async () => {
     render(<RequestForm onSubmit={mockOnSubmit} />);
 
-    fireEvent.change(screen.getByLabelText(/Título de la Solicitud/i), { target: { value: "Nueva Laptop" } });
+    fireEvent.change(screen.getByLabelText(/Título de la Solicitud/i), {
+      target: { value: "Nueva Laptop" },
+    });
     fireEvent.change(screen.getByLabelText(/Solicitante/i), { target: { value: "Juan Pérez" } });
     fireEvent.change(screen.getByLabelText(/Categoría/i), { target: { value: "Hardware" } });
-    fireEvent.change(screen.getByLabelText(/Descripción Detallada/i), { target: { value: "Mi laptop se malogró y necesito una urgente para trabajar." } });
+    fireEvent.change(screen.getByLabelText(/Descripción Detallada/i), {
+      target: { value: "Mi laptop se malogró y necesito una urgente para trabajar." },
+    });
     fireEvent.change(screen.getByLabelText(/Prioridad/i), { target: { value: "high" } });
 
     fireEvent.click(screen.getByRole("button", { name: /Crear Solicitud/i }));
@@ -49,9 +55,9 @@ describe("RequestForm Component", () => {
           requester: "Juan Pérez",
           category: "Hardware",
           description: "Mi laptop se malogró y necesito una urgente para trabajar.",
-          priority: "high"
+          priority: "high",
         }),
-        expect.anything()
+        expect.anything(),
       );
     });
   });

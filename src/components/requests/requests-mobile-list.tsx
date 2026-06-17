@@ -25,12 +25,18 @@ export function RequestsMobileList({ filtered, categoryTranslations }: RequestsM
           </div>
           <div className="flex justify-between items-center text-xs text-gray-500 mb-4">
             <span>{req.requester}</span>
-            <span className="font-mono bg-white/80 px-2 py-0.5 rounded text-[10px] text-gray-600">{categoryTranslations[req.category] || req.category}</span>
+            <span className="font-mono bg-white/80 px-2 py-0.5 rounded text-[10px] text-gray-600">
+              {categoryTranslations[req.category] || req.category}
+            </span>
           </div>
           <div className="flex justify-between items-center pt-3 border-t border-gray-100">
             <div className="flex items-center gap-1.5 text-xs text-gray-440 dark:text-gray-500">
               <Calendar className="h-3.5 w-3.5" />
-              <span>{new Date(req.creationDate).toLocaleDateString(language === "en" ? "en-US" : "es-ES")}</span>
+              <span>
+                {new Date(req.creationDate).toLocaleDateString(
+                  language === "en" ? "en-US" : "es-ES",
+                )}
+              </span>
             </div>
             <Badge variant={req.priority} />
           </div>

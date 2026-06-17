@@ -12,13 +12,13 @@ export default function SettingsPage() {
   const [loading, setLoading] = useState(false);
   const [mounted, setMounted] = useState(false);
   const { t, language, setLanguage } = useLanguage();
-  
+
   const [profile, setProfile] = useState({
     name: "Ángel Arteaga",
     role: "Administrador de Solicitudes",
-    department: "Operaciones y Sistemas"
+    department: "Operaciones y Sistemas",
   });
-  
+
   const [theme, setTheme] = useState("system");
   const [notifications, setNotifications] = useState(true);
   const [refreshInterval, setRefreshInterval] = useState("30");
@@ -41,13 +41,13 @@ export default function SettingsPage() {
       setProfile({
         name: "Ángel Arteaga",
         role: "Requests Administrator",
-        department: "Operations & Systems"
+        department: "Operations & Systems",
       });
     } else {
       setProfile({
         name: "Ángel Arteaga",
         role: "Administrador de Solicitudes",
-        department: "Operaciones y Sistemas"
+        department: "Operaciones y Sistemas",
       });
     }
   }, [language]);
@@ -73,12 +73,12 @@ export default function SettingsPage() {
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    
+
     localStorage.setItem("theme", theme);
     applyTheme(theme);
-    
+
     await new Promise((resolve) => setTimeout(resolve, 800));
-    
+
     setLoading(false);
     toast(t("settings.toastSaved"), "success");
   };
@@ -95,7 +95,7 @@ export default function SettingsPage() {
       <form onSubmit={handleSave} className="space-y-6">
         <ProfileSettings profile={profile} setProfile={setProfile} />
 
-        <PreferencesSettings 
+        <PreferencesSettings
           theme={theme}
           handleThemeSelect={handleThemeSelect}
           language={language}
@@ -113,7 +113,7 @@ export default function SettingsPage() {
             className="w-full sm:w-auto btn-primary-liquid px-6 py-3 rounded-xl font-semibold inline-flex items-center justify-center gap-2 transform active:scale-98 disabled:opacity-75 disabled:pointer-events-none"
           >
             <Save className="h-4 w-4" />
-            {loading ? t("common.saving") : (language === "en" ? "Save Settings" : "Guardar Ajustes")}
+            {loading ? t("common.saving") : language === "en" ? "Save Settings" : "Guardar Ajustes"}
           </button>
         </div>
       </form>

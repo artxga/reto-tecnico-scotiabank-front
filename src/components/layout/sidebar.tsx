@@ -3,7 +3,15 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, FileText, PlusCircle, Settings, ChevronLeft, ChevronRight, X } from "lucide-react";
+import {
+  LayoutDashboard,
+  FileText,
+  PlusCircle,
+  Settings,
+  ChevronLeft,
+  ChevronRight,
+  X,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/components/providers/language-provider";
 
@@ -24,7 +32,7 @@ export function Sidebar({ isMobileOpen, onCloseMobile }: SidebarProps) {
   ];
 
   return (
-    <div 
+    <div
       className={cn(
         "flex h-full flex-col border-r border-gray-200 bg-white dark:bg-slate-900 shadow-[2px_0_15px_-3px_rgba(0,0,0,0.05)] transition-all duration-300 glass-sidebar",
         // Desktop behavior
@@ -32,22 +40,26 @@ export function Sidebar({ isMobileOpen, onCloseMobile }: SidebarProps) {
         isCollapsed ? "md:w-20" : "md:w-64",
         // Mobile behavior
         "fixed inset-y-0 left-0 z-40 w-64 transform",
-        isMobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+        isMobileOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0",
       )}
     >
-      <div className={cn(
-        "flex h-16 items-center border-b border-gray-100 overflow-hidden px-6 justify-between",
-        isCollapsed && "md:justify-center md:px-0"
-      )}>
+      <div
+        className={cn(
+          "flex h-16 items-center border-b border-gray-100 overflow-hidden px-6 justify-between",
+          isCollapsed && "md:justify-center md:px-0",
+        )}
+      >
         <div className={cn("flex items-center gap-2 min-w-max", isCollapsed && "md:hidden")}>
           <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center shadow-md">
             <FileText className="h-4 w-4 text-white" />
           </div>
-          <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Gestor</h1>
+          <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+            Gestor
+          </h1>
         </div>
-        
+
         {/* Toggle desktop collapse */}
-        <button 
+        <button
           onClick={() => setIsCollapsed(!isCollapsed)}
           className="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-white/80 transition-colors focus:outline-none hidden md:block"
         >
@@ -55,7 +67,7 @@ export function Sidebar({ isMobileOpen, onCloseMobile }: SidebarProps) {
         </button>
 
         {/* Close mobile menu */}
-        <button 
+        <button
           onClick={onCloseMobile}
           className="p-1.5 rounded-lg text-gray-400 hover:text-indigo-650 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/40 transition-colors focus:outline-none md:hidden cursor-pointer"
           aria-label="Cerrar menú"
@@ -63,7 +75,7 @@ export function Sidebar({ isMobileOpen, onCloseMobile }: SidebarProps) {
           <X className="h-5 w-5" />
         </button>
       </div>
-      
+
       <nav className="flex-1 space-y-1.5 px-3 py-6 overflow-hidden">
         {navigation.map((item) => {
           const isActive = pathname === item.href;
@@ -78,7 +90,7 @@ export function Sidebar({ isMobileOpen, onCloseMobile }: SidebarProps) {
                 isActive
                   ? "bg-indigo-50 text-indigo-700 shadow-sm"
                   : "text-gray-600 hover:bg-white/60 hover:text-indigo-600",
-                isCollapsed ? "md:justify-center md:px-0 justify-start px-3" : "justify-start px-3"
+                isCollapsed ? "md:justify-center md:px-0 justify-start px-3" : "justify-start px-3",
               )}
             >
               {isActive && (
@@ -87,9 +99,11 @@ export function Sidebar({ isMobileOpen, onCloseMobile }: SidebarProps) {
               <item.icon
                 className={cn(
                   "h-5 w-5 flex-shrink-0 transition-all duration-200",
-                  isActive ? "text-indigo-600" : "text-gray-400 group-hover:text-indigo-500 group-hover:scale-110",
+                  isActive
+                    ? "text-indigo-600"
+                    : "text-gray-400 group-hover:text-indigo-500 group-hover:scale-110",
                   "mr-3",
-                  isCollapsed && "md:mr-0"
+                  isCollapsed && "md:mr-0",
                 )}
                 aria-hidden="true"
               />
@@ -98,9 +112,9 @@ export function Sidebar({ isMobileOpen, onCloseMobile }: SidebarProps) {
           );
         })}
       </nav>
-      
+
       <div className="border-t border-gray-100 p-4">
-        <Link 
+        <Link
           href="/settings"
           title={isCollapsed ? t("sidebar.settings") : undefined}
           onClick={onCloseMobile}
@@ -109,21 +123,25 @@ export function Sidebar({ isMobileOpen, onCloseMobile }: SidebarProps) {
             pathname === "/settings"
               ? "bg-indigo-50 text-indigo-700 shadow-sm"
               : "text-gray-600 hover:bg-white/60 hover:text-indigo-600",
-            isCollapsed ? "md:justify-center md:px-0 justify-start px-3" : "justify-start px-3"
+            isCollapsed ? "md:justify-center md:px-0 justify-start px-3" : "justify-start px-3",
           )}
         >
           {pathname === "/settings" && (
             <span className="absolute left-0 top-0 h-full w-1 bg-indigo-600 rounded-r-full" />
           )}
-          <Settings 
+          <Settings
             className={cn(
               "h-5 w-5 transition-all duration-200 group-hover:rotate-45",
-              pathname === "/settings" ? "text-indigo-600" : "text-gray-400 group-hover:text-indigo-500 group-hover:scale-110",
+              pathname === "/settings"
+                ? "text-indigo-600"
+                : "text-gray-400 group-hover:text-indigo-500 group-hover:scale-110",
               "mr-3",
-              isCollapsed && "md:mr-0"
-            )} 
+              isCollapsed && "md:mr-0",
+            )}
           />
-          <span className={cn("truncate", isCollapsed && "md:hidden")}>{t("sidebar.settings")}</span>
+          <span className={cn("truncate", isCollapsed && "md:hidden")}>
+            {t("sidebar.settings")}
+          </span>
         </Link>
       </div>
     </div>

@@ -20,12 +20,12 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
   const { t, language } = useLanguage();
 
   const categoryTranslations: Record<string, string> = {
-    "Hardware": language === "en" ? "Hardware" : "Hardware",
-    "Accesos": language === "en" ? "Access" : "Accesos",
-    "Software": language === "en" ? "Software" : "Software",
-    "Infraestructura": language === "en" ? "Infrastructure" : "Infraestructura",
+    Hardware: language === "en" ? "Hardware" : "Hardware",
+    Accesos: language === "en" ? "Access" : "Accesos",
+    Software: language === "en" ? "Software" : "Software",
+    Infraestructura: language === "en" ? "Infrastructure" : "Infraestructura",
     "Recursos Humanos": language === "en" ? "Human Resources" : "Recursos Humanos",
-    "Otros": language === "en" ? "Others" : "Otros",
+    Otros: language === "en" ? "Others" : "Otros",
   };
 
   if (isLoading) {
@@ -106,15 +106,23 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
   }
 
   const handleDelete = async () => {
-    if (confirm(language === "en" 
-      ? "Are you sure you want to close/delete this request?" 
-      : "¿Estás seguro de que deseas cerrar/eliminar esta solicitud?")) {
+    if (
+      confirm(
+        language === "en"
+          ? "Are you sure you want to close/delete this request?"
+          : "¿Estás seguro de que deseas cerrar/eliminar esta solicitud?",
+      )
+    ) {
       try {
         await deleteRequest.mutateAsync(id);
         toast(t("requests.detail.toastClosed"), "success");
         router.push("/requests");
       } catch (error: any) {
-        toast(error.message || (language === "en" ? "Error closing request" : "Error al cerrar la solicitud"), "error");
+        toast(
+          error.message ||
+            (language === "en" ? "Error closing request" : "Error al cerrar la solicitud"),
+          "error",
+        );
       }
     }
   };
@@ -123,18 +131,31 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
     <div className="max-w-3xl mx-auto space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <Link href="/requests" className="p-2 rounded-full hover:bg-white/50 dark:hover:bg-slate-800/50 dark:bg-slate-900/40 transition-colors shadow-sm bg-white/30 dark:bg-slate-900/20 backdrop-blur-sm border border-white shrink-0">
+          <Link
+            href="/requests"
+            className="p-2 rounded-full hover:bg-white/50 dark:hover:bg-slate-800/50 dark:bg-slate-900/40 transition-colors shadow-sm bg-white/30 dark:bg-slate-900/20 backdrop-blur-sm border border-white shrink-0"
+          >
             <ArrowLeft className="h-5 w-5 text-gray-700" />
           </Link>
-          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900">{t("requests.detail.title")}</h2>
+          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-gray-900">
+            {t("requests.detail.title")}
+          </h2>
         </div>
         <div className="flex gap-3 w-full sm:w-auto">
           <Link href={`/requests/${id}/edit`} className="flex-1 sm:flex-initial">
-            <Button variant="secondary" className="w-full gap-2 bg-white/50 dark:bg-slate-900/40 backdrop-blur-sm hover:bg-white dark:bg-slate-900">
+            <Button
+              variant="secondary"
+              className="w-full gap-2 bg-white/50 dark:bg-slate-900/40 backdrop-blur-sm hover:bg-white dark:bg-slate-900"
+            >
               <Edit className="h-4 w-4" /> {t("common.edit")}
             </Button>
           </Link>
-          <Button variant="danger" className="flex-1 sm:flex-initial gap-2" onClick={handleDelete} disabled={deleteRequest.isPending}>
+          <Button
+            variant="danger"
+            className="flex-1 sm:flex-initial gap-2"
+            onClick={handleDelete}
+            disabled={deleteRequest.isPending}
+          >
             <Trash2 className="h-4 w-4" /> {t("common.close")}
           </Button>
         </div>
@@ -145,7 +166,9 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
             <div>
               <h1 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">{request.title}</h1>
-              <p className="text-gray-500 font-mono text-xs bg-gray-100 dark:bg-slate-800/60 dark:text-gray-400 px-2 py-1 rounded-md inline-block">ID: {request.id}</p>
+              <p className="text-gray-500 font-mono text-xs bg-gray-100 dark:bg-slate-800/60 dark:text-gray-400 px-2 py-1 rounded-md inline-block">
+                ID: {request.id}
+              </p>
             </div>
             <div className="flex flex-row sm:flex-col items-center sm:items-end gap-2 shrink-0">
               <Badge variant={request.status} className="px-3 py-1 text-sm shadow-sm" />
@@ -170,9 +193,10 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
           <div className="space-y-6">
             <div className="bg-white/50 rounded-2xl p-5 border border-gray-100/80 space-y-5">
               <h3 className="font-semibold text-gray-800 flex items-center gap-2 border-b border-gray-200 pb-3">
-                <Activity className="h-4 w-4 text-indigo-500" /> {language === "en" ? "Details" : "Detalles"}
+                <Activity className="h-4 w-4 text-indigo-500" />{" "}
+                {language === "en" ? "Details" : "Detalles"}
               </h3>
-              
+
               <div className="space-y-1">
                 <p className="text-xs text-gray-500 flex items-center gap-1.5 uppercase tracking-wider font-semibold">
                   <User className="h-3.5 w-3.5" /> {t("requests.form.fieldRequester")}
@@ -184,7 +208,9 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
                 <p className="text-xs text-gray-500 flex items-center gap-1.5 uppercase tracking-wider font-semibold">
                   <Activity className="h-3.5 w-3.5" /> {t("requests.detail.category")}
                 </p>
-                <p className="font-medium text-gray-900 ml-5">{categoryTranslations[request.category] || request.category}</p>
+                <p className="font-medium text-gray-900 ml-5">
+                  {categoryTranslations[request.category] || request.category}
+                </p>
               </div>
 
               <div className="space-y-1">
@@ -192,7 +218,9 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
                   <Calendar className="h-3.5 w-3.5" /> {t("requests.detail.creationDate")}
                 </p>
                 <p className="font-medium text-gray-900 ml-5">
-                  {new Date(request.creationDate).toLocaleDateString(language === "en" ? "en-US" : "es-ES")}
+                  {new Date(request.creationDate).toLocaleDateString(
+                    language === "en" ? "en-US" : "es-ES",
+                  )}
                 </p>
               </div>
 
@@ -201,7 +229,9 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
                   <Calendar className="h-3.5 w-3.5" /> {t("requests.detail.lastUpdate")}
                 </p>
                 <p className="font-medium text-gray-900 ml-5">
-                  {new Date(request.lastChangeDate).toLocaleDateString(language === "en" ? "en-US" : "es-ES")}
+                  {new Date(request.lastChangeDate).toLocaleDateString(
+                    language === "en" ? "en-US" : "es-ES",
+                  )}
                 </p>
               </div>
             </div>

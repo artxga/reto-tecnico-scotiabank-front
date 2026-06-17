@@ -1,7 +1,16 @@
 "use client";
 
 import { Request } from "@/lib/types";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Cell,
+} from "recharts";
 import { FolderKanban } from "lucide-react";
 import { useLanguage } from "@/components/providers/language-provider";
 
@@ -15,7 +24,7 @@ const COLORS = [
   "#ec4899", // Pink (Software)
   "#10b981", // Emerald (Infraestructura)
   "#f59e0b", // Amber (Recursos Humanos)
-  "#64748b"  // Slate (Otros)
+  "#64748b", // Slate (Otros)
 ];
 
 export function CategoryChart({ requests }: CategoryChartProps) {
@@ -23,12 +32,12 @@ export function CategoryChart({ requests }: CategoryChartProps) {
 
   const translateCategory = (cat: string) => {
     const map: Record<string, string> = {
-      "Hardware": language === "en" ? "Hardware" : "Hardware",
-      "Accesos": language === "en" ? "Access" : "Accesos",
-      "Software": language === "en" ? "Software" : "Software",
-      "Infraestructura": language === "en" ? "Infrastructure" : "Infraestructura",
+      Hardware: language === "en" ? "Hardware" : "Hardware",
+      Accesos: language === "en" ? "Access" : "Accesos",
+      Software: language === "en" ? "Software" : "Software",
+      Infraestructura: language === "en" ? "Infrastructure" : "Infraestructura",
       "Recursos Humanos": language === "en" ? "Human Resources" : "Recursos Humanos",
-      "Otros": language === "en" ? "Others" : "Otros",
+      Otros: language === "en" ? "Others" : "Otros",
     };
     return map[cat] || cat;
   };
@@ -72,19 +81,24 @@ export function CategoryChart({ requests }: CategoryChartProps) {
             layout="vertical"
             margin={{ top: 5, right: 10, left: -10, bottom: 5 }}
           >
-            <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="rgba(255,255,255,0.06)" className="dark:stroke-slate-800/40" />
-            <XAxis 
+            <CartesianGrid
+              strokeDasharray="3 3"
+              horizontal={false}
+              stroke="rgba(255,255,255,0.06)"
+              className="dark:stroke-slate-800/40"
+            />
+            <XAxis
               type="number"
-              stroke="#94a3b8" 
+              stroke="#94a3b8"
               fontSize={10}
               tickLine={false}
               axisLine={false}
               allowDecimals={false}
             />
-            <YAxis 
+            <YAxis
               type="category"
-              dataKey="name" 
-              stroke="#94a3b8" 
+              dataKey="name"
+              stroke="#94a3b8"
               fontSize={10}
               tickLine={false}
               axisLine={false}
@@ -101,11 +115,7 @@ export function CategoryChart({ requests }: CategoryChartProps) {
               }}
               cursor={{ fill: "rgba(255, 255, 255, 0.1)" }}
             />
-            <Bar 
-              dataKey="cantidad" 
-              radius={[0, 6, 6, 0]}
-              barSize={12}
-            >
+            <Bar dataKey="cantidad" radius={[0, 6, 6, 0]} barSize={12}>
               {data.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
               ))}

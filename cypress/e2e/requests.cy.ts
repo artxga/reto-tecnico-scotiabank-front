@@ -16,17 +16,12 @@ describe("Requests Inbox", () => {
       timeout: 10000,
     }).should("be.visible");
 
-    cy.get('#search')
-      .first()
-      .should("be.visible");
+    cy.get("#search").first().should("be.visible");
   });
 
   it("shows request items after loading", () => {
     // Wait for requests to load (the API has an 800ms delay)
-    cy.get("table tbody tr", { timeout: 10000 }).should(
-      "have.length.greaterThan",
-      0
-    );
+    cy.get("table tbody tr", { timeout: 10000 }).should("have.length.greaterThan", 0);
   });
 
   it("navigates to new request page", () => {
@@ -37,8 +32,6 @@ describe("Requests Inbox", () => {
   });
 
   it("has CSV export button", () => {
-    cy.contains(/Exportar CSV|Export CSV/i, { timeout: 10000 }).should(
-      "be.visible"
-    );
+    cy.contains(/Exportar CSV|Export CSV/i, { timeout: 10000 }).should("be.visible");
   });
 });

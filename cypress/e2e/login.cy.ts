@@ -59,9 +59,7 @@ describe("Login Flow", () => {
     cy.get('button[type="submit"]').click();
 
     // Wait for the simulated network delay (1200ms)
-    cy.contains(/incorrectos|incorrect/i, { timeout: 5000 }).should(
-      "be.visible"
-    );
+    cy.contains(/incorrectos|incorrect/i, { timeout: 5000 }).should("be.visible");
   });
 
   it("logs in successfully with valid mock credentials", () => {

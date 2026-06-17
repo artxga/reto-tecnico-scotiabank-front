@@ -57,9 +57,9 @@ export const es = {
       newEvent: "Nueva Solicitud",
       statusUpdated: "Estado Actualizado",
       requestEdited: "Solicitud Editada",
-      createdDesc: "{requester} creó la solicitud \"{title}\"",
-      statusDesc: "La solicitud \"{title}\" cambió a {status}",
-      editedDesc: "Se actualizaron los detalles de la solicitud \"{title}\"",
+      createdDesc: '{requester} creó la solicitud "{title}"',
+      statusDesc: 'La solicitud "{title}" cambió a {status}',
+      editedDesc: 'Se actualizaron los detalles de la solicitud "{title}"',
       noActivity: "No hay actividad registrada",
       time: {
         now: "Hace un momento",
@@ -68,8 +68,8 @@ export const es = {
         hours: "Hace {count} horas",
         day: "Hace 1 día",
         days: "Hace {count} días",
-      }
-    }
+      },
+    },
   },
   requests: {
     title: "Bandeja de Solicitudes",
@@ -129,8 +129,8 @@ export const es = {
         titleMax: "El título no puede exceder los 100 caracteres",
         descMin: "La descripción debe tener al menos 10 caracteres",
         requesterMin: "El nombre debe tener al menos 3 caracteres",
-      }
-    }
+      },
+    },
   },
   settings: {
     title: "Ajustes",
@@ -177,5 +177,5 @@ export const es = {
     passwordMin: "La contraseña debe tener al menos 6 caracteres",
     invalidCredentials: "Correo o contraseña incorrectos (Prueba: admin@scotiabank.com / admin123)",
     signOut: "Cerrar Sesión",
-  }
+  },
 };

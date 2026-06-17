@@ -7,7 +7,7 @@ describe("Validaciones de Solicitud (Zod)", () => {
       description: "Descripción detallada de la solicitud de prueba.",
       category: "Prueba de categoría",
       priority: "high",
-      requester: "Juan Pérez"
+      requester: "Juan Pérez",
     };
 
     const result = requestSchema.safeParse(validData);
@@ -20,7 +20,7 @@ describe("Validaciones de Solicitud (Zod)", () => {
       description: "Descripción detallada de la solicitud de prueba.",
       category: "Prueba de categoría",
       priority: "high",
-      requester: "Juan Pérez"
+      requester: "Juan Pérez",
     };
 
     const result = requestSchema.safeParse(invalidData);

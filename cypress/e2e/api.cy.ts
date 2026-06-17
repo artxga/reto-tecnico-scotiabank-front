@@ -49,11 +49,11 @@ describe("API - Solicitudes", () => {
       method: "POST",
       url: baseUrl,
       body: {
-        title: "AB",           // Too short (min 5)
-        description: "short",  // Too short (min 10)
-        category: "T",         // Too short (min 2)
-        priority: "invalid",   // Not in enum
-        requester: "AB",       // Too short (min 3)
+        title: "AB", // Too short (min 5)
+        description: "short", // Too short (min 10)
+        category: "T", // Too short (min 2)
+        priority: "invalid", // Not in enum
+        requester: "AB", // Too short (min 3)
       },
       failOnStatusCode: false,
     }).then((response) => {

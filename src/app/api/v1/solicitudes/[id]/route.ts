@@ -3,10 +3,7 @@ import { getMockRequest, updateMockRequest } from "@/lib/data";
 import { Priority } from "@/lib/types";
 import { requestSchema, updatePrioritySchema } from "@/lib/validations";
 
-export async function GET(
-  req: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const request = await getMockRequest(id);
 
@@ -17,10 +14,7 @@ export async function GET(
   return NextResponse.json(request);
 }
 
-export async function PUT(
-  req: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const request = await getMockRequest(id);
 
@@ -37,9 +31,9 @@ export async function PUT(
       return NextResponse.json(
         {
           error: "Validation failed",
-          details: validation.error.flatten().fieldErrors
+          details: validation.error.flatten().fieldErrors,
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -52,10 +46,7 @@ export async function PUT(
   }
 }
 
-export async function PATCH(
-  req: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function PATCH(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const request = await getMockRequest(id);
 
@@ -72,9 +63,9 @@ export async function PATCH(
       return NextResponse.json(
         {
           error: "Validation failed",
-          details: validation.error.flatten().fieldErrors
+          details: validation.error.flatten().fieldErrors,
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -87,10 +78,7 @@ export async function PATCH(
   }
 }
 
-export async function DELETE(
-  req: Request,
-  { params }: { params: Promise<{ id: string }> }
-) {
+export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const request = await getMockRequest(id);
 

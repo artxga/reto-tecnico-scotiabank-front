@@ -65,7 +65,9 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
         <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center shadow-md sm:hidden shrink-0">
           <FileText className="h-4.5 w-4.5 text-white" />
         </div>
-        <h2 className="text-base sm:text-lg font-semibold text-gray-800 hidden sm:block">{t("common.appName")}</h2>
+        <h2 className="text-base sm:text-lg font-semibold text-gray-800 hidden sm:block">
+          {t("common.appName")}
+        </h2>
       </div>
 
       <div className="flex items-center space-x-1.5 sm:space-x-3">
@@ -76,7 +78,9 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
           title={language === "es" ? "Switch to English" : "Cambiar a Español"}
         >
           <Globe className="h-5 w-5" />
-          <span className="text-xs font-extrabold uppercase select-none hidden sm:inline-block">{language}</span>
+          <span className="text-xs font-extrabold uppercase select-none hidden sm:inline-block">
+            {language}
+          </span>
         </button>
 
         <button
@@ -93,8 +97,8 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
           )}
         </button>
 
-        <NotificationsMenu 
-          isOpen={isOpenNotifications} 
+        <NotificationsMenu
+          isOpen={isOpenNotifications}
           onToggle={() => {
             setIsOpenNotifications(!isOpenNotifications);
             setIsOpenProfile(false);
@@ -102,7 +106,7 @@ export function Header({ onOpenMobileMenu }: HeaderProps) {
           onClose={() => setIsOpenNotifications(false)}
         />
 
-        <UserProfileMenu 
+        <UserProfileMenu
           isOpen={isOpenProfile}
           onToggle={() => {
             setIsOpenProfile(!isOpenProfile);

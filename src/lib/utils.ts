@@ -6,8 +6,8 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatDate(dateString: string) {
-  return new Intl.DateTimeFormat('es-ES', {
-    dateStyle: 'medium',
-    timeStyle: 'short',
+  return new Intl.DateTimeFormat("es-ES", {
+    dateStyle: "medium",
+    timeStyle: "short",
   }).format(new Date(dateString));
 }

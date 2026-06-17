@@ -21,7 +21,6 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(dashboardUrl);
   }
 
-
   const response = NextResponse.next();
   const ip = request.headers.get("x-forwarded-for") || "127.0.0.1";
 
@@ -29,10 +28,7 @@ export function middleware(request: NextRequest) {
   response.headers.set("X-Content-Type-Options", "nosniff");
   response.headers.set("Referrer-Policy", "strict-origin-when-cross-origin");
   response.headers.set("X-XSS-Protection", "1; mode=block");
-  response.headers.set(
-    "Permissions-Policy",
-    "camera=(), microphone=(), geolocation=()"
-  );
+  response.headers.set("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
 
   // Content Security Policy (CSP)
   const cspHeader = `
@@ -46,14 +42,13 @@ export function middleware(request: NextRequest) {
     form-action 'self';
     frame-ancestors 'none';
     connect-src 'self';
-  `.replace(/\s{2,}/g, ' ').trim();
+  `
+    .replace(/\s{2,}/g, " ")
+    .trim();
   response.headers.set("Content-Security-Policy", cspHeader);
 
   // Strict-Transport-Security (HSTS)
-  response.headers.set(
-    "Strict-Transport-Security",
-    "max-age=31536000; includeSubDomains; preload"
-  );
+  response.headers.set("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
 
   // 2. Rate Limiting for API routes
   if (request.nextUrl.pathname.startsWith("/api")) {
@@ -73,7 +68,8 @@ export function middleware(request: NextRequest) {
       return new NextResponse(
         JSON.stringify({
           error: "Too Many Requests",
-          message: "Has superado el límite de solicitudes permitido (60 por minuto). Por favor, inténtalo de nuevo más tarde."
+          message:
+            "Has superado el límite de solicitudes permitido (60 por minuto). Por favor, inténtalo de nuevo más tarde.",
         }),
         {
           status: 429,
@@ -82,9 +78,9 @@ export function middleware(request: NextRequest) {
             "X-RateLimit-Limit": LIMIT.toString(),
             "X-RateLimit-Remaining": "0",
             "X-RateLimit-Reset": Math.ceil(resetTime / 1000).toString(),
-            "Retry-After": Math.ceil((resetTime - now) / 1000).toString()
-          }
-        }
+            "Retry-After": Math.ceil((resetTime - now) / 1000).toString(),
+          },
+        },
       );
     }
 

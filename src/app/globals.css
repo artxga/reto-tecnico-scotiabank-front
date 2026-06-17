@@ -29,7 +29,6 @@ body {
   display: none;
 }
 
-
 .hide-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -74,7 +73,11 @@ body {
 
 /* Liquid Glass Header */
 .glass-header {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.15) 100%) !important;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(255, 255, 255, 0.15) 100%
+  ) !important;
   backdrop-filter: blur(30px) saturate(220%) !important;
   -webkit-backdrop-filter: blur(30px) saturate(220%) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.6) !important;
@@ -85,7 +88,11 @@ body {
 
 /* Liquid Glass Sidebar */
 .glass-sidebar {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 95%, rgba(255, 255, 255, 0.9) 100%) !important;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.95) 95%,
+    rgba(255, 255, 255, 0.9) 100%
+  ) !important;
   backdrop-filter: blur(32px) saturate(220%) !important;
   -webkit-backdrop-filter: blur(32px) saturate(220%) !important;
   border-right: 1px solid rgba(255, 255, 255, 0.55) !important;
@@ -104,13 +111,19 @@ body {
 input,
 select,
 textarea {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.2) 100%) !important;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.5) 0%,
+    rgba(255, 255, 255, 0.2) 100%
+  ) !important;
   backdrop-filter: blur(10px) !important;
   -webkit-backdrop-filter: blur(10px) !important;
   border: 1px solid rgba(255, 255, 255, 0.6) !important;
   border-radius: 12px !important;
   color: #1e293b !important;
-  box-shadow: inset 0 1px 1.5px rgba(255, 255, 255, 0.5), 0 2px 4px rgba(0, 0, 0, 0.01) !important;
+  box-shadow:
+    inset 0 1px 1.5px rgba(255, 255, 255, 0.5),
+    0 2px 4px rgba(0, 0, 0, 0.01) !important;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
@@ -119,7 +132,9 @@ select:focus,
 textarea:focus {
   border-color: #6366f1 !important;
   background-color: rgba(255, 255, 255, 0.65) !important;
-  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15), inset 0 1px 1.5px rgba(255, 255, 255, 0.5) !important;
+  box-shadow:
+    0 0 0 4px rgba(99, 102, 241, 0.15),
+    inset 0 1px 1.5px rgba(255, 255, 255, 0.5) !important;
 }
 
 /* Dropdown option reset */
@@ -271,10 +286,16 @@ select option {
 .dark input,
 .dark select,
 .dark textarea {
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.5) 0%, rgba(9, 13, 22, 0.35) 100%) !important;
+  background: linear-gradient(
+    180deg,
+    rgba(15, 23, 42, 0.5) 0%,
+    rgba(9, 13, 22, 0.35) 100%
+  ) !important;
   border-color: rgba(255, 255, 255, 0.08) !important;
   color: #f8fafc !important;
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05), 0 4px 6px rgba(0, 0, 0, 0.15) !important;
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.05),
+    0 4px 6px rgba(0, 0, 0, 0.15) !important;
 }
 
 .dark input:focus,
@@ -282,7 +303,9 @@ select option {
 .dark textarea:focus {
   border-color: #818cf8 !important;
   background-color: rgba(15, 23, 42, 0.6) !important;
-  box-shadow: 0 0 0 4px rgba(129, 140, 248, 0.15), inset 0 1px 1px rgba(255, 255, 255, 0.08) !important;
+  box-shadow:
+    0 0 0 4px rgba(129, 140, 248, 0.15),
+    inset 0 1px 1px rgba(255, 255, 255, 0.08) !important;
 }
 
 .dark input::placeholder,
@@ -297,7 +320,11 @@ select option {
 
 /* Glass Header in Dark Mode */
 .dark .glass-header {
-  background: linear-gradient(180deg, rgba(15, 23, 42, 0.35) 0%, rgba(9, 13, 22, 0.2) 100%) !important;
+  background: linear-gradient(
+    180deg,
+    rgba(15, 23, 42, 0.35) 0%,
+    rgba(9, 13, 22, 0.2) 100%
+  ) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
   box-shadow:
     0 8px 30px -10px rgba(0, 0, 0, 0.5),
@@ -306,7 +333,11 @@ select option {
 
 /* Glass Sidebar in Dark Mode */
 .dark .glass-sidebar {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.35) 0%, rgba(9, 13, 22, 0.2) 100%) !important;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 23, 42, 0.35) 0%,
+    rgba(9, 13, 22, 0.2) 100%
+  ) !important;
   border-right: 1px solid rgba(255, 255, 255, 0.05) !important;
   box-shadow:
     8px 0 40px -15px rgba(0, 0, 0, 0.65),
@@ -435,5 +466,7 @@ select option {
 }
 
 .dark .shadow-md {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4) !important;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.4),
+    0 2px 4px -2px rgba(0, 0, 0, 0.4) !important;
 }
