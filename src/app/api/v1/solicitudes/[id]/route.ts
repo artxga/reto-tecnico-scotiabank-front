@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getMockRequest, updateMockRequest } from "@/lib/data";
 import { Priority } from "@/lib/types";
-import { requestSchema, updatePrioritySchema } from "@/lib/validations";
+import { requestSchema, updatePrioritySchema, ALLOWED_STATUS_TRANSITIONS } from "@/lib/validations";
 
 export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -35,6 +35,17 @@ export async function PUT(req: Request, { params }: { params: Promise<{ id: stri
         },
         { status: 400 },
       );
+    }
+
+    // Validate status transition
+    if (validation.data.status && validation.data.status !== request.status) {
+      const allowedNextStates = ALLOWED_STATUS_TRANSITIONS[request.status] || [];
+      if (!allowedNextStates.includes(validation.data.status)) {
+        return NextResponse.json(
+          { error: "Invalid status transition", allowed: allowedNextStates },
+          { status: 400 },
+        );
+      }
     }
 
     await updateMockRequest(id, validation.data);

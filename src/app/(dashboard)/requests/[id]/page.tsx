@@ -1,22 +1,22 @@
 "use client";
 
 import { use } from "react";
-import { useRequest, useDeleteRequest } from "@/hooks/use-requests";
+import { useRequest, useUpdateRequest } from "@/hooks/use-requests";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { ArrowLeft, Edit, Trash2, Calendar, User, AlignLeft, Activity } from "lucide-react";
+import { ArrowLeft, Edit, Calendar, User, AlignLeft, Activity } from "lucide-react";
 import { useToast } from "@/components/ui/toast-context";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useLanguage } from "@/components/providers/language-provider";
+import { ALLOWED_STATUS_TRANSITIONS } from "@/lib/validations";
+import { RequestStatus } from "@/lib/types";
 
 export default function RequestDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
   const { data: request, isLoading } = useRequest(id);
-  const deleteRequest = useDeleteRequest();
+  const updateRequest = useUpdateRequest();
   const { toast } = useToast();
-  const router = useRouter();
   const { t, language } = useLanguage();
 
   const categoryTranslations: Record<string, string> = {
@@ -105,26 +105,32 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
     );
   }
 
-  const handleDelete = async () => {
-    if (
-      confirm(
-        language === "en"
-          ? "Are you sure you want to close/delete this request?"
-          : "¿Estás seguro de que deseas cerrar/eliminar esta solicitud?",
-      )
-    ) {
-      try {
-        await deleteRequest.mutateAsync(id);
-        toast(t("requests.detail.toastClosed"), "success");
-        router.push("/requests");
-      } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : "";
-        toast(
-          errorMessage ||
-            (language === "en" ? "Error closing request" : "Error al cerrar la solicitud"),
-          "error",
-        );
-      }
+  const handleStatusChange = async (newStatus: RequestStatus) => {
+    try {
+      await updateRequest.mutateAsync({ id: id as string, data: { status: newStatus } });
+      toast(
+        language === "en" ? "Status updated successfully" : "Estado actualizado correctamente",
+        "success",
+      );
+    } catch {
+      toast(language === "en" ? "Error updating status" : "Error al actualizar estado", "error");
+    }
+  };
+
+  const allowedTransitions = request ? ALLOWED_STATUS_TRANSITIONS[request.status] || [] : [];
+
+  const getStatusActionText = (status: string) => {
+    switch (status) {
+      case "in_review":
+        return language === "en" ? "Move to In Review" : "Mover a En Revisión";
+      case "approved":
+        return language === "en" ? "Approve" : "Aprobar";
+      case "rejected":
+        return language === "en" ? "Reject" : "Rechazar";
+      case "closed":
+        return language === "en" ? "Close Request" : "Cerrar Solicitud";
+      default:
+        return status;
     }
   };
 
@@ -142,7 +148,18 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
             {t("requests.detail.title")}
           </h2>
         </div>
-        <div className="flex gap-3 w-full sm:w-auto">
+        <div className="flex flex-wrap gap-3 w-full sm:w-auto justify-end">
+          {allowedTransitions.map((status) => (
+            <Button
+              key={status}
+              variant={status === "rejected" || status === "closed" ? "danger" : "secondary"}
+              className="flex-1 sm:flex-initial"
+              onClick={() => handleStatusChange(status as RequestStatus)}
+              disabled={updateRequest.isPending}
+            >
+              {getStatusActionText(status)}
+            </Button>
+          ))}
           <Link href={`/requests/${id}/edit`} className="flex-1 sm:flex-initial">
             <Button
               variant="secondary"
@@ -151,14 +168,6 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
               <Edit className="h-4 w-4" /> {t("common.edit")}
             </Button>
           </Link>
-          <Button
-            variant="danger"
-            className="flex-1 sm:flex-initial gap-2"
-            onClick={handleDelete}
-            disabled={deleteRequest.isPending}
-          >
-            <Trash2 className="h-4 w-4" /> {t("common.close")}
-          </Button>
         </div>
       </div>
 

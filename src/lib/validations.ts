@@ -34,3 +34,11 @@ export const loginSchema = z.object({
 
 export type SolicitudFormData = z.infer<typeof requestSchema>;
 export type LoginFormData = z.infer<typeof loginSchema>;
+
+export const ALLOWED_STATUS_TRANSITIONS: Record<string, string[]> = {
+  pending: ["in_review"],
+  in_review: ["approved", "rejected"],
+  approved: ["closed", "in_review"],
+  rejected: ["closed"],
+  closed: [],
+};

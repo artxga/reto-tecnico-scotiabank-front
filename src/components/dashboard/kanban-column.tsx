@@ -12,9 +12,10 @@ interface KanbanColumnProps {
   id: RequestStatus;
   title: string;
   requests: Request[];
+  isDropDisabled?: boolean;
 }
 
-export function KanbanColumn({ id, title, requests }: KanbanColumnProps) {
+export function KanbanColumn({ id, title, requests, isDropDisabled }: KanbanColumnProps) {
   const { t, language } = useLanguage();
   const isClosedColumn = id === "closed";
   const displayRequests = isClosedColumn ? requests.slice(0, 5) : requests;
@@ -45,7 +46,9 @@ export function KanbanColumn({ id, title, requests }: KanbanColumnProps) {
 
   return (
     <div
-      className={`flex flex-col rounded-2xl min-w-[320px] w-[320px] shadow-sm snap-center self-start max-h-[650px] border ${COLUMN_COLORS[id] || "bg-gray-100/50 border-gray-200/60"}`}
+      className={`flex flex-col rounded-2xl min-w-[320px] w-[320px] shadow-sm snap-center self-start max-h-[650px] border transition-opacity duration-300 ${COLUMN_COLORS[id] || "bg-gray-100/50 border-gray-200/60"} ${
+        isDropDisabled ? "opacity-50 grayscale-[50%]" : "opacity-100"
+      }`}
     >
       <div
         className={`p-4 border-b border-black/5 flex justify-between items-center rounded-t-2xl sticky top-0 z-10 backdrop-blur-md ${HEADER_COLORS[id] || "bg-white/70 dark:bg-slate-900/60"}`}
@@ -56,7 +59,7 @@ export function KanbanColumn({ id, title, requests }: KanbanColumnProps) {
         </span>
       </div>
 
-      <Droppable droppableId={id}>
+      <Droppable droppableId={id} isDropDisabled={isDropDisabled}>
         {(provided, snapshot) => (
           <div
             ref={provided.innerRef}

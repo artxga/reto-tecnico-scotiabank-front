@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { DragDropContext, DropResult } from "@hello-pangea/dnd";
+import { DragDropContext, DropResult, DragStart } from "@hello-pangea/dnd";
 import { Request, RequestStatus } from "@/lib/types";
 import { KanbanColumn } from "./kanban-column";
+import { ALLOWED_STATUS_TRANSITIONS } from "@/lib/validations";
 import { useUpdateRequest } from "@/hooks/use-requests";
 import { useToast } from "@/components/ui/toast-context";
 import { useLanguage } from "@/components/providers/language-provider";
@@ -15,6 +16,7 @@ interface KanbanBoardProps {
 export function KanbanBoard({ requests }: KanbanBoardProps) {
   const [mounted, setMounted] = useState(false);
   const [localRequests, setLocalRequests] = useState<Request[]>(requests);
+  const [draggedItemStatus, setDraggedItemStatus] = useState<RequestStatus | null>(null);
   const updateRequest = useUpdateRequest();
   const { toast } = useToast();
   const { t, language } = useLanguage();
@@ -37,7 +39,12 @@ export function KanbanBoard({ requests }: KanbanBoardProps) {
 
   if (!mounted) return null; // Prevents hydration mismatch
 
+  const onDragStart = (start: DragStart) => {
+    setDraggedItemStatus(start.source.droppableId as RequestStatus);
+  };
+
   const onDragEnd = async (result: DropResult) => {
+    setDraggedItemStatus(null);
     const { destination, source, draggableId } = result;
 
     if (!destination) return;
@@ -75,7 +82,7 @@ export function KanbanBoard({ requests }: KanbanBoardProps) {
       </div>
 
       <div className="w-full">
-        <DragDropContext onDragEnd={onDragEnd}>
+        <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
           <div className="flex gap-5 overflow-x-auto pb-6 pt-2 snap-x hide-scrollbar items-start">
             {localColumns.map((col) => (
               <KanbanColumn
@@ -88,6 +95,12 @@ export function KanbanBoard({ requests }: KanbanBoardProps) {
                     (a, b) =>
                       new Date(b.creationDate).getTime() - new Date(a.creationDate).getTime(),
                   )}
+                isDropDisabled={
+                  draggedItemStatus
+                    ? draggedItemStatus !== col.id &&
+                      !(ALLOWED_STATUS_TRANSITIONS[draggedItemStatus] || []).includes(col.id)
+                    : false
+                }
               />
             ))}
           </div>
