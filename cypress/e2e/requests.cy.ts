@@ -34,4 +34,19 @@ describe("Requests Inbox", () => {
   it("has CSV export button", () => {
     cy.contains(/Exportar CSV|Export CSV/i, { timeout: 10000 }).should("be.visible");
   });
+
+  it("can toggle between list and kanban view", () => {
+    // Should be in list view by default (table exists)
+    cy.get("table tbody tr", { timeout: 10000 }).should("exist");
+
+    // Switch to Kanban
+    cy.get('button[title="Kanban View"]').click();
+    
+    // Check if Kanban columns exist
+    cy.contains(/dashboard.kanban.title|Tablero Kanban|Kanban Board/i, { timeout: 10000 }).should("exist");
+    
+    // Switch back to List
+    cy.get('button[title="List View"]').click();
+    cy.get("table tbody tr").should("exist");
+  });
 });
