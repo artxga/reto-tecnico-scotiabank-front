@@ -10,8 +10,7 @@ export function DashboardStats({ requests }: DashboardStatsProps) {
   const { t } = useLanguage();
   const total = requests.length;
 
-  const getCount = (status: RequestStatus) =>
-    requests.filter((r) => r.status === status).length;
+  const getCount = (status: RequestStatus) => requests.filter((r) => r.status === status).length;
 
   const stats = [
     {
