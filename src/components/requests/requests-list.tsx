@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useRequests } from "@/hooks/use-requests";
 import { useSearchParams } from "next/navigation";
 import { Priority } from "@/lib/types";
@@ -30,6 +30,20 @@ export function RequestsList() {
     initialStatus !== "todos" || initialPriority !== "todos",
   );
   const [viewMode, setViewMode] = useState<"list" | "kanban">("list");
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    const saved = localStorage.getItem("requestsViewMode") as "list" | "kanban";
+    if (saved === "list" || saved === "kanban") {
+      setViewMode(saved);
+    }
+  }, []);
+
+  const handleViewModeChange = (mode: "list" | "kanban") => {
+    setViewMode(mode);
+    localStorage.setItem("requestsViewMode", mode);
+  };
 
   const statusTranslations = useMemo(
     () => ({
@@ -123,7 +137,7 @@ export function RequestsList() {
         }
         exportDisabled={filtered.length === 0}
         viewMode={viewMode}
-        setViewMode={setViewMode}
+        setViewMode={handleViewModeChange}
       />
 
       <RequestsFilters
@@ -144,7 +158,11 @@ export function RequestsList() {
         priorityTranslations={priorityTranslations}
       />
 
-      {viewMode === "list" ? (
+      {!mounted ? (
+        <div className="w-full flex justify-center py-12">
+          <div className="w-8 h-8 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin"></div>
+        </div>
+      ) : viewMode === "list" ? (
         <>
           <RequestsMobileList filtered={filtered} categoryTranslations={categoryTranslations} />
           <RequestsTable filtered={filtered} categoryTranslations={categoryTranslations} />
