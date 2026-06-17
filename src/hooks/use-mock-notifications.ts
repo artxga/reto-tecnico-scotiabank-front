@@ -38,7 +38,10 @@ export function useMockNotifications() {
       const isSoundEnabled = localStorage.getItem("notifications") !== "false";
       if (!isSoundEnabled) return;
 
-      const AudioContext = window.AudioContext || (window as unknown as { webkitAudioContext: typeof window.AudioContext }).webkitAudioContext;
+      const AudioContext =
+        window.AudioContext ||
+        (window as unknown as { webkitAudioContext: typeof window.AudioContext })
+          .webkitAudioContext;
       if (!AudioContext) return;
       const ctx = new AudioContext();
 

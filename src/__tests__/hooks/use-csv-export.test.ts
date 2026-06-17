@@ -11,9 +11,15 @@ describe("useCsvExport", () => {
   });
 
   it("should trigger a download with the correct CSV content in English", () => {
-    const mockAppendChild = jest.spyOn(document.body, "appendChild").mockImplementation((node) => node);
-    const mockRemoveChild = jest.spyOn(document.body, "removeChild").mockImplementation((node) => node);
-    const mockSetAttribute = jest.spyOn(HTMLAnchorElement.prototype, "setAttribute").mockImplementation(() => {});
+    const mockAppendChild = jest
+      .spyOn(document.body, "appendChild")
+      .mockImplementation((node) => node);
+    const mockRemoveChild = jest
+      .spyOn(document.body, "removeChild")
+      .mockImplementation((node) => node);
+    const mockSetAttribute = jest
+      .spyOn(HTMLAnchorElement.prototype, "setAttribute")
+      .mockImplementation(() => {});
     const mockClick = jest.spyOn(HTMLAnchorElement.prototype, "click").mockImplementation(() => {});
 
     const { result } = renderHook(() => useCsvExport());
@@ -27,8 +33,8 @@ describe("useCsvExport", () => {
           category: "Hardware",
           priority: "high",
           status: "pending",
-          creationDate: "2023-01-01T10:00:00Z"
-        }
+          creationDate: "2023-01-01T10:00:00Z",
+        },
       ],
       language: "en",
       categoryTranslations: { Hardware: "Hardware (EN)" },
@@ -41,12 +47,12 @@ describe("useCsvExport", () => {
     expect(mockSetAttribute).toHaveBeenCalledWith("href", "blob:mock-url");
     expect(mockSetAttribute).toHaveBeenCalledWith(
       "download",
-      expect.stringMatching(/^exported_requests_.*\.csv$/)
+      expect.stringMatching(/^exported_requests_.*\.csv$/),
     );
     expect(mockAppendChild).toHaveBeenCalled();
     expect(mockClick).toHaveBeenCalled();
     expect(mockRemoveChild).toHaveBeenCalled();
-    
+
     mockAppendChild.mockRestore();
     mockRemoveChild.mockRestore();
     mockSetAttribute.mockRestore();
@@ -54,9 +60,15 @@ describe("useCsvExport", () => {
   });
 
   it("should trigger a download with the correct CSV content in Spanish", () => {
-    const mockAppendChild = jest.spyOn(document.body, "appendChild").mockImplementation((node) => node);
-    const mockRemoveChild = jest.spyOn(document.body, "removeChild").mockImplementation((node) => node);
-    const mockSetAttribute = jest.spyOn(HTMLAnchorElement.prototype, "setAttribute").mockImplementation(() => {});
+    const mockAppendChild = jest
+      .spyOn(document.body, "appendChild")
+      .mockImplementation((node) => node);
+    const mockRemoveChild = jest
+      .spyOn(document.body, "removeChild")
+      .mockImplementation((node) => node);
+    const mockSetAttribute = jest
+      .spyOn(HTMLAnchorElement.prototype, "setAttribute")
+      .mockImplementation(() => {});
     const mockClick = jest.spyOn(HTMLAnchorElement.prototype, "click").mockImplementation(() => {});
 
     const { result } = renderHook(() => useCsvExport());
@@ -73,9 +85,9 @@ describe("useCsvExport", () => {
 
     expect(mockSetAttribute).toHaveBeenCalledWith(
       "download",
-      expect.stringMatching(/^solicitudes_exportadas_.*\.csv$/)
+      expect.stringMatching(/^solicitudes_exportadas_.*\.csv$/),
     );
-    
+
     mockAppendChild.mockRestore();
     mockRemoveChild.mockRestore();
     mockSetAttribute.mockRestore();

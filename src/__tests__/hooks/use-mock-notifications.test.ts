@@ -24,7 +24,7 @@ describe("useMockNotifications", () => {
 
   it("should mark all as read", () => {
     const { result } = renderHook(() => useMockNotifications());
-    
+
     act(() => {
       result.current.markAllAsRead();
     });
@@ -35,7 +35,7 @@ describe("useMockNotifications", () => {
 
   it("should mark a single notification as read by id", () => {
     const { result } = renderHook(() => useMockNotifications());
-    
+
     act(() => {
       result.current.markAsRead("1");
     });
@@ -67,24 +67,36 @@ describe("useMockNotifications", () => {
   it("should translate notification titles", () => {
     const { result } = renderHook(() => useMockNotifications());
 
-    expect(result.current.translateNotificationTitle("Nueva Solicitud")).toBe("dashboard.recentActivity.newEvent");
-    expect(result.current.translateNotificationTitle("Actualización de Estado")).toBe("dashboard.recentActivity.statusUpdated");
-    expect(result.current.translateNotificationTitle("Solicitud Cerrada")).toBe("requests.detail.closeRequest");
+    expect(result.current.translateNotificationTitle("Nueva Solicitud")).toBe(
+      "dashboard.recentActivity.newEvent",
+    );
+    expect(result.current.translateNotificationTitle("Actualización de Estado")).toBe(
+      "dashboard.recentActivity.statusUpdated",
+    );
+    expect(result.current.translateNotificationTitle("Solicitud Cerrada")).toBe(
+      "requests.detail.closeRequest",
+    );
     expect(result.current.translateNotificationTitle("Other")).toBe("Other");
   });
 
   it("should translate notification descriptions to English", () => {
     const { result } = renderHook(() => useMockNotifications());
 
-    expect(result.current.translateNotificationDesc("La solicitud #42a fue Aprobada por Operaciones.")).toBe("Request #42a was Approved by Operations.");
+    expect(
+      result.current.translateNotificationDesc("La solicitud #42a fue Aprobada por Operaciones."),
+    ).toBe("Request #42a was Approved by Operations.");
     expect(result.current.translateNotificationDesc("Other")).toBe("Other");
   });
 
   it("should translate notification times to English", () => {
     const { result } = renderHook(() => useMockNotifications());
 
-    expect(result.current.translateNotificationTime("Hace un momento")).toBe("dashboard.recentActivity.time.now");
-    expect(result.current.translateNotificationTime("Hace 1 hora")).toBe("dashboard.recentActivity.time.hour");
+    expect(result.current.translateNotificationTime("Hace un momento")).toBe(
+      "dashboard.recentActivity.time.now",
+    );
+    expect(result.current.translateNotificationTime("Hace 1 hora")).toBe(
+      "dashboard.recentActivity.time.hour",
+    );
     expect(result.current.translateNotificationTime("Other")).toBe("Other");
   });
 });

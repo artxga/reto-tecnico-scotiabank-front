@@ -31,7 +31,7 @@ describe("RequestsFilters", () => {
         hasActiveFilters={false}
         statusTranslations={{ pending: "Pendiente" }}
         priorityTranslations={{ high: "Alta" }}
-      />
+      />,
     );
 
     const searchInput = screen.getByPlaceholderText("requests.searchPlaceholder");
@@ -64,11 +64,11 @@ describe("RequestsFilters", () => {
         hasActiveFilters={true}
         statusTranslations={{ pending: "Pendiente" }}
         priorityTranslations={{ high: "Alta" }}
-      />
+      />,
     );
 
     expect(screen.getByText("requests.activeFilters")).toBeInTheDocument();
-    
+
     const clearBtn = screen.getByText("requests.clearFilters");
     fireEvent.click(clearBtn);
     expect(mockClearAllFilters).toHaveBeenCalled();

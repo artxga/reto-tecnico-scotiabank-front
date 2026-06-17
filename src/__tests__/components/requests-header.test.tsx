@@ -9,14 +9,14 @@ describe("RequestsHeader", () => {
   it("renders correctly and interacts with buttons", () => {
     const mockOnExport = jest.fn();
     const mockSetViewMode = jest.fn();
-    
+
     render(
       <RequestsHeader
         onExportCSV={mockOnExport}
         exportDisabled={false}
         viewMode="list"
         setViewMode={mockSetViewMode}
-      />
+      />,
     );
 
     expect(screen.getByText("requests.title")).toBeInTheDocument();
@@ -41,7 +41,7 @@ describe("RequestsHeader", () => {
         exportDisabled={true}
         viewMode="list"
         setViewMode={jest.fn()}
-      />
+      />,
     );
 
     const exportBtn = screen.getByText("requests.exportCSV");

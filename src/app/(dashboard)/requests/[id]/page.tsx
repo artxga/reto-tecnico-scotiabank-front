@@ -117,9 +117,10 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
         await deleteRequest.mutateAsync(id);
         toast(t("requests.detail.toastClosed"), "success");
         router.push("/requests");
-      } catch (error: any) {
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : "";
         toast(
-          error.message ||
+          errorMessage ||
             (language === "en" ? "Error closing request" : "Error al cerrar la solicitud"),
           "error",
         );

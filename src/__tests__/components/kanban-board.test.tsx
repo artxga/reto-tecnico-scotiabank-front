@@ -12,12 +12,25 @@ jest.mock("@/components/ui/toast-context", () => ({
 }));
 
 jest.mock("@hello-pangea/dnd", () => ({
-  DragDropContext: ({ children }: { children: React.ReactNode }) => <div data-testid="dnd-context">{children}</div>,
-  Droppable: ({ children }: { children: (provided: Record<string, unknown>, snapshot: Record<string, unknown>) => React.ReactNode }) => children({
-    innerRef: jest.fn(),
-    droppableProps: {},
-    placeholder: null
-  }, { isDraggingOver: false }),
+  DragDropContext: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="dnd-context">{children}</div>
+  ),
+  Droppable: ({
+    children,
+  }: {
+    children: (
+      provided: Record<string, unknown>,
+      snapshot: Record<string, unknown>,
+    ) => React.ReactNode;
+  }) =>
+    children(
+      {
+        innerRef: jest.fn(),
+        droppableProps: {},
+        placeholder: null,
+      },
+      { isDraggingOver: false },
+    ),
 }));
 
 // Mock the kanban-column so we don't have to test its internals here
@@ -27,14 +40,34 @@ jest.mock("@/components/dashboard/kanban-column", () => ({
       <span>{title}</span>
       <span>Count: {requests.length}</span>
     </div>
-  )
+  ),
 }));
 
 const queryClient = new QueryClient();
 
 const mockRequests: Request[] = [
-  { id: "1", title: "Req 1", description: "Desc", status: "pending", priority: "low", category: "Hardware", requester: "John", creationDate: "2023-01-01T10:00:00Z", lastChangeDate: "2023-01-01T10:00:00Z" },
-  { id: "2", title: "Req 2", description: "Desc", status: "approved", priority: "high", category: "Software", requester: "Jane", creationDate: "2023-01-02T10:00:00Z", lastChangeDate: "2023-01-02T10:00:00Z" },
+  {
+    id: "1",
+    title: "Req 1",
+    description: "Desc",
+    status: "pending",
+    priority: "low",
+    category: "Hardware",
+    requester: "John",
+    creationDate: "2023-01-01T10:00:00Z",
+    lastChangeDate: "2023-01-01T10:00:00Z",
+  },
+  {
+    id: "2",
+    title: "Req 2",
+    description: "Desc",
+    status: "approved",
+    priority: "high",
+    category: "Software",
+    requester: "Jane",
+    creationDate: "2023-01-02T10:00:00Z",
+    lastChangeDate: "2023-01-02T10:00:00Z",
+  },
 ];
 
 describe("KanbanBoard", () => {
@@ -42,7 +75,7 @@ describe("KanbanBoard", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <KanbanBoard requests={mockRequests} />
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     expect(screen.getByText("dashboard.kanban.title")).toBeInTheDocument();
