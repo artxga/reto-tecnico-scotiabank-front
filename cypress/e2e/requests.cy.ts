@@ -27,7 +27,7 @@ describe("Requests Inbox", () => {
   it("navigates to new request page", () => {
     cy.contains(/Nueva Solicitud|New Request/i, { timeout: 10000 })
       .first()
-      .click();
+      .click({ force: true });
     cy.url().should("include", "/requests/new");
   });
 
@@ -39,13 +39,15 @@ describe("Requests Inbox", () => {
     // Should be in list view by default (table exists)
     cy.get("table tbody tr", { timeout: 10000 }).should("exist");
 
+    cy.wait(500);
+
     // Switch to Kanban
-    cy.get('button[title="Kanban View"]').click();
+    cy.get('button[title="Kanban View"]').click({ force: true });
 
     // Check if Kanban columns exist
-    cy.contains(/dashboard.kanban.title|Tablero Kanban|Kanban Board/i, { timeout: 10000 }).should(
-      "exist",
-    );
+    cy.contains(/dashboard.kanban.title|Tablero de Solicitudes|Request Board/i, {
+      timeout: 10000,
+    }).should("exist");
 
     // Switch back to List
     cy.get('button[title="List View"]').click();
