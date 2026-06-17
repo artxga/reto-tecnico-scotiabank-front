@@ -60,7 +60,7 @@ export default function LoginPage() {
     result.error.issues.forEach((issue) => {
       const field = issue.path[0] as "email" | "password";
       if (!newErrors[field]) {
-        newErrors[field] = t(issue.message as any);
+        newErrors[field] = t(issue.message as string);
       }
     });
 
@@ -173,9 +173,8 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={isLoading}
-                className={`pl-11 rounded-xl h-11 border-gray-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 focus:bg-white dark:bg-slate-900 dark:focus:bg-slate-900 text-gray-950 dark:text-white transition-all ${
-                  errors.email ? "border-red-500 focus:ring-red-500/20" : ""
-                }`}
+                className={`pl-11 rounded-xl h-11 border-gray-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 focus:bg-white dark:bg-slate-900 dark:focus:bg-slate-900 text-gray-950 dark:text-white transition-all ${errors.email ? "border-red-500 focus:ring-red-500/20" : ""
+                  }`}
               />
             </div>
             {errors.email && (
@@ -202,9 +201,8 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 disabled={isLoading}
-                className={`pl-11 rounded-xl h-11 border-gray-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 focus:bg-white dark:bg-slate-900 dark:focus:bg-slate-900 text-gray-950 dark:text-white transition-all ${
-                  errors.password ? "border-red-500 focus:ring-red-500/20" : ""
-                }`}
+                className={`pl-11 rounded-xl h-11 border-gray-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 focus:bg-white dark:bg-slate-900 dark:focus:bg-slate-900 text-gray-950 dark:text-white transition-all ${errors.password ? "border-red-500 focus:ring-red-500/20" : ""
+                  }`}
               />
             </div>
             {errors.password && (
