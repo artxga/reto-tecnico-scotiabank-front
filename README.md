@@ -187,6 +187,16 @@ pnpm run oxfmt
 pnpm run oxfmt:check
 ```
 
+### Git Hooks (Verificación Pre-push)
+
+El proyecto cuenta con un hook de **pre-push** configurado que se instala automáticamente al ejecutar `pnpm install` (a través del script `prepare`). Este hook asegura que no se suba ningún cambio defectuoso a la rama remota ejecutando automáticamente:
+
+1. `oxlint` (validación de código).
+2. `oxfmt --check .` (validación de formato).
+3. `pnpm run test` (pruebas de Jest).
+
+Si alguna de estas verificaciones falla, el push será rechazado de manera preventiva.
+
 ---
 
 ## 🐳 Despliegue con Docker

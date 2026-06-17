@@ -1,0 +1,36 @@
+#!/bin/sh
+
+echo "--------------------------------------------------------"
+echo "🔍 Ejecutando verificaciones previas al push..."
+echo "--------------------------------------------------------"
+
+# 1. Ejecutar oxlint
+echo "1. Ejecutando oxlint..."
+pnpm run oxlint
+if [ $? -ne 0 ]; then
+  echo "❌ Error: oxlint detectó problemas en el código. Push abortado."
+  echo "--------------------------------------------------------"
+  exit 1
+fi
+
+# 2. Ejecutar oxfmt check
+echo "2. Ejecutando oxfmt check..."
+pnpm run oxfmt:check
+if [ $? -ne 0 ]; then
+  echo "❌ Error: Hay archivos sin formatear. Ejecuta 'pnpm run oxfmt' para corregir. Push abortado."
+  echo "--------------------------------------------------------"
+  exit 1
+fi
+
+# 3. Ejecutar pruebas de Jest
+echo "3. Ejecutando pruebas unitarias de Jest..."
+pnpm run test
+if [ $? -ne 0 ]; then
+  echo "❌ Error: Las pruebas de Jest han fallado. Push abortado."
+  echo "--------------------------------------------------------"
+  exit 1
+fi
+
+echo "✅ Verificaciones exitosas. Procediendo con el git push..."
+echo "--------------------------------------------------------"
+exit 0

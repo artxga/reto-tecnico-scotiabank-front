@@ -15,7 +15,8 @@
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run",
+    "prepare": "node -e \"const fs = require('fs'); if (fs.existsSync('.git')) { fs.copyFileSync('scripts/pre-push', '.git/hooks/pre-push'); fs.chmodSync('.git/hooks/pre-push', 0o755); console.log('Git hooks installed successfully.'); }\""
   },
   "dependencies": {
     "@hello-pangea/dnd": "^18.0.1",
