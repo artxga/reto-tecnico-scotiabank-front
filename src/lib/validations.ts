@@ -11,7 +11,7 @@ export const requestSchema = z.object({
     .min(10, "La descripción debe tener al menos 10 caracteres")
     .max(500, "La descripción no puede exceder los 500 caracteres"),
   category: z.enum(CATEGORIES, {
-    message: "La categoría es obligatoria"
+    message: "La categoría es obligatoria",
   }),
   priority: z.enum(PRIORITIES, {
     message: "Prioridad inválida",
