@@ -52,7 +52,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     }
 
     if (value === undefined) {
-      return key; // Fallback to key itself if not found
+      return keys[keys.length - 1]; // Fallback to original value (last key segment)
     }
 
     let text = String(value);
@@ -93,7 +93,7 @@ export function useLanguage() {
       }
 
       if (value === undefined) {
-        return key;
+        return keys[keys.length - 1];
       }
 
       let text = String(value);
