@@ -28,7 +28,7 @@ export function RequestForm({ initialData, onSubmit, isLoading }: RequestFormPro
     defaultValues: {
       title: initialData?.title || "",
       description: initialData?.description || "",
-      category: initialData?.category || "",
+      category: initialData?.category || "others",
       priority: initialData?.priority || "medium",
       requester: initialData?.requester || "",
     },
