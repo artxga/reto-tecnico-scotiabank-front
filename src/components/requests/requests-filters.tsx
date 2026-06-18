@@ -66,10 +66,11 @@ export function RequestsFilters({
 
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className={`w-full sm:w-auto justify-center px-4 py-2.5 rounded-xl border font-medium inline-flex items-center gap-2 cursor-pointer transition-all shadow-sm hover:shadow h-10.5 ${showFilters || hasActiveFilters
+          className={`w-full sm:w-auto justify-center px-4 py-2.5 rounded-xl border font-medium inline-flex items-center gap-2 cursor-pointer transition-all shadow-sm hover:shadow h-10.5 ${
+            showFilters || hasActiveFilters
               ? "bg-indigo-50 border-indigo-200 text-indigo-700 dark:bg-indigo-950/30 dark:border-indigo-800 dark:text-indigo-300"
               : "bg-white border-gray-200 text-gray-700 hover:bg-white/60 dark:bg-slate-950/20 dark:border-slate-800/80 dark:text-gray-200 dark:hover:bg-slate-950/45"
-            }`}
+          }`}
         >
           <SlidersHorizontal className="h-4 w-4" />
           <span className="text-sm">{language === "en" ? "Filters" : "Filtros"}</span>
@@ -93,8 +94,10 @@ export function RequestsFilters({
               className="w-full text-gray-800 dark:text-slate-200 bg-white/40 dark:bg-slate-950/20 border-gray-200 dark:border-slate-800/80 rounded-xl"
             >
               <option value="all">{t("requests.allStatuses")}</option>
-              {REQUEST_STATUSES.map(s => (
-                <option key={s} value={s}>{statusTranslations[s]}</option>
+              {REQUEST_STATUSES.map((s) => (
+                <option key={s} value={s}>
+                  {statusTranslations[s]}
+                </option>
               ))}
             </Select>
           </div>
@@ -109,8 +112,10 @@ export function RequestsFilters({
               className="w-full text-gray-800 dark:text-slate-200 bg-white/40 dark:bg-slate-950/20 border-gray-200 dark:border-slate-800/80 rounded-xl"
             >
               <option value="all">{t("requests.allPriorities")}</option>
-              {PRIORITIES.map(p => (
-                <option key={p} value={p}>{priorityTranslations[p]}</option>
+              {PRIORITIES.map((p) => (
+                <option key={p} value={p}>
+                  {priorityTranslations[p]}
+                </option>
               ))}
             </Select>
           </div>
@@ -153,8 +158,7 @@ export function RequestsFilters({
           )}
           {statusFilter !== "all" && (
             <Badge variant="secondary" className="flex items-center gap-1 py-1">
-              {t("requests.table.status")}:{" "}
-              {statusTranslations[statusFilter] || statusFilter}
+              {t("requests.table.status")}: {statusTranslations[statusFilter] || statusFilter}
               <button
                 onClick={() => setStatusFilter("all")}
                 className="hover:bg-indigo-100 dark:hover:bg-indigo-900 rounded-full p-0.5 ml-1 transition-colors cursor-pointer"
@@ -166,7 +170,8 @@ export function RequestsFilters({
           )}
           {priorityFilter !== "all" && (
             <Badge variant="secondary" className="flex items-center gap-1 py-1">
-              {t("requests.table.priority")}: {priorityTranslations[priorityFilter] || priorityFilter}
+              {t("requests.table.priority")}:{" "}
+              {priorityTranslations[priorityFilter] || priorityFilter}
               <button
                 onClick={() => setPriorityFilter("all")}
                 className="hover:bg-indigo-100 dark:hover:bg-indigo-900 rounded-full p-0.5 ml-1 transition-colors cursor-pointer"

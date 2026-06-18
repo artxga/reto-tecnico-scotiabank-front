@@ -19,8 +19,6 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
   const { toast } = useToast();
   const { t, language } = useLanguage();
 
-
-
   if (isLoading) {
     return (
       <div className="max-w-3xl mx-auto space-y-6">

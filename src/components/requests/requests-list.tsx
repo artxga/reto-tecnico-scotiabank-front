@@ -79,9 +79,7 @@ export function RequestsList() {
   );
 
   const activeFiltersCount =
-    (statusFilter !== "all" ? 1 : 0) +
-    (priorityFilter !== "all" ? 1 : 0) +
-    (search !== "" ? 1 : 0);
+    (statusFilter !== "all" ? 1 : 0) + (priorityFilter !== "all" ? 1 : 0) + (search !== "" ? 1 : 0);
 
   const hasActiveFilters = activeFiltersCount > 0;
 

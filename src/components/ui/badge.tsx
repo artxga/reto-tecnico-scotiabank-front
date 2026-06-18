@@ -51,7 +51,7 @@ function Badge({ className, variant = "default", ...props }: BadgeProps) {
     if ((REQUEST_STATUSES as readonly string[]).includes(textLower)) {
       return t(`requests.statuses.${textLower}`);
     }
-    
+
     if ((PRIORITIES as readonly string[]).includes(textLower)) {
       return t(`requests.priorities.${textLower}`);
     }

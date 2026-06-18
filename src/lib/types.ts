@@ -1,11 +1,18 @@
 export const REQUEST_STATUSES = ["pending", "in_review", "approved", "rejected", "closed"] as const;
-export type RequestStatus = typeof REQUEST_STATUSES[number];
+export type RequestStatus = (typeof REQUEST_STATUSES)[number];
 
 export const PRIORITIES = ["low", "medium", "high", "critical"] as const;
-export type Priority = typeof PRIORITIES[number];
+export type Priority = (typeof PRIORITIES)[number];
 
-export const CATEGORIES = ["hardware", "access", "software", "infrastructure", "human_resources", "others"] as const;
-export type Category = typeof CATEGORIES[number];
+export const CATEGORIES = [
+  "hardware",
+  "access",
+  "software",
+  "infrastructure",
+  "human_resources",
+  "others",
+] as const;
+export type Category = (typeof CATEGORIES)[number];
 
 export interface Request {
   id: string | number;
