@@ -12,8 +12,8 @@ interface RequestsFiltersProps {
   setStatusFilter: (val: string) => void;
   priorityFilter: string;
   setPriorityFilter: (val: string) => void;
-  sortBy: string;
-  setSortBy: (val: string) => void;
+  sortBy: "recent" | "oldest" | "priority";
+  setSortBy: (val: "recent" | "oldest" | "priority") => void;
   showFilters: boolean;
   setShowFilters: (val: boolean) => void;
   clearAllFilters: () => void;
@@ -126,7 +126,7 @@ export function RequestsFilters({
             </label>
             <Select
               value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
+              onChange={(e) => setSortBy(e.target.value as "recent" | "oldest" | "priority")}
               className="w-full text-gray-800 dark:text-slate-200 bg-white/40 dark:bg-slate-950/20 border-gray-200 dark:border-slate-800/80 rounded-xl"
             >
               <option value="recent">{language === "en" ? "Most recent" : "Más recientes"}</option>
