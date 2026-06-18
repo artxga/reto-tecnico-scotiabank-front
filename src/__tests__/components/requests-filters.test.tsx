@@ -18,9 +18,9 @@ describe("RequestsFilters", () => {
       <RequestsFilters
         search=""
         setSearch={mockSetSearch}
-        statusFilter="todos"
+        statusFilter="all"
         setStatusFilter={mockSetStatusFilter}
-        priorityFilter="todos"
+        priorityFilter="all"
         setPriorityFilter={mockSetPriorityFilter}
         sortBy="recent"
         setSortBy={mockSetSortBy}

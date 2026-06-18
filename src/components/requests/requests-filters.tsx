@@ -2,6 +2,7 @@ import { Search, SlidersHorizontal, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { useLanguage } from "@/components/providers/language-provider";
+import { Badge } from "../ui/badge";
 
 interface RequestsFiltersProps {
   search: string;
@@ -64,11 +65,10 @@ export function RequestsFilters({
 
         <button
           onClick={() => setShowFilters(!showFilters)}
-          className={`w-full sm:w-auto justify-center px-4 py-2.5 rounded-xl border font-medium inline-flex items-center gap-2 cursor-pointer transition-all shadow-sm hover:shadow h-10.5 ${
-            showFilters || hasActiveFilters
+          className={`w-full sm:w-auto justify-center px-4 py-2.5 rounded-xl border font-medium inline-flex items-center gap-2 cursor-pointer transition-all shadow-sm hover:shadow h-10.5 ${showFilters || hasActiveFilters
               ? "bg-indigo-50 border-indigo-200 text-indigo-700 dark:bg-indigo-950/30 dark:border-indigo-800 dark:text-indigo-300"
               : "bg-white border-gray-200 text-gray-700 hover:bg-white/60 dark:bg-slate-950/20 dark:border-slate-800/80 dark:text-gray-200 dark:hover:bg-slate-950/45"
-          }`}
+            }`}
         >
           <SlidersHorizontal className="h-4 w-4" />
           <span className="text-sm">{language === "en" ? "Filters" : "Filtros"}</span>
@@ -91,7 +91,7 @@ export function RequestsFilters({
               onChange={(e) => setStatusFilter(e.target.value)}
               className="w-full text-gray-800 dark:text-slate-200 bg-white/40 dark:bg-slate-950/20 border-gray-200 dark:border-slate-800/80 rounded-xl"
             >
-              <option value="todos">{t("requests.allStatuses")}</option>
+              <option value="all">{t("requests.allStatuses")}</option>
               <option value="pending">{statusTranslations.pending}</option>
               <option value="in_review">{statusTranslations.in_review}</option>
               <option value="approved">{statusTranslations.approved}</option>
@@ -109,7 +109,7 @@ export function RequestsFilters({
               onChange={(e) => setPriorityFilter(e.target.value)}
               className="w-full text-gray-800 dark:text-slate-200 bg-white/40 dark:bg-slate-950/20 border-gray-200 dark:border-slate-800/80 rounded-xl"
             >
-              <option value="todos">{t("requests.allPriorities")}</option>
+              <option value="all">{t("requests.allPriorities")}</option>
               <option value="low">{priorityTranslations.low}</option>
               <option value="medium">{priorityTranslations.medium}</option>
               <option value="high">{priorityTranslations.high}</option>
@@ -153,31 +153,30 @@ export function RequestsFilters({
               </button>
             </span>
           )}
-          {statusFilter !== "todos" && (
-            <span className="inline-flex items-center gap-1 bg-indigo-50/70 dark:bg-indigo-950/20 text-indigo-700 dark:text-indigo-300 text-xs font-medium px-2.5 py-1 rounded-full border border-indigo-100/50 dark:border-indigo-950/50">
-              {language === "en" ? "Status:" : "Estado:"}{" "}
+          {statusFilter !== "all" && (
+            <Badge variant="secondary" className="flex items-center gap-1 py-1">
+              {t("requests.table.status")}:{" "}
               {statusTranslations[statusFilter] || statusFilter}
               <button
-                onClick={() => setStatusFilter("todos")}
+                onClick={() => setStatusFilter("all")}
                 className="hover:bg-indigo-100 dark:hover:bg-indigo-900 rounded-full p-0.5 ml-1 transition-colors cursor-pointer"
                 title={language === "en" ? "Remove status filter" : "Quitar filtro de estado"}
               >
                 <X className="h-3 w-3" />
               </button>
-            </span>
+            </Badge>
           )}
-          {priorityFilter !== "todos" && (
-            <span className="inline-flex items-center gap-1 bg-indigo-50/70 dark:bg-indigo-950/20 text-indigo-700 dark:text-indigo-300 text-xs font-medium px-2.5 py-1 rounded-full border border-indigo-100/50 dark:border-indigo-950/50">
-              {language === "en" ? "Priority:" : "Prioridad:"}{" "}
-              {priorityTranslations[priorityFilter] || priorityFilter}
+          {priorityFilter !== "all" && (
+            <Badge variant="secondary" className="flex items-center gap-1 py-1">
+              {t("requests.table.priority")}: {priorityTranslations[priorityFilter] || priorityFilter}
               <button
-                onClick={() => setPriorityFilter("todos")}
+                onClick={() => setPriorityFilter("all")}
                 className="hover:bg-indigo-100 dark:hover:bg-indigo-900 rounded-full p-0.5 ml-1 transition-colors cursor-pointer"
                 title={language === "en" ? "Remove priority filter" : "Quitar filtro de prioridad"}
               >
                 <X className="h-3 w-3" />
               </button>
-            </span>
+            </Badge>
           )}
           <button
             onClick={clearAllFilters}

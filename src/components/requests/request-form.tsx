@@ -125,15 +125,22 @@ export function RequestForm({ initialData, onSubmit, isLoading }: RequestFormPro
           <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1.5">
             {t("requests.form.fieldCategory")}
           </label>
-          <Input
+          <Select
             {...register("category")}
             id="category"
-            placeholder={
-              language === "en" ? "e.g. Hardware, Software, HR" : "Ej. Hardware, Software, RRHH"
-            }
             disabled={isLoading || !!initialData}
             className={errors.category ? "border-red-500 focus:ring-red-500" : ""}
-          />
+          >
+            <option value="">
+              {language === "en" ? "Select category..." : "Seleccionar categoría..."}
+            </option>
+            <option value="Hardware">{t("requests.categories.Hardware")}</option>
+            <option value="Accesos">{t("requests.categories.Accesos")}</option>
+            <option value="Software">{t("requests.categories.Software")}</option>
+            <option value="Infraestructura">{t("requests.categories.Infraestructura")}</option>
+            <option value="Recursos Humanos">{t("requests.categories.Recursos Humanos")}</option>
+            <option value="Otros">{t("requests.categories.Otros")}</option>
+          </Select>
           {errors.category && (
             <p className="mt-1.5 text-sm text-red-600">{getErrorMessage(errors.category)}</p>
           )}

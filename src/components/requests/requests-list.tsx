@@ -19,15 +19,16 @@ export function RequestsList() {
   const { t, language } = useLanguage();
   const { exportToCSV } = useCsvExport();
 
-  const initialStatus = searchParams.get("status") || "todos";
-  const initialPriority = searchParams.get("priority") || "todos";
+  const initialStatus = searchParams.get("status") || "all";
+  const initialPriority = searchParams.get("priority") || "all";
 
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState(initialStatus);
   const [priorityFilter, setPriorityFilter] = useState(initialPriority);
-  const [sortBy, setSortBy] = useState("recent");
+  const [sortBy, setSortBy] = useState<"recent" | "oldest" | "priority">("recent");
+  const [isExporting, setIsExporting] = useState(false);
   const [showFilters, setShowFilters] = useState(
-    initialStatus !== "todos" || initialPriority !== "todos",
+    initialStatus !== "all" || initialPriority !== "all",
   );
   const [viewMode, setViewMode] = useState<"list" | "kanban">("list");
   const [mounted, setMounted] = useState(false);
@@ -58,36 +59,36 @@ export function RequestsList() {
 
   const priorityTranslations = useMemo(
     () => ({
-      low: language === "en" ? "Low" : "Baja",
-      medium: language === "en" ? "Medium" : "Media",
-      high: language === "en" ? "High" : "Alta",
-      critical: language === "en" ? "Critical" : "Crítica",
+      low: t("requests.priorities.low"),
+      medium: t("requests.priorities.medium"),
+      high: t("requests.priorities.high"),
+      critical: t("requests.priorities.critical"),
     }),
-    [language],
+    [t],
   );
 
   const categoryTranslations = useMemo(
     () => ({
-      Hardware: language === "en" ? "Hardware" : "Hardware",
-      Accesos: language === "en" ? "Access" : "Accesos",
-      Software: language === "en" ? "Software" : "Software",
-      Infraestructura: language === "en" ? "Infrastructure" : "Infraestructura",
-      "Recursos Humanos": language === "en" ? "Human Resources" : "Recursos Humanos",
-      Otros: language === "en" ? "Others" : "Otros",
+      Hardware: t("requests.categories.Hardware"),
+      Accesos: t("requests.categories.Accesos"),
+      Software: t("requests.categories.Software"),
+      Infraestructura: t("requests.categories.Infraestructura"),
+      "Recursos Humanos": t("requests.categories.Recursos Humanos"),
+      Otros: t("requests.categories.Otros"),
     }),
-    [language],
+    [t],
   );
 
   const activeFiltersCount =
-    (statusFilter !== "todos" ? 1 : 0) +
-    (priorityFilter !== "todos" ? 1 : 0) +
+    (statusFilter !== "all" ? 1 : 0) +
+    (priorityFilter !== "all" ? 1 : 0) +
     (search !== "" ? 1 : 0);
 
   const hasActiveFilters = activeFiltersCount > 0;
 
   const clearAllFilters = () => {
-    setStatusFilter("todos");
-    setPriorityFilter("todos");
+    setStatusFilter("all");
+    setPriorityFilter("all");
     setSearch("");
   };
 
@@ -102,11 +103,11 @@ export function RequestsList() {
       );
     }
 
-    if (statusFilter !== "todos") {
+    if (statusFilter !== "all") {
       result = result.filter((r) => r.status === statusFilter);
     }
 
-    if (priorityFilter !== "todos") {
+    if (priorityFilter !== "all") {
       result = result.filter((r) => r.priority === priorityFilter);
     }
 

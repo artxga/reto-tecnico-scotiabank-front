@@ -23,7 +23,6 @@ export default function DashboardPage() {
 
       {requests && <DashboardStats requests={requests} />}
 
-      {/* Charts Section */}
       <div className="grid gap-6 grid-cols-1 md:grid-cols-2 w-full">
         {requests && <StatusChart requests={requests} />}
         {requests && <PriorityChart requests={requests} />}
@@ -31,7 +30,6 @@ export default function DashboardPage() {
         {requests && <CategoryChart requests={requests} />}
       </div>
 
-      {/* Recent Activity Section (Full Width) */}
       <div className="w-full">{requests && <RecentActivity requests={requests} />}</div>
     </div>
   );
