@@ -31,7 +31,7 @@ describe("API - Solicitudes", () => {
     const newRequest = {
       title: "Cypress API Test Request",
       description: "Created via Cypress API testing to validate POST endpoint works correctly.",
-      category: "Testing",
+      category: "others",
       priority: "medium",
       requester: "Cypress Bot",
     };

@@ -27,18 +27,11 @@ const PRIORITY_COLORS: Record<string, string> = {
 
 export function PriorityChart({ requests }: PriorityChartProps) {
   const router = useRouter();
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
-  const localPriorityLabels: Record<string, string> = {
-    low: language === "en" ? "Low" : "Baja",
-    medium: language === "en" ? "Medium" : "Media",
-    high: language === "en" ? "High" : "Alta",
-    critical: language === "en" ? "Critical" : "Crítica",
-  };
-
-  const data = Object.keys(localPriorityLabels).map((key) => ({
+  const data = Object.keys(PRIORITY_COLORS).map((key) => ({
     key,
-    name: localPriorityLabels[key],
+    name: t(`requests.priorities.${key}`),
     value: requests.filter((r) => r.priority === key).length,
     color: PRIORITY_COLORS[key],
   }));

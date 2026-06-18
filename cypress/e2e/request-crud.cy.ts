@@ -17,7 +17,7 @@ describe("Request CRUD Flow (E2E)", () => {
     cy.get("#title").type(uniqueTitle);
     cy.get("#requester").clear().type("Cypress Tester");
     cy.get("#priority").select("high");
-    cy.get("#category").clear().type("Testing");
+    cy.get("#category").select("infrastructure");
     cy.get("#description").clear().type(description);
 
     // 3. Submit the form

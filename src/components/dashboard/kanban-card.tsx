@@ -14,18 +14,10 @@ interface KanbanCardProps {
 }
 
 export function KanbanCard({ request, index }: KanbanCardProps) {
-  const { language } = useLanguage();
+  const { t, language } = useLanguage();
 
   const translateCategory = (cat: string) => {
-    const map: Record<string, string> = {
-      Hardware: language === "en" ? "Hardware" : "Hardware",
-      Accesos: language === "en" ? "Access" : "Accesos",
-      Software: language === "en" ? "Software" : "Software",
-      Infraestructura: language === "en" ? "Infrastructure" : "Infraestructura",
-      "Recursos Humanos": language === "en" ? "Human Resources" : "Recursos Humanos",
-      Otros: language === "en" ? "Others" : "Otros",
-    };
-    return map[cat] || cat;
+    return t(`requests.categories.${cat}`);
   };
   return (
     <Draggable draggableId={String(request.id)} index={index}>

@@ -31,22 +31,14 @@ export function CategoryChart({ requests }: CategoryChartProps) {
   const { t, language } = useLanguage();
 
   const translateCategory = (cat: string) => {
-    const map: Record<string, string> = {
-      Hardware: language === "en" ? "Hardware" : "Hardware",
-      Accesos: language === "en" ? "Access" : "Accesos",
-      Software: language === "en" ? "Software" : "Software",
-      Infraestructura: language === "en" ? "Infrastructure" : "Infraestructura",
-      "Recursos Humanos": language === "en" ? "Human Resources" : "Recursos Humanos",
-      Otros: language === "en" ? "Others" : "Otros",
-    };
-    return map[cat] || cat;
+    return t(`requests.categories.${cat}`);
   };
 
   // Process data to count requests per category
   const getCategoryData = () => {
     const categories: Record<string, number> = {};
     requests.forEach((r) => {
-      const cat = r.category || "Otros";
+      const cat = r.category || "others";
       categories[cat] = (categories[cat] || 0) + 1;
     });
 

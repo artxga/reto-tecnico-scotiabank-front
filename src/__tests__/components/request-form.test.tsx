@@ -40,7 +40,7 @@ describe("RequestForm Component", () => {
       target: { value: "Nueva Laptop" },
     });
     fireEvent.change(screen.getByLabelText(/Solicitante/i), { target: { value: "Juan Pérez" } });
-    fireEvent.change(screen.getByLabelText(/Categoría/i), { target: { value: "Hardware" } });
+    fireEvent.change(screen.getByLabelText(/Categoría/i), { target: { value: "hardware" } });
     fireEvent.change(screen.getByLabelText(/Descripción Detallada/i), {
       target: { value: "Mi laptop se malogró y necesito una urgente para trabajar." },
     });
@@ -53,7 +53,7 @@ describe("RequestForm Component", () => {
         expect.objectContaining({
           title: "Nueva Laptop",
           requester: "Juan Pérez",
-          category: "Hardware",
+          category: "hardware",
           description: "Mi laptop se malogró y necesito una urgente para trabajar.",
           priority: "high",
         }),

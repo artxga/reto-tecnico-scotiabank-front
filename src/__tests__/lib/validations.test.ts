@@ -5,7 +5,7 @@ describe("Validaciones de Solicitud (Zod)", () => {
     const validData = {
       title: "Título de prueba válido",
       description: "Descripción detallada de la solicitud de prueba.",
-      category: "Prueba de categoría",
+      category: "software",
       priority: "high",
       requester: "Juan Pérez",
     };
@@ -18,7 +18,7 @@ describe("Validaciones de Solicitud (Zod)", () => {
     const invalidData = {
       title: "No",
       description: "Descripción detallada de la solicitud de prueba.",
-      category: "Prueba de categoría",
+      category: "software",
       priority: "high",
       requester: "Juan Pérez",
     };

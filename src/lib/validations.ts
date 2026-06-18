@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { CATEGORIES, PRIORITIES, REQUEST_STATUSES } from "./types";
 
 export const requestSchema = z.object({
   title: z
@@ -9,12 +10,12 @@ export const requestSchema = z.object({
     .string()
     .min(10, "La descripción debe tener al menos 10 caracteres")
     .max(500, "La descripción no puede exceder los 500 caracteres"),
-  category: z.string().min(2, "La categoría es obligatoria"),
-  priority: z.enum(["low", "medium", "high", "critical"], {
+  category: z.enum(CATEGORIES, { message: "La categoría es obligatoria" }),
+  priority: z.enum(PRIORITIES, {
     message: "Prioridad inválida",
   }),
   status: z
-    .enum(["pending", "in_review", "approved", "rejected", "closed"], {
+    .enum(REQUEST_STATUSES, {
       message: "Estado inválido",
     })
     .optional(),
@@ -22,7 +23,7 @@ export const requestSchema = z.object({
 });
 
 export const updatePrioritySchema = z.object({
-  priority: z.enum(["low", "medium", "high", "critical"], {
+  priority: z.enum(PRIORITIES, {
     message: "Prioridad inválida",
   }),
 });

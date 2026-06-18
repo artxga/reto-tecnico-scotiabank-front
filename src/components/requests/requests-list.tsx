@@ -69,12 +69,12 @@ export function RequestsList() {
 
   const categoryTranslations = useMemo(
     () => ({
-      Hardware: t("requests.categories.Hardware"),
-      Accesos: t("requests.categories.Accesos"),
-      Software: t("requests.categories.Software"),
-      Infraestructura: t("requests.categories.Infraestructura"),
-      "Recursos Humanos": t("requests.categories.Recursos Humanos"),
-      Otros: t("requests.categories.Otros"),
+      hardware: t("requests.categories.hardware"),
+      access: t("requests.categories.access"),
+      software: t("requests.categories.software"),
+      infrastructure: t("requests.categories.infrastructure"),
+      human_resources: t("requests.categories.human_resources"),
+      others: t("requests.categories.others"),
     }),
     [t],
   );

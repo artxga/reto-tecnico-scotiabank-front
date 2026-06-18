@@ -19,14 +19,7 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
   const { toast } = useToast();
   const { t, language } = useLanguage();
 
-  const categoryTranslations: Record<string, string> = {
-    Hardware: language === "en" ? "Hardware" : "Hardware",
-    Accesos: language === "en" ? "Access" : "Accesos",
-    Software: language === "en" ? "Software" : "Software",
-    Infraestructura: language === "en" ? "Infrastructure" : "Infraestructura",
-    "Recursos Humanos": language === "en" ? "Human Resources" : "Recursos Humanos",
-    Otros: language === "en" ? "Others" : "Otros",
-  };
+
 
   if (isLoading) {
     return (
@@ -219,7 +212,7 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
                   <Activity className="h-3.5 w-3.5" /> {t("requests.detail.category")}
                 </p>
                 <p className="font-medium text-gray-900 ml-5">
-                  {categoryTranslations[request.category] || request.category}
+                  {request ? t(`requests.categories.${request.category}`) : ""}
                 </p>
               </div>
 

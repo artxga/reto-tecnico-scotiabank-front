@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Request } from "@/lib/types";
+import { Request, CATEGORIES } from "@/lib/types";
 import { useLanguage } from "@/components/providers/language-provider";
 
 interface RequestFormProps {
@@ -134,12 +134,11 @@ export function RequestForm({ initialData, onSubmit, isLoading }: RequestFormPro
             <option value="">
               {language === "en" ? "Select category..." : "Seleccionar categoría..."}
             </option>
-            <option value="Hardware">{t("requests.categories.Hardware")}</option>
-            <option value="Accesos">{t("requests.categories.Accesos")}</option>
-            <option value="Software">{t("requests.categories.Software")}</option>
-            <option value="Infraestructura">{t("requests.categories.Infraestructura")}</option>
-            <option value="Recursos Humanos">{t("requests.categories.Recursos Humanos")}</option>
-            <option value="Otros">{t("requests.categories.Otros")}</option>
+            {CATEGORIES.map((c) => (
+              <option key={c} value={c}>
+                {t(`requests.categories.${c}`)}
+              </option>
+            ))}
           </Select>
           {errors.category && (
             <p className="mt-1.5 text-sm text-red-600">{getErrorMessage(errors.category)}</p>

@@ -19,20 +19,12 @@ const STATUS_COLORS: Record<string, string> = {
 
 export function StatusChart({ requests }: StatusChartProps) {
   const router = useRouter();
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
-  const localStatusLabels: Record<string, string> = {
-    pending: language === "en" ? "Pending" : "Pendiente",
-    in_review: language === "en" ? "In Review" : "En Revisión",
-    approved: language === "en" ? "Approved" : "Aprobada",
-    rejected: language === "en" ? "Rejected" : "Rechazada",
-    closed: language === "en" ? "Closed" : "Cerrada",
-  };
-
-  const data = Object.keys(localStatusLabels)
+  const data = Object.keys(STATUS_COLORS)
     .map((key) => ({
       key,
-      name: localStatusLabels[key],
+      name: t(`requests.statuses.${key}`),
       value: requests.filter((r) => r.status === key).length,
       color: STATUS_COLORS[key],
     }))

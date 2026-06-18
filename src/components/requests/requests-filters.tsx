@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { useLanguage } from "@/components/providers/language-provider";
 import { Badge } from "../ui/badge";
+import { REQUEST_STATUSES, PRIORITIES } from "@/lib/types";
 
 interface RequestsFiltersProps {
   search: string;
@@ -92,11 +93,9 @@ export function RequestsFilters({
               className="w-full text-gray-800 dark:text-slate-200 bg-white/40 dark:bg-slate-950/20 border-gray-200 dark:border-slate-800/80 rounded-xl"
             >
               <option value="all">{t("requests.allStatuses")}</option>
-              <option value="pending">{statusTranslations.pending}</option>
-              <option value="in_review">{statusTranslations.in_review}</option>
-              <option value="approved">{statusTranslations.approved}</option>
-              <option value="rejected">{statusTranslations.rejected}</option>
-              <option value="closed">{statusTranslations.closed}</option>
+              {REQUEST_STATUSES.map(s => (
+                <option key={s} value={s}>{statusTranslations[s]}</option>
+              ))}
             </Select>
           </div>
 
@@ -110,10 +109,9 @@ export function RequestsFilters({
               className="w-full text-gray-800 dark:text-slate-200 bg-white/40 dark:bg-slate-950/20 border-gray-200 dark:border-slate-800/80 rounded-xl"
             >
               <option value="all">{t("requests.allPriorities")}</option>
-              <option value="low">{priorityTranslations.low}</option>
-              <option value="medium">{priorityTranslations.medium}</option>
-              <option value="high">{priorityTranslations.high}</option>
-              <option value="critical">{priorityTranslations.critical}</option>
+              {PRIORITIES.map(p => (
+                <option key={p} value={p}>{priorityTranslations[p]}</option>
+              ))}
             </Select>
           </div>
 
