@@ -26,7 +26,6 @@ export function RequestsList() {
   const [statusFilter, setStatusFilter] = useState(initialStatus);
   const [priorityFilter, setPriorityFilter] = useState(initialPriority);
   const [sortBy, setSortBy] = useState<"recent" | "oldest" | "priority">("recent");
-  const [isExporting, setIsExporting] = useState(false);
   const [showFilters, setShowFilters] = useState(
     initialStatus !== "all" || initialPriority !== "all",
   );

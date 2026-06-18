@@ -28,7 +28,7 @@ const COLORS = [
 ];
 
 export function CategoryChart({ requests }: CategoryChartProps) {
-  const { t, language } = useLanguage();
+  const { t } = useLanguage();
 
   const translateCategory = (cat: string) => {
     return t(`requests.categories.${cat}`);
