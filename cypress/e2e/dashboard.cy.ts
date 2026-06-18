@@ -27,7 +27,9 @@ describe("Dashboard", () => {
   it("displays recent activity section", () => {
     cy.contains(/Actividad Reciente|Recent Activity/i, {
       timeout: 10000,
-    }).should("be.visible");
+    })
+      .scrollIntoView()
+      .should("be.visible");
   });
 
   it("navigates to requests page via sidebar", () => {
