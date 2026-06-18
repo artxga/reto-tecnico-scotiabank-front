@@ -67,7 +67,6 @@ export function RecentActivity({ requests }: RecentActivityProps) {
 
     const list: ActivityEvent[] = [];
 
-
     requests.forEach((r) => {
       // 1. Every request has a creation event
       list.push({
