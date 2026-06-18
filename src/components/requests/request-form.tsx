@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Request, CATEGORIES } from "@/lib/types";
+import { Request, CATEGORIES, Category, Priority } from "@/lib/types";
 import { useLanguage } from "@/components/providers/language-provider";
 
 interface RequestFormProps {
@@ -28,8 +28,8 @@ export function RequestForm({ initialData, onSubmit, isLoading }: RequestFormPro
     defaultValues: {
       title: initialData?.title || "",
       description: initialData?.description || "",
-      category: initialData?.category || "others",
-      priority: initialData?.priority || "medium",
+      category: (initialData?.category || "") as Category,
+      priority: (initialData?.priority || "") as Priority,
       requester: initialData?.requester || "",
     },
   });
