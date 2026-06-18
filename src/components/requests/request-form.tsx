@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Request, CATEGORIES, Category, Priority } from "@/lib/types";
+import { Request, CATEGORIES, Category, Priority, PRIORITIES } from "@/lib/types";
 import { useLanguage } from "@/components/providers/language-provider";
 
 interface RequestFormProps {
@@ -103,18 +103,14 @@ export function RequestForm({ initialData, onSubmit, isLoading }: RequestFormPro
             {t("requests.form.fieldPriority")}
           </label>
           <Select {...register("priority")} id="priority" disabled={isLoading}>
-            <option value="low">
-              {language === "en" ? "Low - Can wait" : "Baja - Puede esperar"}
+            <option value="">
+              {language === "en" ? "Select priority..." : "Seleccionar prioridad..."}
             </option>
-            <option value="medium">
-              {language === "en"
-                ? "Medium - Requires attention soon"
-                : "Media - Requiere atención pronto"}
-            </option>
-            <option value="high">{language === "en" ? "High - Urgent" : "Alta - Urgente"}</option>
-            <option value="critical">
-              {language === "en" ? "Critical - Immediate Action" : "Crítica - Acción Inmediata"}
-            </option>
+            {PRIORITIES.map((p) => (
+              <option key={p} value={p}>
+                {t(`requests.priorities.${p}`)}
+              </option>
+            ))}
           </Select>
           {errors.priority && (
             <p className="mt-1.5 text-sm text-red-600">{getErrorMessage(errors.priority)}</p>

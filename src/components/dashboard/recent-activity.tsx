@@ -67,13 +67,6 @@ export function RecentActivity({ requests }: RecentActivityProps) {
 
     const list: ActivityEvent[] = [];
 
-    const localStatusTranslations: Record<string, string> = {
-      pending: language === "en" ? "Pending" : "Pendiente",
-      in_review: language === "en" ? "In Review" : "En Revisión",
-      approved: language === "en" ? "Approved" : "Aprobada",
-      rejected: language === "en" ? "Rejected" : "Rechazada",
-      closed: language === "en" ? "Closed" : "Cerrada",
-    };
 
     requests.forEach((r) => {
       // 1. Every request has a creation event
@@ -87,7 +80,7 @@ export function RecentActivity({ requests }: RecentActivityProps) {
         timestamp: new Date(r.creationDate).getTime(),
         color: "text-blue-500 bg-blue-50 dark:bg-blue-950/30",
         icon: PlusCircle,
-        category: r.category || "General",
+        category: r.category ? t(`requests.categories.${r.category}`) : "General",
         priority: r.priority,
       });
 
@@ -102,7 +95,7 @@ export function RecentActivity({ requests }: RecentActivityProps) {
           title = t("dashboard.recentActivity.statusUpdated");
           desc = t("dashboard.recentActivity.statusDesc", {
             title: r.title,
-            status: localStatusTranslations[r.status] || r.status,
+            status: t(`requests.statuses.${r.status}`),
           });
           if (r.status === "approved") {
             icon = CheckCircle2;
@@ -132,7 +125,7 @@ export function RecentActivity({ requests }: RecentActivityProps) {
           timestamp: new Date(r.lastChangeDate).getTime(),
           color,
           icon,
-          category: r.category || "General",
+          category: r.category ? t(`requests.categories.${r.category}`) : "General",
           priority: r.priority,
         });
       }
